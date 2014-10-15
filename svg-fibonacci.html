@@ -19,9 +19,9 @@ var svgWidth = 510;
 var svgHeight = 270;
 
 var fontSize = '15px';
-var textOffset = 5;
+var textOffset = 4.5;
 
-var rectWidth = 48;
+var rectWidth = 46;
 var rectHeight = 28;
 var rectRadius = rectHeight / 2;
 var rectXoffset = (svgWidth-15) / 17;
@@ -62,13 +62,13 @@ function useCoordinatesTo(action){
 				if ( action === 'store' ) {
 					coordinates[coordinates.length-1].push([x, y]);	
 				} else if ( action === 'draw' ) {
-					generateRect(x - rectWidth/2, y - rectHeight/2, null, null, null, null, 'rgba(91, 192, 222, 0.5)');
+					generateRect(x - rectWidth/2, y - rectHeight/2, null, null, null, null);
 				} else if ( action === 'write' ) {
 					var lightColor = '#999';
 					var call = fib_calls[k][i];
-					generateText('fib(', x - 7, y + textOffset, '300', '14px', lightColor);
-					generateText(call.toString(), x + 8, y + textOffset + 1);
-					generateText(')', x + 15, y + textOffset, '300', '14px', lightColor);
+					generateText('fib(', x - 7, y + textOffset, '300', '13px'); // , lightColor);
+					generateText(call.toString(), x + 7.5, y + textOffset + 1.2);
+					generateText(')', x + 14.5, y + textOffset, '300', '13px'); // , lightColor);
 				}
 			}
 		}
