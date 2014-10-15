@@ -11,28 +11,22 @@
 
 // Dynamic styles and attributes
 
-function log(content){
-	console.log(content);
-}
-
 var svgWidth = 300;
-var svgHeight = 205;
+var svgHeight = 200;
 
 var fontSize = '13px';
 
-var rectWidth = 50;
-var rectHeight = 30;
-var rectRadius = 15;
+var rectWidth = 20;
+var rectHeight = 20;
+var rectRadius = 5;
 var rectXoffset;
 var rectYoffset;
 
 var circleRadius = 7;
+var circleXoffset = svgWidth / 17;
+var circleYoffset = svgHeight / 6;
 
 // Draw diagram
-
-var circleWidthOffset  = svgWidth / 17;
-var circleHeightOffset = svgHeight / 6;
-
 
 var coordinates = []
 var multipliers = [16, 8, 4, 2, 1];
@@ -43,8 +37,8 @@ function useCoordinatesTo(action){
 		coordinates.push([]);
 		for (var i=0; i < Math.pow(2, k); i++) {
 
-			var x = circleWidthOffset * multipliers[k] * (i+1) - circleWidthOffset * subtractions[k];
-			var y = circleHeightOffset * (k + 1);
+			var x = circleXoffset * multipliers[k] * (i+1) - circleXoffset * subtractions[k];
+			var y = circleYoffset * (k + 1);
 
 			if ( action === 'store' ) {
 				coordinates[coordinates.length-1].push([x, y]);	
