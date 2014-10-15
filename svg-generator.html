@@ -5,16 +5,11 @@
 <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
 <script type='text/javascript' src='js/generate_elements.js'></script>
 <script type='text/javascript' src='js/initialize_page.js'></script>
+<script type='text/javascript' src='js/static_variables.js'></script>
 
 <script>
 
 // Dynamic styles and attributes
-
-var defaultDarkColor  = '#555';
-var defaultLightColor = 'white';
-
-var pageBackground = 'lightgrey';
-var svgBackground = 'rgb(247, 247, 247)';
 
 var svgWidth = 300;
 var svgHeight = 300;
@@ -38,10 +33,10 @@ var circleOffset;
 
 Cheatsheet:
 
-generateRect( x, y, width, height, [ borderRadius, fill, stroke, strokeWidth ])
-generateCircle( cx, cy, r, [ fill, stroke, strokeWidth ])
-generateText( content, x, y, fontSize, [ fill, textAnchor ])
-generateLine(x1, y1, x2, y2, [ stroke, strokeWidth ])
+generateRect   ( x, y, width, height, [ borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, r, [ fill, stroke, strokeWidth ])
+generateText   ( content, x, y, fontSize, [ fill, textAnchor ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
 
 */
 
