@@ -1,10 +1,12 @@
 var svg = $('svg');
 
 function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth){
+    width = width   || rectWidth;
+    height = height || rectHeight;
+    borderRadius = borderRadius || rectRadius;
     fill = fill     || defaultLightColor;
     stroke = stroke || defaultDarkColor;
     strokeWidth = strokeWidth   || 1;
-    borderRadius = borderRadius || 0;
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     el.setAttribute('x', x);
     el.setAttribute('y', y);
@@ -20,6 +22,7 @@ function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWid
 };
 
 function generateCircle(cx, cy, r, fill, stroke, strokeWidth){
+    r = r           || circleRadius;
     fill = fill     || defaultLightColor;
     stroke = stroke || defaultDarkColor;
     strokeWidth = strokeWidth || 1;
@@ -33,13 +36,14 @@ function generateCircle(cx, cy, r, fill, stroke, strokeWidth){
     svg.append(el);
 };
 
-function generateText(content, x, y, fontSize, fill, textAnchor){
+function generateText(content, x, y, newFontSize, fill, textAnchor){
+    newFontSize = newFontSize || fontSize;
     fill = fill || defaultDarkColor;
     textAnchor = textAnchor || 'middle';
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     el.setAttribute('x', x);
     el.setAttribute('y', y);
-    el.setAttribute('font-size', fontSize);
+    el.setAttribute('font-size', newFontSize);
     el.setAttribute('fill', fill);
     el.setAttribute('text-anchor', textAnchor);
     el.textContent = content;
@@ -47,7 +51,7 @@ function generateText(content, x, y, fontSize, fill, textAnchor){
 };
 
 function generateLine(x1, y1, x2, y2, stroke, strokeWidth){
-    stroke = stroke || defaultDarkColor;
+    stroke = stroke || '#999';
     strokeWidth = strokeWidth || 1;
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     el.setAttribute('x1', x1);

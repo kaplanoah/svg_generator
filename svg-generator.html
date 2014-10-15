@@ -11,8 +11,12 @@
 
 // Dynamic styles and attributes
 
+function log(content){
+	console.log(content);
+}
+
 var svgWidth = 300;
-var svgHeight = 300;
+var svgHeight = 200;
 
 var fontSize = '13px';
 
@@ -22,20 +26,51 @@ var rectRadius = 15;
 var rectXoffset;
 var rectYoffset;
 
-var circleRadius = 50;
-var circleOffset;
+var circleRadius = 6.5;
 
 // Draw diagram
 
+var circleWidthOffset  = svgWidth / 17;
+var circleHeightOffset = svgHeight / 6;
 
+
+var coordinates = []
+var multipliers = [16, 8, 4, 2, 1];
+var subtractions = [7.5, 3.5, 1.5, 0.5, 0];
+
+for (var k=0; k < 5; k++) {
+	coordinates.push([]);
+	for (var i=0; i < Math.pow(2, k); i++) {
+		log('circleWidthOffset * ' + multipliers[k] + ' * (i+1) - circleWidthOffset * ' + subtractions[k])
+		var x = circleWidthOffset * multipliers[k] * (i+1) - circleWidthOffset * subtractions[k];
+		var y = circleHeightOffset * (k + 1);
+		coordinates[coordinates.length-1].push([x, y]);
+	}
+}
+
+for (var i=1; i < coordinates.length+1; i++ ) {
+	for ( k in coordinates[i] ) {
+		generateLine(coordinates[i-1][Math.floor(k/2)][0], coordinates[i-1][Math.floor(k/2)][1], coordinates[i][k][0], coordinates[i][k][1]);
+	}
+}
+
+for (var k=0; k < 5; k++) {
+	coordinates.push([]);
+	for (var i=0; i < Math.pow(2, k); i++) {
+		log('circleWidthOffset * ' + multipliers[k] + ' * (i+1) - circleWidthOffset * ' + subtractions[k])
+		var x = circleWidthOffset * multipliers[k] * (i+1) - circleWidthOffset * subtractions[k];
+		var y = circleHeightOffset * (k + 1);
+		generateCircle(x, y);
+	}
+}
 
 /*
 
 Cheatsheet:
 
-generateRect   ( x, y, width, height, [ borderRadius, fill, stroke, strokeWidth ])
-generateCircle ( cx, cy, r, [ fill, stroke, strokeWidth ])
-generateText   ( content, x, y, fontSize, [ fill, textAnchor ])
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
+generateText   ( content, x, y, [ newFontSize, fill, textAnchor ])
 generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
 
 */
