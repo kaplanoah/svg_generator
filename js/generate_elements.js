@@ -36,13 +36,15 @@ function generateCircle(cx, cy, r, fill, stroke, strokeWidth){
     svg.append(el);
 };
 
-function generateText(content, x, y, newFontSize, fill, textAnchor){
+function generateText(content, x, y, fontWeight, newFontSize, fill, textAnchor){
+    fontWeight  = fontWeight  || 'normal'
     newFontSize = newFontSize || fontSize;
     fill = fill || defaultDarkColor;
     textAnchor = textAnchor || 'middle';
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    el.setAttribute('x', x);
-    el.setAttribute('y', y);
+    el.setAttribute('x', Math.round(x*10) / 10);
+    el.setAttribute('y', Math.round(y*10) / 10);
+    el.setAttribute('font-weight', fontWeight);
     el.setAttribute('font-size', newFontSize);
     el.setAttribute('fill', fill);
     el.setAttribute('text-anchor', textAnchor);
