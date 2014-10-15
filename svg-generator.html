@@ -74,6 +74,9 @@ function generateLine(x1, y1, x2, y2, stroke, strokeWidth){
 
 // Dynamic styles and attributes
 
+var pageBackground = 'lightgrey';
+var svgBackground = 'rgb(247, 247, 247)';
+
 var svgWidth = 300;
 var svgHeight = 300;
 
@@ -83,9 +86,10 @@ var rectWidth = 50;
 var rectHeight = 30;
 var rectRadius = 15;
 
-// Initialize svg
+// Initialize page
 
-svg.attr({'width': svgWidth, 'height': svgHeight});
+svg.attr({'width': svgWidth, 'height': svgHeight, 'style': 'background:rgb(247, 247, 247)'});
+document.body.style.backgroundColor = pageBackground;
 
 // Draw diagram
 
