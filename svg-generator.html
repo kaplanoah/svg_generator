@@ -1,0 +1,57 @@
+<div class="diagram image">
+    <svg>
+
+    </svg>
+</div>
+
+
+<!-- 
+
+
+<text x="87"
+      y="24"
+      font-size="13px"
+      fill="#555"
+      text-anchor="middle">
+      fib(3)
+</text>
+-->
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script>
+
+var div = document.getElementsByClassName('diagram')[0];
+var svg = document.getElementsByTagName('svg')[0];
+
+var defaultDarkColor  = '#555';
+var defaultLightColor = 'white';
+
+function generateRect(x, y, width, height, fill, stroke, strokeWidth, rx, ry){
+    fill = fill     || defaultLightColor;
+    stroke = stroke || defaultDarkColor;
+    strokeWidth = strokeWidth || 1;
+    rx = rx         || 0;
+    ry = ry         || 0;
+    return "<rect x='"+x+"' y='"+y+"' width='"+width+"' height='"+height+"' fill='"+fill+"' stroke='"+stroke+"' stroke-width='"+strokeWidth+"' rx='"+rx+"' ry='"+ry+"'/>";
+};
+
+function generateCircle(cx, cy, r, fill, stroke, strokeWidth){
+    fill = fill     || defaultLightColor;
+    stroke = stroke || defaultDarkColor;
+    strokeWidth = strokeWidth || 1;
+    return "<rect cx='"+cx+"' cy='"+cy+"' r='"+r+"' fill='"+fill+"' stroke='"+stroke+"' stroke-width='"+strokeWidth+"'/>";
+};
+
+function generateText(content, x, y, fontSize, fill, textAnchor){
+    fill = fill || defaultDarkColor;
+    textAnchor = textAnchor || 'middle';
+    console.log("<text x='"+x+"' y='"+y+"' font-size='"+fontSize+"' fill='"+fill+"' text-anchor='"+textAnchor+"'>"+content+"</text>");
+    return "<text x='"+x+"' y='"+y+"' font-size='"+fontSize+"' fill='"+fill+"' text-anchor='"+textAnchor+"'>"+content+"</text>";
+};
+
+generateRect(2, 3, 100, 100);
+generateCircle(2, 3, 100);
+generateText('hello', 1, 17, 4);
+
+
+</script>
