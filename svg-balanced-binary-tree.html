@@ -1,3 +1,7 @@
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+</head>
+
 <div class="diagram image">
     <svg></svg>
 </div>
@@ -37,8 +41,8 @@ function useCoordinatesTo(action){
 		coordinates.push([]);
 		for (var i=0; i < Math.pow(2, k); i++) {
 
-			var x = circleXoffset * multipliers[k] * (i+1) - circleXoffset * subtractions[k];
-			var y = circleYoffset * (k + 1);
+			var x = Math.round(circleXoffset * multipliers[k] * (i+1) - circleXoffset * subtractions[k]);
+			var y = Math.round(circleYoffset * (k + 1));
 
 			if ( action === 'store' ) {
 				coordinates[coordinates.length-1].push([x, y]);	
@@ -59,9 +63,19 @@ function drawLines(){
 	}
 }
 
+function drawText(){
+	for (var i=0; i < 5; i++) {
+		content = Math.pow(2, i);
+		height = svgHeight / 6 * (i + 1) + 4;
+		console.log(content);
+		generateText(content, 10, height);
+	}
+}
+
 useCoordinatesTo('store');
 drawLines();
 useCoordinatesTo('draw');
+drawText();
 
 /*
 
