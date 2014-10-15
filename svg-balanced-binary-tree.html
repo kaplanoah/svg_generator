@@ -16,7 +16,7 @@ function log(content){
 }
 
 var svgWidth = 300;
-var svgHeight = 200;
+var svgHeight = 205;
 
 var fontSize = '13px';
 
@@ -26,7 +26,7 @@ var rectRadius = 15;
 var rectXoffset;
 var rectYoffset;
 
-var circleRadius = 6.5;
+var circleRadius = 7;
 
 // Draw diagram
 
@@ -45,13 +45,13 @@ function useCoordinatesTo(action){
 
 			var x = circleWidthOffset * multipliers[k] * (i+1) - circleWidthOffset * subtractions[k];
 			var y = circleHeightOffset * (k + 1);
-			
+
 			if ( action === 'store' ) {
 				coordinates[coordinates.length-1].push([x, y]);	
 			} else {
 				generateCircle(x, y);
 			}
-			
+
 		}
 	}
 }
