@@ -1,0 +1,76 @@
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+</head>
+
+<div class="diagram image">
+    <svg></svg>
+</div>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/generate_elements.js'></script>
+<script type='text/javascript' src='../../js/initialize_page.js'></script>
+<script type='text/javascript' src='../../js/static_variables.js'></script>
+
+<script>
+
+// Dynamic styles and attributes
+
+var svgWidth = 340;
+var svgHeight = 45;
+
+var fontSize = '14.5px'; // 14.6
+var textOffset = 20;
+
+var rectWidth = 27.3;
+var rectHeight = 18.1;
+var rectRadius = 5;
+var rectXoffset;
+var rectYoffset = textOffset - 13.8;
+
+var circleRadius = 10;
+var circleXoffset;
+var circleXoffset;
+
+var mathFont = 'serif';
+var icBlue = 'rgba(91, 192, 222, 0.2)';
+
+// Draw diagram here
+
+function drawArray(){
+	generateText('[2*6*5*9, 1*6*5*9, 1*2*5*9, 1*2*6*9, 1*2*6*5]', 2, textOffset, null, null, null, mathFont, 'left', null, 'letter-spacing:1;');
+}
+
+function highlightDuplicate(){
+	generateRect(39.4, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(106.5, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(173.5, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
+}
+
+function highlightAsending(){
+	generateRect(73, rectYoffset, 10.5, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(140, rectYoffset, 27, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(207, rectYoffset, 43.5, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(274, rectYoffset, 59.5, rectHeight, 0, icBlue, icBlue, 0)
+}
+
+function drawExtraStuff(){
+
+}
+
+// highlightDuplicate();
+highlightAsending();
+drawArray();
+drawExtraStuff();
+
+/*
+
+Cheatsheet:
+
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
+generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
+
+*/
+
+</script>

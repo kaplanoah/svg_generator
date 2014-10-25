@@ -7,9 +7,9 @@
 </div>
 
 <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
-<script type='text/javascript' src='js/generate_elements.js'></script>
-<script type='text/javascript' src='js/initialize_page.js'></script>
-<script type='text/javascript' src='js/static_variables.js'></script>
+<script type='text/javascript' src='../../js/generate_elements.js'></script>
+<script type='text/javascript' src='../../js/initialize_page.js'></script>
+<script type='text/javascript' src='/js/static_variables.js'></script>
 
 <script>
 
@@ -19,29 +19,33 @@ var svgWidth = 510;
 var svgHeight = 270;
 
 var fontSize = '15px';
-var textOffset = 4.5;
+var textOffset = 5;
 
-var rectWidth = 46;
+var rectWidth = 48;
 var rectHeight = 28;
 var rectRadius = rectHeight / 2;
 var rectXoffset = (svgWidth-15) / 17;
 var rectYoffset = svgHeight / 6;
+var rectStrokeWidth = 1;
 
 var circleRadius = 7;
 var circleXoffset;
 var circleYoffset;
 
+var memoColor = 'rgb(91, 192, 222)'
+
 // Draw diagram
 
-var coordinates = []
+var coordinates = [];
+var completed_calls = [];
 var multipliers = [16, 8, 4, 2, 1];
 var subtractions = [7.5, 3.5, 1.5, 0.5, 0];
 
 var fib_calls = [
 	[5],
 	[4, 3],
-	[3, 2, 2, 1],
-	[2, 1, 1, 0, 1, 0],
+	[3, 2],
+	[2, 1],
 	[1, 0]
 ]
 
@@ -58,17 +62,27 @@ function useCoordinatesTo(action){
 				( i === 0 ) ? ( x -= offset ) : ( x += offset );
 			}
 
-			if ( k < 3 || k === 3 && i < 6 || k === 4 && i < 2 ) {
+			if ( i < 2 ) {
 				if ( action === 'store' ) {
 					coordinates[coordinates.length-1].push([x, y]);	
 				} else if ( action === 'draw' ) {
-					generateRect(x - rectWidth/2, y - rectHeight/2, null, null, null, null);
+					var call = fib_calls[k][i];
+					var rectColor;
+					if ( call > 0 && call < 4 && completed_calls.indexOf(call) < 0 ) {
+						rectColor = memoColor;
+						rectStrokeWidth = 2.5;
+					} else {
+						rectColor = defaultDarkColor;
+						rectStrokeWidth = 1;
+					}
+					completed_calls.push(call);
+					generateRect(x - rectWidth/2, y - rectHeight/2, null, null, null, null, rectColor, rectStrokeWidth);
 				} else if ( action === 'write' ) {
 					var lightColor = '#999';
 					var call = fib_calls[k][i];
-					generateText('fib(', x - 7, y + textOffset, '300', '13px'); // , lightColor);
-					generateText(call.toString(), x + 7.5, y + textOffset + 1.2);
-					generateText(')', x + 14.5, y + textOffset, '300', '13px'); // , lightColor);
+					generateText('fib(', x - 7, y + textOffset, '300', '14px');
+					generateText(call.toString(), x + 8, y + textOffset + 1);
+					generateText(')', x + 15, y + textOffset, '300', '14px');
 				}
 			}
 		}
@@ -83,6 +97,22 @@ function drawLines(){
 		}
 	}
 }
+
+var keyX = 282;
+var keyY = 181;
+var keyrX = keyX - 4.5;
+var keyrY = keyY - 15.5;
+var spacing = 29;
+var keySize = '13px';
+var keyWidth = 131.5;
+var keyHeight = 21;
+var offset = spacing;
+var keyRadius = 2;
+
+generateRect(keyrX, keyrY, keyWidth, keyHeight, keyRadius, defaultDarkColor, defaultDarkColor, 0);
+generateRect(keyrX, keyrY + offset, keyWidth - 23, keyHeight, keyRadius, memoColor, memoColor, 0);
+generateText('CALLING FUNCTION', keyX, keyY, 'normal', keySize, 'white', 'left');
+generateText('GETTING MEMO', keyX, keyY+spacing, 'normal', keySize, 'white', 'left');
 
 useCoordinatesTo('store');
 drawLines();

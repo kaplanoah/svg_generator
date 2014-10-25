@@ -3,10 +3,10 @@ var svg = $('svg');
 function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth){
     width = width   || rectWidth;
     height = height || rectHeight;
-    borderRadius = borderRadius || rectRadius;
+    if ( borderRadius !== 0 && !borderRadius) { borderRadius || rectRadius }
     fill = fill     || defaultLightColor;
     stroke = stroke || defaultDarkColor;
-    strokeWidth = strokeWidth   || 1;
+    if ( strokeWidth !== 0 && !strokeWidth ) { strokeWidth = 1 }
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     el.setAttribute('x', Math.round(x*10) / 10);
     el.setAttribute('y', Math.round(y*10) / 10);
@@ -36,7 +36,7 @@ function generateCircle(cx, cy, r, fill, stroke, strokeWidth){
     svg.append(el);
 };
 
-function generateText(content, x, y, fontWeight, newFontSize, fill, textAnchor){
+function generateText(content, x, y, fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style){
     fontWeight  = fontWeight  || 'normal'
     newFontSize = newFontSize || fontSize;
     fill = fill || defaultDarkColor;
@@ -47,7 +47,10 @@ function generateText(content, x, y, fontWeight, newFontSize, fill, textAnchor){
     el.setAttribute('font-weight', fontWeight);
     el.setAttribute('font-size', newFontSize);
     el.setAttribute('fill', fill);
+    if (fontFamily) { el.setAttribute('font-family', fontFamily); }
     el.setAttribute('text-anchor', textAnchor);
+    if (transform) { el.setAttribute('transform', transform); }
+    if (style) { el.setAttribute('style', style); }
     el.textContent = content;
     svg.append(el);
 };
