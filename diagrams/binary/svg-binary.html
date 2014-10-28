@@ -15,8 +15,8 @@
 
 // Dynamic styles and attributes
 
-var svgWidth = 500;
-var svgHeight = 240;
+var svgWidth = 380;
+var svgHeight = 235;
 
 var fontSize = '13px';
 var textOffset;
@@ -33,9 +33,11 @@ var circleXoffset;
 
 var mathFont = 'serif';
 var icBlue = 'rgba(91, 192, 222, 0.1)';
-var darkBlue = 'rgb(31, 131, 173)';
+var darkBlue = 'rgb(31, 119, 173)';
 
 // layout
+
+var labelOffset = 3;
 
 var sideLabelX = 20;
 var sideLabelOffset = 6;
@@ -46,8 +48,8 @@ var decimalColumnX = binaryColumnX + 130;
 var topLabelY = 25;
 var columnLabelY = topLabelY + 33;
 var digitY = columnLabelY + 30;
-var columnValueY = digitY + 55;
-var finalValueY = columnValueY + 55;
+var columnValueY = digitY + 53;
+var finalValueY = columnValueY + 60;
 
 var digitOffset = 37;
 var digitOffsets = [-digitOffset, 0, digitOffset];
@@ -73,6 +75,8 @@ var columnLabelSize = '9px';
 
 var highlightHeight = columnValueY - columnLabelY + 33;
 
+var plusColor = '#AAA';
+
 // Draw diagram here
 
 for (var i=0; i<3; i++) {
@@ -86,14 +90,14 @@ for (var i=0; i<3; i++) {
 	generateRect(x, y, null, highlightHeight, 0, icBlue, icBlue, 0);
 }
 
-generateText(sideLabels[0], sideLabelX, digitY, null, sideLabelSize, null, null, 'left');
+generateText(sideLabels[0], sideLabelX, digitY - labelOffset, null, sideLabelSize, null, null, 'left');
 
-generateText(sideLabels[1], sideLabelX, columnValueY + sideLabelOffsets[2], null, sideLabelSize, null, null, 'left');
-generateText(sideLabels[2], sideLabelX, columnValueY + sideLabelOffsets[3], null, sideLabelSize, null, null, 'left');
-generateText(sideLabels[3], sideLabelX, columnValueY + sideLabelOffsets[4], null, sideLabelSize, null, null, 'left');
+generateText(sideLabels[1], sideLabelX, columnValueY + sideLabelOffsets[2] - labelOffset, null, sideLabelSize, null, null, 'left');
+generateText(sideLabels[2], sideLabelX, columnValueY + sideLabelOffsets[3] - labelOffset, null, sideLabelSize, null, null, 'left');
+generateText(sideLabels[3], sideLabelX, columnValueY + sideLabelOffsets[4] - labelOffset, null, sideLabelSize, null, null, 'left');
 
-generateText(sideLabels[4], sideLabelX, finalValueY + sideLabelOffsets[0], null, sideLabelSize, null, null, 'left');
-generateText(sideLabels[5], sideLabelX, finalValueY + sideLabelOffsets[1], null, sideLabelSize, null, null, 'left');
+generateText(sideLabels[4], sideLabelX, finalValueY + sideLabelOffsets[0] - labelOffset, null, sideLabelSize, null, null, 'left');
+generateText(sideLabels[5], sideLabelX, finalValueY + sideLabelOffsets[1] - labelOffset, null, sideLabelSize, null, null, 'left');
 
 var topWeight = 'bold';
 var topColor = darkBlue;
@@ -116,7 +120,13 @@ for (var i=0; i<3; i++) {
 }
 
 for (var i=0; i<3; i++) {
-	generateText(columnValues[i], binaryColumnX + digitOffsets[i], columnValueY, null, mathSizeSmall, null, mathFont);
+	var offset;
+	if ( i === 0) {
+		offset = digitOffsets[i] - 1.5;
+	} else {
+		offset = digitOffsets[i];
+	}
+	generateText(columnValues[i], binaryColumnX + offset, columnValueY, null, mathSizeSmall, null, mathFont);
 }
 for (var i=0; i<3; i++) {
 	generateText(columnValues[i+3], decimalColumnX + digitOffsets[i], columnValueY, null, mathSizeSmall, null, mathFont);
@@ -124,6 +134,16 @@ for (var i=0; i<3; i++) {
 
 generateText(finalValues[0], binaryColumnX, finalValueY, null, mathSizeMed, null, mathFont);
 generateText(finalValues[1], decimalColumnX, finalValueY, null, mathSizeMed, null, mathFont);
+
+for (var i=0; i<3; i+=2) {
+	generateText('+', binaryColumnX + digitOffsets[i] / 2, columnValueY, null, mathSizeSmall, plusColor);
+}
+for (var i=0; i<3; i+=2) {
+	generateText('+', decimalColumnX + digitOffsets[i] / 2, columnValueY, null, mathSizeSmall, plusColor);
+}
+
+generateText('=', binaryColumnX - 24.5, finalValueY, null, mathSizeSmall, plusColor);
+generateText('=', decimalColumnX - 16, finalValueY, null, mathSizeSmall, plusColor);
 
 /*
 
