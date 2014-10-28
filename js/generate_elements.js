@@ -3,7 +3,7 @@ var svg = $('svg');
 function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth){
     width = width   || rectWidth;
     height = height || rectHeight;
-    if ( borderRadius !== 0 && !borderRadius) { borderRadius || rectRadius }
+    if ( borderRadius !== 0 && !borderRadius) { borderRadius = borderRadius || rectRadius };
     fill = fill     || defaultLightColor;
     stroke = stroke || defaultDarkColor;
     if ( strokeWidth !== 0 && !strokeWidth ) { strokeWidth = 1 }
