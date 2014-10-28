@@ -16,7 +16,7 @@
 // Dynamic styles and attributes
 
 var svgWidth = 400;
-var svgHeight = 200;
+var svgHeight = 105;
 
 var fontSize = '17px';
 var textOffset = 20;
@@ -32,10 +32,10 @@ var circleRadius = 10;
 var circleXoffset;
 var circleXoffset;
 
-var spacingX = 60;
-var spacingY = 30.5;
+var spacingX = 37;
+var spacingY = 24.5;
 
-var integers = ['1', '2', '8', '40', '10', '1', '40', '20', '8'];
+var integers = ['2', '4', '10', '1', '2', '8'];
 
 var timesSize = '11px';
 var equalSize = '14.5px';
@@ -44,25 +44,17 @@ var operatorColor = '#999';
 var singleDigitComma = spacingX / 2;
 var doubleDigitComma = singleDigitComma - 1.5;
 
-var bracketOffset = 29.5;
+var bracketOffset = 19.5;
 
-var leftMargin = 94;
+var leftMargin = 107;
 
 // Draw diagram here
-
-
-for (var i=0; i < 3; i++) {
-	generateRect(leftMargin + spacingX * (i + 1) - 20.5, spacingY - 27, 40, 170, 0, 'rgba(91, 192, 222, 0.09)', 'rgba(91, 192, 222, 0)')
-}
 
 for (var i=0; i < 3; i++) {
 	generateText(integers[i], leftMargin + spacingX * (i + 1), spacingY, null, null, null, mathFont);
 }
 for (var i=3; i < 6; i++) {
 	generateText(integers[i], leftMargin + spacingX * (i - 2), spacingY * 3, null, null, null, mathFont);
-}
-for (var i=6; i < 9; i++) {
-	generateText(integers[i], leftMargin + spacingX * (i - 5), spacingY * 5, null, null, null, mathFont);
 }
 
 for (var i=0; i < 2; i++) {
@@ -81,45 +73,21 @@ for (var i=3; i < 5; i++) {
 	}
 	generateText(',', leftMargin + spacingX * (i - 2) + commaSpacing, spacingY * 3, null, null, null, mathFont);
 }
-for (var i=6; i < 8; i++) {
-	if (i === 6) {
-		commaSpacing = doubleDigitComma;
-	} else {
-		commaSpacing = singleDigitComma;
-	}
-	generateText(',', leftMargin + spacingX * (i - 5) + commaSpacing, spacingY * 5, null, null, null, mathFont);
-}
 
-for (var i=0; i < 3; i++) {
+for (var i=0; i < 2; i++) {
 	generateText('[', leftMargin + spacingX - bracketOffset + 0.5, spacingY * (i + 1) * 2 - spacingY - 0.5, null, null, null, mathFont);
 }
-for (var i=0; i < 3; i++) {
+for (var i=0; i < 2; i++) {
 	generateText(']', leftMargin + spacingX * 3 + bracketOffset - 1, spacingY * (i + 1) * 2 - spacingY - 0.5, null, null, null, mathFont);
 }
 
-for (var i=0; i < 3; i++) {
-	var x = spacingX * (i + 1);
-	var y = spacingY * 2 - 5;
-	var tranformation = 'rotate(90 ' + x + ', ' + y + ')'
-	generateText('x', leftMargin + x, y, null, timesSize, operatorColor);
-}
-for (var i=0; i < 3; i++) {
-	var x = leftMargin + spacingX * (i + 1) - 5;
-	var y = spacingY * 4 - 6;
-	var tranformation = 'rotate(90 ' + x + ', ' + y + ')'
-	generateText('=', x, y, null, equalSize, operatorColor, null, null, tranformation);
-}
 
-var lables = ['PRODUCTS BEFORE', 'EACH INDEX', 'PRODUCTS AFTER', 'EACH INDEX', 'PRODUCTS OF ALL', 'OTHER INTEGERS'];
-var before = 30.5;
-var after  = before * 3;
-var all    = before * 5;
-var label = 15;
-var lineSpacing = 14.5;
-var ys = [before, before + lineSpacing, after, after + lineSpacing, all, all + lineSpacing];
+var lables = ['INPUT ARRAY', 'PRODUCTS BEFORE', 'EACH INDEX'];
+var second = spacingY * 2.5 + 3;
+var ys = [spacingY, second, second + 14.5];
 
-for (var i=0; i < 6; i++) {
-	generateText(lables[i], 10, ys[i] - 7, null, '10px', null, null, 'left');
+for (var i=0; i < 3; i++) {
+	generateText(lables[i], 10, ys[i], null, '10px', null, null, 'left');
 }
 
 /*

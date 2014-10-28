@@ -1,0 +1,87 @@
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+</head>
+
+<div class="diagram image">
+    <svg></svg>
+</div>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/generate_elements.js'></script>
+<script type='text/javascript' src='../../js/initialize_page.js'></script>
+<script type='text/javascript' src='../../js/static_variables.js'></script>
+
+<script>
+
+// Dynamic styles and attributes
+
+var svgWidth = 300;
+var svgHeight = 200;
+
+var fontSize = '13px';
+var textOffset;
+
+var rectWidth = 20;
+var rectHeight = 20;
+var rectRadius = 5;
+var rectXoffset;
+var rectYoffset;
+
+var circleRadius = 10;
+var circleXoffset;
+var circleXoffset;
+
+var mathFont = 'serif';
+var icBlue = 'rgba(91, 192, 222, 1)';
+
+// layout
+
+var sideLabelX = 20;
+var binaryColumnX = sideLabelX + 100;
+var decimalColumnX = binaryColumnX + 100;
+
+var topLabelY = 20;
+var columnLabelY = topLabelY + 40;
+var digitY = columnLabelY + 20;
+var columnValueY = digitY + 50;
+var finalValueY = columnValueY + 50;
+
+var columnLabelOffset = 30;
+var columnLabelOffsets = [-columnLabelOffset, 0, columnLabelOffset];
+
+// content
+
+var sideLabels = ['digit columns', 'in base 10', 'value in', 'base 10'];
+var topLables = ['base 10', 'base 2'];
+var columnLabels = ['100s', '10s', '1s', '4s', '2s', '1s'];
+var digits = ['1', '0', '1'];
+var columnValues = ['100', '0', '1', '4', '0', '1'];
+var finalValues = ['101', '5'];
+
+// Draw diagram here
+
+generateText(sideLabels[0], sideLabelX, columnValueY, null, null, null, null, 'left');
+generateText(sideLabels[1], sideLabelX, finalValueY, null, null, null, null, 'left');
+
+generateText(topLables[0], binaryColumnX, topLabelY);
+generateText(topLables[1], decimalColumnX, topLabelY);
+
+for (var i=0; i<3; i++) {
+	generateText(columnLabels[i], binaryColumnX + columnLabelOffsets[i], columnLabelY);
+}
+for (var i=0; i<3; i++) {
+	generateText(columnLabels[i+3], decimalColumnX + columnLabelOffsets[i], columnLabelY);
+}
+
+/*
+
+Cheatsheet:
+
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
+generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, style ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
+
+*/
+
+</script>
