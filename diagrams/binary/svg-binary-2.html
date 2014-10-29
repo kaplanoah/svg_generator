@@ -15,7 +15,7 @@
 
 // Dynamic styles and attributes
 
-var svgWidth = 380;
+var svgWidth = 247;
 var svgHeight = 235;
 
 var fontSize = '13px';
@@ -56,12 +56,22 @@ var digitOffsets = [-digitOffset, 0, digitOffset];
 
 // content
 
+var base10 = false;
+
+if ( base10 ) {
+	topLable = 'base-10';
+	columnLabels = ['100s', '10s', '1s'];
+	columnValues = ['100', '0', '1'];
+	finalValue = '101';
+} else {
+	topLable = 'base-2';
+	columnLabels = ['4s', '2s', '1s'];
+	columnValues = ['4', '0', '1'];
+	finalValue = '5';
+}
+
 var sideLabels = ['DIGITS', 'DIGIT COLUMN', 'VALUES IN', 'BASE 10', 'VALUE IN', 'BASE 10'];
-var topLables = ['base-10', 'base-2'];
-var columnLabels = ['100s', '10s', '1s', '4s', '2s', '1s'];
 var digits = ['1', '0', '1'];
-var columnValues = ['100', '0', '1', '4', '0', '1'];
-var finalValues = ['101', '5'];
 
 // sizes and styles
 
@@ -79,16 +89,15 @@ var plusColor = '#AAA';
 
 // Draw diagram here
 
+// highlights
+
 for (var i=0; i<3; i++) {
 	var x = binaryColumnX + digitOffsets[i] - rectWidth/2;
 	var y = columnLabelY - rectYoffset;
 	generateRect(x, y, null, highlightHeight, 0, icBlue, icBlue, 0);
 }
-for (var i=0; i<3; i++) {
-	var x = decimalColumnX + digitOffsets[i] - rectWidth/2;
-	var y = columnLabelY - rectYoffset;
-	generateRect(x, y, null, highlightHeight, 0, icBlue, icBlue, 0);
-}
+
+// side labels
 
 generateText(sideLabels[0], sideLabelX, digitY - labelOffset, null, sideLabelSize, null, null, 'left');
 
@@ -99,51 +108,54 @@ generateText(sideLabels[3], sideLabelX, columnValueY + sideLabelOffsets[4] - lab
 generateText(sideLabels[4], sideLabelX, finalValueY + sideLabelOffsets[0] - labelOffset, null, sideLabelSize, null, null, 'left');
 generateText(sideLabels[5], sideLabelX, finalValueY + sideLabelOffsets[1] - labelOffset, null, sideLabelSize, null, null, 'left');
 
+// top labels
+
 var topWeight = 'bold';
 var topColor = null;
 
-generateText(topLables[0], binaryColumnX, topLabelY, topWeight, topLabelSize, topColor);
-generateText(topLables[1], decimalColumnX, topLabelY, topWeight, topLabelSize, topColor);
+generateText(topLable, binaryColumnX, topLabelY, topWeight, topLabelSize, topColor);
+
+// column labels
 
 for (var i=0; i<3; i++) {
 	generateText(columnLabels[i], binaryColumnX + digitOffsets[i], columnLabelY, 'bold', columnLabelSize, darkBlue);
 }
-for (var i=0; i<3; i++) {
-	generateText(columnLabels[i+3], decimalColumnX + digitOffsets[i], columnLabelY, 'bold', columnLabelSize, darkBlue);
-}
+
+// digits
 
 for (var i=0; i<3; i++) {
 	generateText(digits[i], binaryColumnX + digitOffsets[i], digitY, null, mathSizeLarge, null, mathFont);
 }
-for (var i=0; i<3; i++) {
-	generateText(digits[i], decimalColumnX + digitOffsets[i], digitY, null, mathSizeLarge, null, mathFont);
-}
+
+// column values
 
 for (var i=0; i<3; i++) {
 	var offset;
-	if ( i === 0) {
-		offset = digitOffsets[i] - 1.5;
+	if ( columnValues[i] === '100') {
+		offset = digitOffsets[i] - 1.3;
 	} else {
 		offset = digitOffsets[i];
 	}
 	generateText(columnValues[i], binaryColumnX + offset, columnValueY, null, mathSizeSmall, null, mathFont);
 }
-for (var i=0; i<3; i++) {
-	generateText(columnValues[i+3], decimalColumnX + digitOffsets[i], columnValueY, null, mathSizeSmall, null, mathFont);
-}
 
-generateText(finalValues[0], binaryColumnX, finalValueY, null, mathSizeMed, null, mathFont);
-generateText(finalValues[1], decimalColumnX, finalValueY, null, mathSizeMed, null, mathFont);
+// final value
+
+generateText(finalValue, binaryColumnX, finalValueY, null, mathSizeMed, null, mathFont);
+
+// +
 
 for (var i=0; i<3; i+=2) {
 	generateText('+', binaryColumnX + digitOffsets[i] / 2, columnValueY, null, mathSizeSmall, plusColor);
 }
-for (var i=0; i<3; i+=2) {
-	generateText('+', decimalColumnX + digitOffsets[i] / 2, columnValueY, null, mathSizeSmall, plusColor);
-}
 
-generateText('=', binaryColumnX - 24.5, finalValueY, null, mathSizeSmall, plusColor);
-generateText('=', decimalColumnX - 16, finalValueY, null, mathSizeSmall, plusColor);
+// =
+
+if ( base10 ) {
+	generateText('=', binaryColumnX - 24.5, finalValueY, null, mathSizeSmall, plusColor);
+} else {
+	generateText('=', binaryColumnX - 16, finalValueY, null, mathSizeSmall, plusColor);
+}
 
 /*
 
