@@ -67,3 +67,14 @@ function generateLine(x1, y1, x2, y2, stroke, strokeWidth){
     el.setAttribute('stroke-width', strokeWidth);
     svg.append(el);
 };
+function generatePolygon(points, fill, stroke, strokeWidth){
+    fill   = fill   || defaultLightColor;
+    stroke = stroke || defaultDarkColor;
+    strokeWidth = strokeWidth || 1;
+    var el = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    el.setAttribute('points', points);
+    el.setAttribute('fill', fill);
+    el.setAttribute('stroke', stroke);
+    el.setAttribute('stroke-width', strokeWidth);
+    svg.append(el);
+};
