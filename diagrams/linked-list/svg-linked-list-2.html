@@ -15,17 +15,17 @@
 
 // Dynamic styles and attributes
 
-var svgWidth  = 600;
-var svgHeight = 320;
+var svgWidth  = 430;
+var svgHeight = 140;
 
-var fontSize = '9px';
+var fontSize = '9.5px';
 
-var icBlue = 'rgba(91, 192, 222, 0.1)';
+var icBlue = 'rgba(91, 192, 222, 0.8)';
 
 var leftMargin = 50;
 var topMargin = 20;
 
-var nodeXgap = 50;
+var nodeXgap = 45;
 var nodeWidth = 68;
 var nodeHeight = 95;
 var nodeColor = '#DDD'
@@ -38,8 +38,17 @@ var internalBackground = 'white';
 var internalStrokeWidth = 1;
 
 var pointerHeight = nodeHeight * 0.25;
+var valueHeight = nodeHeight - (nodeInternalBorder * 3) - pointerHeight;
 
 var arrowHeight = 8;
+var arrowSize = 8.5;
+
+var valueTextMargin = 13;
+var nextTextMargin = 3.3;
+var valueIntMargin = 39;
+
+var values = ['5', '1', '9'];
+var valueSize = '23px';
 
 // Draw diagram here
 
@@ -54,7 +63,6 @@ for (var i=0; i<3; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder;
 	var y = topMargin + nodeInternalBorder;
 	var width = nodeWidth - nodeInternalBorder * 2;
-	var valueHeight = nodeHeight - (nodeInternalBorder * 3) - pointerHeight;
 	generateRect(x, y, width, valueHeight, nodeBorderRadius, internalBackground, null, internalStrokeWidth);
 }
 
@@ -67,8 +75,6 @@ for (var i=0; i<3; i++) {
 }
 
 // arrow triangles
-var arrowSize = 8.5;
-
 for (var i=0; i<3; i++) {
 	var pointX  = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth + nodeXgap - nodeInternalBorder;
 	var pointY  = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2);
@@ -97,6 +103,35 @@ for (var i=0; i<3; i++) {
 	generateLine(x1, topY, x2, topY, '#555');
 	generateLine(x1, bottomY, x2, bottomY, '#555');
 }
+
+// value text
+for (var i=0; i<3; i++) {
+	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
+	var y = topMargin + nodeInternalBorder + valueTextMargin;
+	generateText('VALUE', x, y);
+}
+
+// next text
+for (var i=0; i<4; i++) {
+	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
+	var y = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) + nextTextMargin;
+	var text = 'NEXT'
+	if (i === 3) {
+		text = 'None';
+		x = x - 15;
+	}
+	generateText(text, x, y);
+}
+
+// value integer
+for (var i=0; i<3; i++) {
+	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
+	var y = topMargin + nodeInternalBorder + valueIntMargin;
+	generateText(values[i], x, y, 'bold', valueSize, icBlue);
+}
+
+
+
 
 
 
