@@ -8,6 +8,7 @@
 </div>
 
 <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/helper_functions.js'></script>
 <script type='text/javascript' src='../../js/generate_elements.js'></script>
 <script type='text/javascript' src='../../js/initialize_page.js'></script>
 <script type='text/javascript' src='../../js/static_variables.js'></script>
@@ -42,7 +43,7 @@ var arrowPointAngle = 151;
 var arrowPointLength = 5;
 
 var stickEndWidth = 8;
-var stickOffset = 5;
+var stickOffset = 18;
 var stickEndRadius = 1;
 
 // Draw diagram here
@@ -174,15 +175,18 @@ function drawPinkStick() {
 function drawPurpleStick() {
     var endCoordinates = [];
 
-    var x = xof(3) + nodeWidth / 2 - stickEndWidth / 2;
-    var y = yof(3) - stickOffset;
-    generateRect(x, y, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
-    endCoordinates.push([x, y]);
+    var flatx = xof(3) + nodeWidth / 2 - stickEndWidth / 2;
+    var flaty = yof(3) - stickOffset;
+    var flatxMeet;
+    generateRect(flatx, flaty, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
+    endCoordinates.push([flatx, flaty]);
 
-    var x = xof(7) + nodeWidth / 2 - stickEndWidth / 2 + stickOffset;
-    var y = yof(7) + nodeWidth / 2 - stickEndWidth / 2;
-    // generateRect(x, y, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
-    endCoordinates.push([x, y]);
+    var flaty = flaty + stickEndWidth / 2;
+
+    var roundx = xof(7) + stickOffset + nodeWidth / 2;
+    var roundy = yof(7) + nodeWidth / 2 - stickEndWidth / 2;
+    generateRect(roundx, roundy, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
+    endCoordinates.push([roundx, roundy]);
 
     var startx = endCoordinates[1][0] + stickEndWidth / 2;
     var starty = endCoordinates[1][1] - 1 + stickEndWidth / 2;
@@ -190,11 +194,33 @@ function drawPurpleStick() {
     var endy = endCoordinates[1][1] + 1 + stickEndWidth / 2;
 
     var hypotenuseLength = Math.sqrt(2 * Math.pow(nodeSpacing, 2));
-    var radiusx = hypotenuseLength / 2 + stickEndWidth + nodeCircleOffset / 2; // + nodeWidth / 2;
-    var radiusy = hypotenuseLength / 2 + stickEndWidth;
 
-    generateRect(startx, starty, 3, 3, 0, 'red');
-    generateArc(startx, starty, radiusx, radiusy, 0, 1, 0, endx, endy);
+    var circleCenterx = coordinates[5][0] + hypotenuseLength / 2 + nodeWidth / 2;
+    var circleCentery = coordinates[5][1] + nodeWidth / 2;
+    var stickCenterx = roundx + stickEndWidth / 2;
+    var stickCentery = roundy + stickEndWidth / 2;
+
+    var distanceToRoundStick = stickCenterx - circleCenterx;
+
+    var radiusx = distanceToRoundStick;
+    var radiusy = distanceToRoundStick;
+
+
+    for (var i=flatx; i<flatx+1000; i++) {
+        var distanceToFlatStick = Math.sqrt( Math.pow(circleCenterx - i, 2) + Math.pow(circleCentery - flaty, 2) );
+        if (distanceToFlatStick - distanceToRoundStick < 0) {
+            var flatxMeet = i;
+            break;
+        }
+    }
+
+    var stickCurve = 4;
+    var stickBlur = 1.3;
+
+    generateArc(startx, starty, radiusx, radiusy, 0, 0, 0, flatxMeet + stickCurve / stickBlur, flaty - stickCurve);
+    generateLine(flatx, flaty, flatxMeet - stickCurve, flaty, defaultDarkColor);
+
+    generateQuadraticPath(flatxMeet - stickCurve, flaty, flatxMeet, flaty, flatxMeet + stickCurve / stickBlur, flaty - stickCurve);
 }
 
 function xof(index){
@@ -209,7 +235,7 @@ generateNodeCoordinates();
 drawNodes();
 
 // drawPinkStick();
-// drawPurpleStick();
+drawPurpleStick();
 
 
 
