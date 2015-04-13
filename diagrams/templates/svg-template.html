@@ -8,6 +8,7 @@
 </div>
 
 <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/helper_functions.js'></script>
 <script type='text/javascript' src='../../js/generate_elements.js'></script>
 <script type='text/javascript' src='../../js/initialize_page.js'></script>
 <script type='text/javascript' src='../../js/static_variables.js'></script>
@@ -52,7 +53,8 @@ generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
 generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
 generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
 generatePolygon(points, [ fill, stroke, strokeWidth ])
-generatePath   (startx, starty, middlex, middley, endx, endy, [ strokeWidth, stroke, fill, isRelative ])
+generateQuadraticPath(startx, starty, middlex, middley, endx, endy, [ strokeWidth, stroke, fill, isRelative ])
+generateArc    (startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, [ closed, stroke, fill ])
 
 */
 

@@ -23,27 +23,34 @@ var fontSize = '15px';
 
 var mathFont = 'Droid Serif';
 var icBlue   = 'rgba(91, 192, 222, 1)';
+var transparent = 'rgba(255, 255, 255, 0)';
 
-var topMargin = 40;
+var topMargin = 60;
 var leftMargin = 30;
 
 var nodeWidth = 13;
-var nodeSpacing = 37;
+var nodeSpacing = 40;
 var nodeRadius = 4;
-var nodeCircleOffset = 2;
+var nodeCircleOffset = 1;
 
-var arrowCurve = 4;
-var arrowSpacingStart = 1;
+var arrowCurve = 6;
+var arrowSpacingStart = 2;
 var arrowSpacingEnd = 3;
 var arrowWidth = 1;
 var arrowOffset = 1;
-var arrowPointAngle = 150;
+var arrowPointAngle = 151;
 var arrowPointLength = 5;
+
+var stickEndWidth = 8;
+var stickOffset = 5;
+var stickEndRadius = 1;
 
 // Draw diagram here
 
+var coordinates = [];
+
 function generateNodeCoordinates() {
-    var coordinates = [];
+    
     for (var i=0; i<9; i++) {
         x = leftMargin + i * nodeSpacing;
         y = topMargin;
@@ -63,16 +70,15 @@ function generateNodeCoordinates() {
         }
         coordinates.push([x, y]);
     }
-    drawNodes(coordinates);
 }
 
-function drawNodes(coordinates) {
+function drawNodes() {
     for (var i=0; i<coordinates.length; i++){
 
-        generateRect(coordinates[i][0], coordinates[i][1], nodeWidth, nodeWidth, nodeRadius);
+        generateRect(xof(i), yof(i), nodeWidth, nodeWidth, nodeRadius, transparent);
 
-        var startx = coordinates[i][0] + nodeWidth + arrowSpacingStart;
-        var starty = coordinates[i][1] + nodeWidth / 2 - arrowOffset;
+        var startx = xof(i) + nodeWidth + arrowSpacingStart;
+        var starty = yof(i) + nodeWidth / 2 - arrowOffset;
 
         if (i === coordinates.length -1) {
             var nextIndex = 5;
@@ -80,8 +86,8 @@ function drawNodes(coordinates) {
             var nextIndex = i + 1;
         }
 
-        var endx = coordinates[nextIndex][0] - arrowSpacingEnd;
-        var endy = coordinates[nextIndex][1] + nodeWidth / 2 - arrowOffset;
+        var endx = xof(nextIndex) - arrowSpacingEnd;
+        var endy = yof(nextIndex) + nodeWidth / 2 - arrowOffset;
 
         switch(i) {
             case 5:
@@ -128,7 +134,7 @@ function drawNodes(coordinates) {
         var curvex = middlex + arrowCurve * (Math.cos(angleStartToEnd));
         var curvey = middley + arrowCurve * (Math.sin(angleStartToEnd));
 
-        generatePath(startx, starty, curvex, curvey, endx, endy, arrowWidth);
+        generateQuadraticPath(startx, starty, curvex, curvey, endx, endy, arrowWidth);
 
         var deltax = endx - curvex;
         var deltay = endy - curvey;
@@ -137,9 +143,9 @@ function drawNodes(coordinates) {
 
         if (i < 7) {
             var pointaAngle = angleMiddleToEnd - arrowPointAngle * Math.PI / 180;
-            var pointbAngle = angleMiddleToEnd + arrowPointAngle * Math.PI / 180;
+            var pointbAngle = angleMiddleToEnd + arrowPointAngle * Math.PI / 185;
         } else {
-            var pointaAngle = angleMiddleToEnd - (arrowPointAngle - 180) * Math.PI / 180;
+            var pointaAngle = angleMiddleToEnd - (arrowPointAngle - 180) * Math.PI / 190;
             var pointbAngle = angleMiddleToEnd + (arrowPointAngle - 180) * Math.PI / 180;
         }
 
@@ -154,7 +160,58 @@ function drawNodes(coordinates) {
     }
 }
 
+function drawPinkStick() {
+    var endCoordinates = [];
+    for (var i=0; i<5; i+=4) {
+        var x = xof(i) + nodeWidth / 2 - stickEndWidth / 2;
+        var y = yof(i) - stickOffset;
+        generateRect(x, y, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
+        endCoordinates.push([x, y]);
+    }
+    generateLine(endCoordinates[0][0], endCoordinates[0][1] + stickEndWidth / 2, endCoordinates[1][0], endCoordinates[1][1] + stickEndWidth / 2, defaultDarkColor);
+}
+
+function drawPurpleStick() {
+    var endCoordinates = [];
+
+    var x = xof(3) + nodeWidth / 2 - stickEndWidth / 2;
+    var y = yof(3) - stickOffset;
+    generateRect(x, y, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
+    endCoordinates.push([x, y]);
+
+    var x = xof(7) + nodeWidth / 2 - stickEndWidth / 2 + stickOffset;
+    var y = yof(7) + nodeWidth / 2 - stickEndWidth / 2;
+    // generateRect(x, y, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
+    endCoordinates.push([x, y]);
+
+    var startx = endCoordinates[1][0] + stickEndWidth / 2;
+    var starty = endCoordinates[1][1] - 1 + stickEndWidth / 2;
+    var endx = endCoordinates[1][0] + stickEndWidth / 2;
+    var endy = endCoordinates[1][1] + 1 + stickEndWidth / 2;
+
+    var hypotenuseLength = Math.sqrt(2 * Math.pow(nodeSpacing, 2));
+    var radiusx = hypotenuseLength / 2 + stickEndWidth + nodeCircleOffset / 2; // + nodeWidth / 2;
+    var radiusy = hypotenuseLength / 2 + stickEndWidth;
+
+    generateRect(startx, starty, 3, 3, 0, 'red');
+    generateArc(startx, starty, radiusx, radiusy, 0, 1, 0, endx, endy);
+}
+
+function xof(index){
+    return coordinates[index][0];
+}
+
+function yof(index){
+    return coordinates[index][1];
+}
+
 generateNodeCoordinates();
+drawNodes();
+
+// drawPinkStick();
+// drawPurpleStick();
+
+
 
 /*
 
@@ -165,7 +222,8 @@ generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
 generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
 generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
 generatePolygon(points, [ fill, stroke, strokeWidth ])
-generatePath   (startx, starty, middlex, middley, endx, endy, [ strokeWidth, stroke, fill, isRelative ])
+generateQuadraticPath(startx, starty, middlex, middley, endx, endy, [ strokeWidth, stroke, fill, isRelative ])
+generateArc    (startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, [ closed, stroke, fill ])
 
 */
 
