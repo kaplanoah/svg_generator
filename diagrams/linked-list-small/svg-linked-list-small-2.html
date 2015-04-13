@@ -1,0 +1,151 @@
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+</head>
+
+<div class="diagram image">
+    <svg></svg>
+</div>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/generate_elements.js'></script>
+<script type='text/javascript' src='../../js/initialize_page.js'></script>
+<script type='text/javascript' src='../../js/static_variables.js'></script>
+
+<script>
+
+// Dynamic styles and attributes
+
+var svgWidth  = 365;
+var svgHeight = 150;
+
+var fontSize = '13px';
+var textOffset;
+
+var rectWidth  = 20;
+var rectHeight = 20;
+var rectRadius = 3;
+var rectXoffset;
+var rectYoffset;
+
+var circleRadius = 10;
+var circleXoffset;
+var circleYoffset;
+
+var mathFont = 'serif';
+// var icBlue   = 'rgba(91, 192, 222, 1)';
+// var icBlueLight   = 'rgba(91, 192, 222, 0.15)';
+var transparent = 'rgba(255, 255, 255, 0)';
+
+var topMargin = 40;
+var leftMargin = 20;
+
+var nodeDimention = 16;
+var nodeOffset = nodeDimention + 35;
+
+var arrowPadding = 6.5;
+var arrowHeadSize = 3.7;
+var arrowWidth = 1;
+var arrowDetail = 0.3;
+
+var stickOffset = 12;
+var stickEndRadius = 2;
+var stickColor = defaultDarkColor;
+var stickLabelOffset = 100;
+var stickLabelSize = '12px';
+
+var kLabelOffset = stickOffset + 2.5;
+
+var kthX = leftMargin + 4 * nodeOffset + nodeDimention / 2;
+var startX = leftMargin;
+var endX = leftMargin + nodeDimention + 6 * nodeOffset;
+
+var textSize = '15px';
+
+// Draw diagram here
+
+var drawK = true;
+var drawNK = true;
+
+
+// nodes
+for (var i=0; i < 7; i++) {
+	generateRect(leftMargin + i * nodeOffset, topMargin, nodeDimention, nodeDimention, 0.5, transparent, null, 1);
+}
+
+// arrow lines
+for (var i=0; i < 6; i++) {
+	var x1 = leftMargin + i * nodeOffset + nodeDimention + arrowPadding;
+	var y  = topMargin + nodeDimention / 2;
+	var x2 = (x1 + nodeOffset - nodeDimention - 2 * arrowPadding) - 1;
+	generateLine(x1, y, x2, y, defaultDarkColor, arrowWidth);
+	generateLine(x2 - arrowHeadSize - arrowDetail * arrowWidth, y - arrowHeadSize, x2, y + arrowDetail * arrowWidth, defaultDarkColor, arrowWidth);
+	generateLine(x2 - arrowHeadSize - arrowDetail * arrowWidth, y + arrowHeadSize, x2, y - arrowDetail * arrowWidth, defaultDarkColor, arrowWidth);
+}
+
+// n line
+var nY = topMargin - 15;
+generateLine(startX, nY, endX, nY, defaultDarkColor);
+
+// bottom lines
+
+var kY = topMargin + nodeDimention + 42;
+var bottomGap = 2.4;
+
+if (drawK) {
+	generateLine(kthX + bottomGap, kY, endX, kY, defaultDarkColor);
+}
+if (drawNK) {
+	generateLine(startX, kY, kthX - bottomGap, kY, defaultDarkColor);
+}
+
+// ends
+var endHeight = 4.8;
+
+generateLine(startX, nY - endHeight, startX, nY + endHeight, defaultDarkColor);
+generateLine(endX, nY - endHeight, endX, nY + endHeight, defaultDarkColor);
+
+if (drawK) {
+	generateLine(kthX + bottomGap, kY - endHeight, kthX + bottomGap, kY + endHeight, defaultDarkColor);
+	generateLine(endX, kY - endHeight, endX, kY + endHeight, defaultDarkColor);
+}
+if (drawNK) {
+	generateLine(startX, kY - endHeight, startX, kY + endHeight, defaultDarkColor);
+	generateLine(kthX - bottomGap, kY - endHeight, kthX - bottomGap, kY + endHeight, defaultDarkColor);	
+}
+
+// text
+var lineHeight = 11;
+
+if (drawK || drawNK) {
+	generateText('k', kthX - 5.3, topMargin + nodeDimention + kLabelOffset, null, null, null, mathFont, null, null, 'font-style:italic');
+	generateText('th', kthX + 4.1, topMargin + nodeDimention + kLabelOffset, null, '10.7px');
+	generateText('to last', kthX, topMargin + nodeDimention + kLabelOffset + lineHeight, null, '10.7px');	
+}
+
+// labels
+var labelOffset = 9;
+var bottomOffset = labelOffset + 10;
+
+generateText('n', endX - (endX - startX) / 2, nY - labelOffset, null, textSize, null, mathFont, null, null, 'font-style:italic');
+
+if (drawK) {
+	generateText('k', endX - (endX - kthX + bottomGap) / 2, kY + bottomOffset, null, textSize, null, mathFont, null, null, 'font-style:italic');
+}
+if (drawNK) {
+	generateText('n - k', kthX - bottomGap - (kthX - bottomGap - startX) / 2, kY + bottomOffset, null, textSize, null, mathFont, null, null, 'font-style:italic');
+}
+
+
+/*
+
+Cheatsheet:
+
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
+generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
+generatePolygon(points, [ fill, stroke, strokeWidth ])
+
+*/
+
+</script>

@@ -16,14 +16,15 @@
 // Dynamic styles and attributes
 
 var svgWidth  = 455;
-var svgHeight = 135;
+var svgHeight = 200;
 
 var fontSize = '9.5px';
 
 var icBlue = 'rgba(91, 192, 222, 0.8)';
+var icLightBlue = 'rgba(91, 192, 222, 0.6)';
 
 var leftMargin = 80;
-var topMargin = 10;
+var topMargin = 75;
 
 var nodeXgap = 45;
 var nodeWidth = 68;
@@ -47,17 +48,31 @@ var valueTextMargin = 13;
 var nextTextMargin = 3.3;
 var valueIntMargin = 39;
 
-var values = ['5', '1', '9'];
+var values = ['1', '4', '0'];
 var valueSize = '23px';
 
 defaultDarkColor = '#777';
+
+var deletedNodeOffset = 33;
 
 // Draw diagram here
 
 // grey boxes
 for (var i=0; i<3; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap);
-	generateRect(x, topMargin, nodeWidth, nodeHeight, nodeBorderRadius + 2, nodeColor, null, nodeStrokeWidth);
+	var color;
+	if (i === 1) {
+		color = icLightBlue;
+	} else {
+		color = nodeColor;
+	}
+	var y;
+	if (i === 1) {
+		y = topMargin - deletedNodeOffset;
+	} else {
+		y = topMargin;
+	}
+	generateRect(x, y, nodeWidth, nodeHeight, nodeBorderRadius + 2, color, null, nodeStrokeWidth);
 }
 
 // values
@@ -65,6 +80,9 @@ for (var i=0; i<3; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder;
 	var y = topMargin + nodeInternalBorder;
 	var width = nodeWidth - nodeInternalBorder * 2;
+	if (i === 1) {
+		y = y - deletedNodeOffset;
+	}
 	generateRect(x, y, width, valueHeight, nodeBorderRadius, internalBackground, null, internalStrokeWidth);
 }
 
@@ -73,6 +91,9 @@ for (var i=0; i<3; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder;
 	var y = topMargin + (nodeInternalBorder * 2) + valueHeight;
 	var width = nodeWidth - nodeInternalBorder * 2;
+	if (i === 1) {
+		y = y - deletedNodeOffset;
+	}
 	generateRect(x, y, width, pointerHeight, nodeBorderRadius, internalBackground, null, internalStrokeWidth);
 }
 
@@ -80,6 +101,12 @@ for (var i=0; i<3; i++) {
 for (var i=0; i<3; i++) {
 	var pointX  = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth + nodeXgap - nodeInternalBorder;
 	var pointY  = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2);
+	if (i === 1) {
+		pointY = pointY - deletedNodeOffset;
+	}
+	if (i === 0) {
+		pointX = pointX + nodeWidth + nodeXgap;
+	}
 	var backX   = pointX - arrowSize;
 	var topY    = pointY + arrowSize;
 	var bottomY = pointY - arrowSize;
@@ -91,6 +118,12 @@ for (var i=0; i<3; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth - nodeInternalBorder * 2 - 1;
 	var y = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2);
 	var width = nodeXgap + nodeInternalBorder - 6;
+	if (i === 1) {
+		y = y - deletedNodeOffset;
+	}
+	if (i === 0) {
+		width = width + nodeWidth + nodeXgap;
+	}
 	generateRect(x, y, width, arrowHeight, 0, internalBackground, internalBackground, internalStrokeWidth);
 }
 
@@ -102,6 +135,13 @@ for (var i=0; i<3; i++) {
 	var topY    = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2);
 	var bottomY = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2) + arrowHeight;
 
+	if (i === 1) {
+		topY = topY - deletedNodeOffset;
+		bottomY = bottomY - deletedNodeOffset;
+	}
+	if (i === 0) {
+		x2 = x2 + nodeWidth + nodeXgap;
+	}
 	generateLine(x1, topY, x2, topY, '#555');
 	generateLine(x1, bottomY, x2, bottomY, '#555');
 }
@@ -110,6 +150,9 @@ for (var i=0; i<3; i++) {
 for (var i=0; i<3; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
 	var y = topMargin + nodeInternalBorder + valueTextMargin;
+	if (i === 1) {
+		y = y - deletedNodeOffset;
+	}
 	generateText('VALUE', x, y);
 }
 
@@ -122,6 +165,9 @@ for (var i=0; i<4; i++) {
 		text = 'None';
 		x = x - 17;
 	}
+	if (i === 1) {
+		y = y - deletedNodeOffset;
+	}
 	generateText(text, x, y);
 }
 
@@ -129,10 +175,14 @@ for (var i=0; i<4; i++) {
 for (var i=0; i<3; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
 	var y = topMargin + nodeInternalBorder + valueIntMargin;
+	if (i === 1) {
+		y = y - deletedNodeOffset;
+	}
 	generateText(values[i], x, y, 'bold', valueSize, icBlue);
 }
 
-
+generateText('DELETED', leftMargin + 1.5 * nodeWidth + nodeXgap, topMargin - (35 - 12) - deletedNodeOffset, 'bold', null);
+generateText('NODE', leftMargin + 1.5 * nodeWidth + nodeXgap, topMargin - (35 - 25) - deletedNodeOffset, 'bold', null)
 
 
 

@@ -16,7 +16,7 @@
 // Dynamic styles and attributes
 
 var svgWidth  = 455;
-var svgHeight = 135;
+var svgHeight = 160;
 
 var fontSize = '9.5px';
 
@@ -27,7 +27,7 @@ var topMargin = 10;
 
 var nodeXgap = 45;
 var nodeWidth = 68;
-var nodeHeight = 95;
+var nodeHeight = 125;
 var nodeColor = '#E3E3E3'
 var nodeBorderRadius = 2;
 var nodeStrokeWidth = 0
@@ -37,10 +37,10 @@ var nodeInternalBorder = 6.5;
 var internalBackground = 'white';
 var internalStrokeWidth = 1;
 
-var pointerHeight = nodeHeight * 0.25;
-var valueHeight = nodeHeight - (nodeInternalBorder * 3) - pointerHeight;
+var pointerHeight = nodeHeight * 0.19;
+var valueHeight = nodeHeight - (nodeInternalBorder * 4) - (pointerHeight * 2);
 
-var arrowHeight = 8;
+var arrowHeight = 7;
 var arrowSize = 8.5;
 
 var valueTextMargin = 13;
@@ -49,6 +49,8 @@ var valueIntMargin = 39;
 
 var values = ['5', '1', '9'];
 var valueSize = '23px';
+
+var noneOffset = 17;
 
 defaultDarkColor = '#777';
 
@@ -75,12 +77,26 @@ for (var i=0; i<3; i++) {
 	var width = nodeWidth - nodeInternalBorder * 2;
 	generateRect(x, y, width, pointerHeight, nodeBorderRadius, internalBackground, null, internalStrokeWidth);
 }
+for (var i=0; i<3; i++) {
+	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder;
+	var y = topMargin + (nodeInternalBorder * 3) + valueHeight + pointerHeight;
+	var width = nodeWidth - nodeInternalBorder * 2;
+	generateRect(x, y, width, pointerHeight, nodeBorderRadius, internalBackground, null, internalStrokeWidth);
+}
 
 // arrow triangles
 for (var i=0; i<3; i++) {
 	var pointX  = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth + nodeXgap - nodeInternalBorder;
 	var pointY  = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2);
 	var backX   = pointX - arrowSize;
+	var topY    = pointY + arrowSize;
+	var bottomY = pointY - arrowSize;
+	generatePolygon(backX + ',' + topY + ' ' + pointX + ',' + pointY + ' ' + backX + ',' + bottomY);
+}
+for (var i=0; i<3; i++) {
+	var pointX  = leftMargin + i * (nodeWidth + nodeXgap) - nodeXgap;
+	var pointY  = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) + pointerHeight + nodeInternalBorder;
+	var backX   = pointX + arrowSize;
 	var topY    = pointY + arrowSize;
 	var bottomY = pointY - arrowSize;
 	generatePolygon(backX + ',' + topY + ' ' + pointX + ',' + pointY + ' ' + backX + ',' + bottomY);
@@ -93,18 +109,35 @@ for (var i=0; i<3; i++) {
 	var width = nodeXgap + nodeInternalBorder - 6;
 	generateRect(x, y, width, arrowHeight, 0, internalBackground, internalBackground, internalStrokeWidth);
 }
+for (var i=0; i<3; i++) {
+	var x = leftMargin + nodeInternalBorder + 1 - nodeXgap + nodeInternalBorder - 6 + i * (nodeWidth + nodeXgap);
+	var y = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2) + pointerHeight + nodeInternalBorder;
+	var width = nodeXgap + nodeInternalBorder - 6;
+	generateRect(x, y, width, arrowHeight, 0, internalBackground, internalBackground, internalStrokeWidth);
+}
 
 // dark arrow lines
 for (var i=0; i<3; i++) {
 	var x1 = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth - nodeInternalBorder * 2 - 0.5;
 	var x2 = x1 + nodeXgap + nodeInternalBorder - arrowSize + 1;
 
-	var topY    = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2);
-	var bottomY = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2) + arrowHeight;
+	var topY    = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2) - 0.5;
+	var bottomY = topY + arrowHeight + 1;
 
 	generateLine(x1, topY, x2, topY, '#555');
 	generateLine(x1, bottomY, x2, bottomY, '#555');
 }
+for (var i=0; i<3; i++) {
+	var x1 = leftMargin + nodeInternalBorder + 1 - nodeXgap + nodeInternalBorder - 6 + i * (nodeWidth + nodeXgap) + 0.5;
+	var x2 = x1 + nodeXgap + nodeInternalBorder - arrowSize + 0.5;
+
+	var topY    = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2) + pointerHeight + nodeInternalBorder - 0.5;
+	var bottomY = topY + arrowHeight + 1;
+
+	generateLine(x1, topY, x2, topY, '#555');
+	generateLine(x1, bottomY, x2, bottomY, '#555');
+}
+
 
 // value text
 for (var i=0; i<3; i++) {
@@ -120,7 +153,19 @@ for (var i=0; i<4; i++) {
 	var text = 'NEXT'
 	if (i === 3) {
 		text = 'None';
-		x = x - 17;
+		x = x - noneOffset;
+	}
+	generateText(text, x, y);
+}
+
+// previous text
+for (var i=0; i<4; i++) {
+	var x = leftMargin + i * (nodeWidth + nodeXgap) + (nodeWidth / 2) - nodeWidth - nodeXgap;
+	var y = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) + nextTextMargin + pointerHeight + nodeInternalBorder;
+	var text = 'PREVIOUS'
+	if (i === 0) {
+		text = 'None';
+		x = x + noneOffset;
 	}
 	generateText(text, x, y);
 }

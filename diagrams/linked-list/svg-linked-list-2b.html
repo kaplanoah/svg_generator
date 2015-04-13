@@ -16,7 +16,7 @@
 // Dynamic styles and attributes
 
 var svgWidth  = 455;
-var svgHeight = 135;
+var svgHeight = 160;
 
 var fontSize = '9.5px';
 
@@ -51,6 +51,11 @@ var values = ['5', '1', '9'];
 var valueSize = '23px';
 
 defaultDarkColor = '#777';
+
+var lableHeight = topMargin + nodeHeight + 23;
+var labelWeight = 'bold';
+var labelSize = '12px';
+
 
 // Draw diagram here
 
@@ -132,9 +137,10 @@ for (var i=0; i<3; i++) {
 	generateText(values[i], x, y, 'bold', valueSize, icBlue);
 }
 
+// head and tail
 
-
-
+generateText('HEAD', leftMargin + nodeWidth / 2, lableHeight, labelWeight, labelSize);
+generateText('TAIL', leftMargin + nodeWidth * 2.5 + nodeXgap * 2, lableHeight, labelWeight, labelSize);
 
 
 /*

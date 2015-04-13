@@ -1,0 +1,102 @@
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+</head>
+
+<div class="diagram image">
+    <svg></svg>
+</div>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/generate_elements.js'></script>
+<script type='text/javascript' src='../../js/initialize_page.js'></script>
+<script type='text/javascript' src='../../js/static_variables.js'></script>
+
+<script>
+
+// Dynamic styles and attributes
+
+var svgWidth  = 390;
+var svgHeight = 115;
+
+var fontSize = '13px';
+var textOffset;
+
+var rectWidth  = 20;
+var rectHeight = 20;
+var rectRadius = 3;
+var rectXoffset;
+var rectYoffset;
+
+var circleRadius = 10;
+var circleXoffset;
+var circleYoffset;
+
+var mathFont = 'serif';
+var icBlue   = 'rgba(91, 192, 222, 1)';
+var icBlueLight   = 'rgba(91, 192, 222, 0.15)';
+
+var topMargin = 40;
+var leftMargin = 20;
+
+var nodeDimention = 20;
+var nodeOffset = nodeDimention + 35;
+
+var arrowPadding = 6.5;
+var arrowHeadSize = 4.5;
+var arrowWidth = 2;
+var arrowDetail = 0.3;
+
+var stickOffset = 12;
+var stickEndRadius = 2;
+var stickColor = defaultDarkColor;
+var stickLabelOffset = 7;
+var stickLabelSize = '12px';
+
+var kLabelOffset = stickOffset + 7;
+
+// Draw diagram here
+
+
+// nodes
+for (var i=0; i < 7; i++) {
+	generateRect(leftMargin + i * nodeOffset, topMargin, nodeDimention, nodeDimention, 1, icBlueLight, icBlue, 1.5);
+}
+
+// arrow lines
+for (var i=0; i < 6; i++) {
+	var x1 = leftMargin + i * nodeOffset + nodeDimention + arrowPadding;
+	var y  = topMargin + nodeDimention / 2;
+	var x2 = (x1 + nodeOffset - nodeDimention - 2 * arrowPadding) - 1;
+	generateLine(x1, y, x2, y, null, arrowWidth);
+	generateLine(x2 - arrowHeadSize - arrowDetail * arrowWidth, y - arrowHeadSize, x2, y + arrowDetail * arrowWidth, null, arrowWidth);
+	generateLine(x2 - arrowHeadSize - arrowDetail * arrowWidth, y + arrowHeadSize, x2, y - arrowDetail * arrowWidth, null, arrowWidth);
+}
+
+// stick
+var stickStart = leftMargin + 4 * nodeOffset + nodeDimention / 2;
+var stickEnd = leftMargin + 6 * nodeOffset + nodeDimention / 2;
+var y = topMargin - stickOffset;
+generateLine(stickStart, y, stickEnd, y, defaultDarkColor, 2);
+generateCircle(stickStart, y, stickEndRadius, stickColor, null, 0);
+generateCircle(stickEnd, y, stickEndRadius, stickColor, null, 0);
+
+// text
+
+generateText('stick', stickEnd - (stickEnd - stickStart) / 2, topMargin - stickOffset - stickLabelOffset, null, stickLabelSize);
+generateText('kth', stickStart, topMargin + nodeDimention + kLabelOffset, null, null, null, mathFont, null, null, 'font-style:italic');
+var lineHeight = 14;
+generateText('to last', stickStart, topMargin + nodeDimention + kLabelOffset + lineHeight, null, '10.7px');
+
+/*
+
+Cheatsheet:
+
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
+generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
+generatePolygon(points, [ fill, stroke, strokeWidth ])
+
+*/
+
+</script>

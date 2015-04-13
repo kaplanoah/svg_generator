@@ -1,0 +1,133 @@
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+</head>
+
+<div class="diagram image">
+    <svg></svg>
+</div>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/generate_elements.js'></script>
+<script type='text/javascript' src='../../js/initialize_page.js'></script>
+<script type='text/javascript' src='../../js/static_variables.js'></script>
+
+<script>
+
+// Dynamic styles and attributes
+
+var svgWidth  = 500;
+var svgHeight = 400;
+
+var labelFontSize = '11px';
+var arrayNumberFontSize = '15px';
+var nodeNumberFontSize = '12px';
+var positionFontSize = '10px';
+var positionFontSizeSuper = '6px';
+
+var mathFont = 'Droid Serif';
+var icBlue   = 'rgba(91, 192, 222, 1)';
+var transparent = 'rgba(255, 255, 255, 0)';
+
+var topMargin = 35;
+var labelMargin = 20;
+var columnStart = labelMargin + 112;
+var columnSpacing = 48;
+var bracketOffset = 16;
+var commaOffset = columnSpacing / 2 * 0.9;
+var positionOffset = 2;
+var rowSpacing = 45;
+
+var nodeRadius = 3;
+var nodeWidth = 17;
+var nodeOffset = nodeWidth;
+
+var labels = ['ARRAY', 'POSITION', 'LINKED', 'LIST'];
+var positions = ['1', 'ST', '2', 'ND', '3', 'RD', '4', 'TH', '5', 'TH', '6', 'TH'];
+
+// Draw diagram here
+
+// LABELS
+for (var i=0; i<labels.length; i++) {
+    var doubleLineOffset = 7;
+    var y = topMargin + i * rowSpacing;
+    if (i === 2){
+        y = y - doubleLineOffset;
+    } else if (i === 3){
+        y = y - rowSpacing + doubleLineOffset;
+    }
+    generateText(labels[i], labelMargin, y, null, labelFontSize, null, null, 'left');
+}
+
+// ARRAY NUMBERS
+function drawArray(array){
+    for (var i=0; i<array.length; i++) {
+        var x = columnStart + i * columnSpacing;
+        generateText(array[i], x, topMargin, null, arrayNumberFontSize, null, mathFont);
+        
+        if (i < array.length - 1) {
+            generateText(',', x + commaOffset, topMargin, null, arrayNumberFontSize, null, mathFont);
+        }
+
+        var bracket;
+        var bracketX;
+        if (i === 0) {
+            bracket = '[';
+            bracketX = x - bracketOffset;
+        } else if (i === array.length - 1) {
+            bracket = ']';
+            bracketX = x + bracketOffset;
+        }
+        generateText(bracket, bracketX, topMargin - 1, '300', arrayNumberFontSize);
+    }
+}
+
+// POSITIONS
+function drawPositions(amount){
+    for (var i=0; i<amount * 2; i++) {
+        var x = columnStart + i / 2 * columnSpacing - positionOffset;
+        var y = topMargin + rowSpacing;
+        var fontSize = positionFontSize;
+        if (i % 2) {
+            fontSize = positionFontSizeSuper;
+            x = x - 0.31 * columnSpacing;
+            y = y - 3;
+        }
+        generateText(positions[i], x, y, null, fontSize);
+    }
+}
+
+// NODES
+function drawNodes(array){
+    for (var i=0; i<array.length; i++) {
+        var x = columnStart + i * columnSpacing;
+        var y = topMargin + 2 * rowSpacing;
+        generateText(array[i], x, y, null, nodeNumberFontSize);
+        x = x - nodeOffset / 2;
+        y = y - nodeOffset / 1.3;
+        generateRect(x, y, nodeWidth, nodeWidth, nodeRadius, transparent);
+    } 
+}
+
+var redArray = ['3', '4', '2', '3', '1', '5'];
+var orangeArray = ['3', '1', '2', '2'];
+
+var arrayToDraw = redArray;
+
+drawArray(arrayToDraw);
+drawPositions(arrayToDraw.length);
+drawNodes(arrayToDraw);
+
+/*
+
+Cheatsheet:
+
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
+generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
+generatePolygon(points, [ fill, stroke, strokeWidth ])
+
+*/
+
+</script>

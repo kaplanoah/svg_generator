@@ -1,5 +1,6 @@
 <head>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
 </head>
 
 <div class="diagram image">
@@ -15,42 +16,49 @@
 
 // Dynamic styles and attributes
 
-var svgWidth = 340;
-var svgHeight = 45;
+var svgWidth = 330;
+var svgHeight = 33;
 
 var fontSize = '14.5px'; // 14.6
 var textOffset = 20;
 
-var rectWidth = 27.3;
-var rectHeight = 18.1;
+var rectWidth = 25;
+var rectHeight = 18;
 var rectRadius = 5;
 var rectXoffset;
-var rectYoffset = textOffset - 13.8;
+var rectYoffset = textOffset - 14;
 
 var circleRadius = 10;
 var circleXoffset;
 var circleXoffset;
 
-var mathFont = 'serif';
+var mathFont = 'Droid Serif, serif';
+var mathSize = '13px';
+
 var icBlue = 'rgba(91, 192, 222, 0.2)';
 
 // Draw diagram here
 
+var chars = '[2*6*5*9, 1*6*5*9, 1*2*5*9, 1*2*6*9, 1*2*6*5]';
+var letterSpacing = 7.3;
+
 function drawArray(){
-	generateText('[2*6*5*9, 1*6*5*9, 1*2*5*9, 1*2*6*9, 1*2*6*5]', 2, textOffset, null, null, null, mathFont, 'left', null, 'letter-spacing:1;');
+	for (var i in chars) {
+		generateText(chars[i], 2 + letterSpacing * i, textOffset, null, mathSize, null, mathFont, 'left', null);
+	}
 }
 
 function highlightDuplicate(){
-	generateRect(39.4, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
-	generateRect(106.5, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
-	generateRect(173.5, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(37, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(103, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(168, rectYoffset, rectWidth, rectHeight, 0, icBlue, icBlue, 0)
 }
 
 function highlightAsending(){
-	generateRect(73, rectYoffset, 10.5, rectHeight, 0, icBlue, icBlue, 0)
-	generateRect(140, rectYoffset, 27, rectHeight, 0, icBlue, icBlue, 0)
-	generateRect(207, rectYoffset, 43.5, rectHeight, 0, icBlue, icBlue, 0)
-	generateRect(274, rectYoffset, 59.5, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(73, rectYoffset, 11, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(139, rectYoffset, 25, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(204, rectYoffset, 41, rectHeight, 0, icBlue, icBlue, 0)
+	generateRect(269, rectYoffset, 55, rectHeight, 0, icBlue, icBlue, 0)
 }
 
 function drawExtraStuff(){

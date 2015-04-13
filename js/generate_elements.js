@@ -67,6 +67,7 @@ function generateLine(x1, y1, x2, y2, stroke, strokeWidth){
     el.setAttribute('stroke-width', strokeWidth);
     svg.append(el);
 };
+
 function generatePolygon(points, fill, stroke, strokeWidth){
     fill   = fill   || defaultLightColor;
     stroke = stroke || defaultDarkColor;
@@ -76,5 +77,20 @@ function generatePolygon(points, fill, stroke, strokeWidth){
     el.setAttribute('fill', fill);
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', strokeWidth);
+    svg.append(el);
+};
+
+function generatePath(startx, starty, middlex, middley, endx, endy, strokeWidth, stroke, fill, isRelative){
+    stroke = stroke || defaultDarkColor;
+    strokeWidth = strokeWidth || 1;
+    fill   = fill || 'rgba(255, 255, 255, 0)';
+    var relative;
+    isRelative ? relative = 'q' : relative = 'Q';
+    var d = 'M' + startx + ',' + starty + ' ' + relative + middlex + ',' + middley + ' ' + endx + ',' + endy;
+    var el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    el.setAttribute('d', d);
+    el.setAttribute('stroke', stroke);
+    el.setAttribute('stroke-width', strokeWidth);
+    el.setAttribute('fill', fill);
     svg.append(el);
 };

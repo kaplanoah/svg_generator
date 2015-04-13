@@ -1,0 +1,172 @@
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+</head>
+
+<div class="diagram image">
+    <svg></svg>
+</div>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/generate_elements.js'></script>
+<script type='text/javascript' src='../../js/initialize_page.js'></script>
+<script type='text/javascript' src='../../js/static_variables.js'></script>
+
+<script>
+
+// Dynamic styles and attributes
+
+var svgWidth  = 500;
+var svgHeight = 200;
+
+var fontSize = '15px';
+
+var mathFont = 'Droid Serif';
+var icBlue   = 'rgba(91, 192, 222, 1)';
+
+var topMargin = 40;
+var leftMargin = 30;
+
+var nodeWidth = 13;
+var nodeSpacing = 37;
+var nodeRadius = 4;
+var nodeCircleOffset = 2;
+
+var arrowCurve = 4;
+var arrowSpacingStart = 1;
+var arrowSpacingEnd = 3;
+var arrowWidth = 1;
+var arrowOffset = 1;
+var arrowPointAngle = 150;
+var arrowPointLength = 5;
+
+// Draw diagram here
+
+function generateNodeCoordinates() {
+    var coordinates = [];
+    for (var i=0; i<9; i++) {
+        x = leftMargin + i * nodeSpacing;
+        y = topMargin;
+        var hypotenuseLength = Math.sqrt(2 * Math.pow(nodeSpacing, 2));
+        switch(i) {
+            case 6: // top
+                x = x - nodeSpacing + hypotenuseLength / 2 + nodeCircleOffset;
+                y = y - hypotenuseLength / 2;
+                break;
+            case 8: // bottom
+                x = x - 3 * nodeSpacing + hypotenuseLength / 2 + nodeCircleOffset;
+                y = y + hypotenuseLength / 2;
+                break;
+            case 7: // end
+                x = x - (2 * nodeSpacing) + hypotenuseLength + 2 * nodeCircleOffset;
+                break;
+        }
+        coordinates.push([x, y]);
+    }
+    drawNodes(coordinates);
+}
+
+function drawNodes(coordinates) {
+    for (var i=0; i<coordinates.length; i++){
+
+        generateRect(coordinates[i][0], coordinates[i][1], nodeWidth, nodeWidth, nodeRadius);
+
+        var startx = coordinates[i][0] + nodeWidth + arrowSpacingStart;
+        var starty = coordinates[i][1] + nodeWidth / 2 - arrowOffset;
+
+        if (i === coordinates.length -1) {
+            var nextIndex = 5;
+        } else {
+            var nextIndex = i + 1;
+        }
+
+        var endx = coordinates[nextIndex][0] - arrowSpacingEnd;
+        var endy = coordinates[nextIndex][1] + nodeWidth / 2 - arrowOffset;
+
+        switch(i) {
+            case 5:
+                startx = startx - arrowSpacingStart - nodeWidth / 2 - arrowOffset + arrowOffset; //
+                starty = starty + arrowOffset - nodeWidth / 2 - arrowSpacingStart;
+                endy = endy + arrowOffset; //
+                break;
+            case 6:
+                starty = starty + arrowOffset; //
+                endx = endx + arrowSpacingEnd + nodeWidth / 2 + arrowOffset - arrowOffset; //
+                endy = endy + arrowOffset - nodeWidth / 2 - arrowSpacingEnd;
+                break;
+            case 7:
+                startx = startx - arrowSpacingStart - nodeWidth / 2 + arrowOffset - arrowOffset; //
+                starty = starty + arrowOffset + nodeWidth / 2 + arrowSpacingStart;
+                endx = endx + 2 * arrowSpacingEnd + nodeWidth;
+                endy = endy + 2 * arrowOffset - arrowOffset; //
+                break;
+            case 8:
+                startx = startx - 2 * arrowSpacingStart - nodeWidth;
+                starty = starty + 2 * arrowOffset - arrowOffset; //
+                endx = endx + arrowSpacingEnd + nodeWidth / 2 - arrowOffset + arrowOffset; //
+                endy = endy + arrowOffset + nodeWidth / 2 + arrowSpacingEnd;
+                break;
+        }
+
+        var middlex = (startx + endx) / 2;
+        var middley = (starty + endy) / 2;
+
+        var deltax = endx - startx;
+        var deltay = endy - starty;
+
+        var angleStartToEnd = Math.atan(deltay / deltax);
+
+        var curvex = middlex + arrowCurve * (Math.cos(angleStartToEnd - 90));
+        var curvey = middley + arrowCurve * (Math.sin(angleStartToEnd - 90));
+
+        if (i < 7) {
+            angleStartToEnd = angleStartToEnd - 90;
+        } else {
+            angleStartToEnd = angleStartToEnd + 90;
+        }
+
+        var curvex = middlex + arrowCurve * (Math.cos(angleStartToEnd));
+        var curvey = middley + arrowCurve * (Math.sin(angleStartToEnd));
+
+        generatePath(startx, starty, curvex, curvey, endx, endy, arrowWidth);
+
+        var deltax = endx - curvex;
+        var deltay = endy - curvey;
+
+        var angleMiddleToEnd = Math.atan(deltay / deltax);
+
+        if (i < 7) {
+            var pointaAngle = angleMiddleToEnd - arrowPointAngle * Math.PI / 180;
+            var pointbAngle = angleMiddleToEnd + arrowPointAngle * Math.PI / 180;
+        } else {
+            var pointaAngle = angleMiddleToEnd - (arrowPointAngle - 180) * Math.PI / 180;
+            var pointbAngle = angleMiddleToEnd + (arrowPointAngle - 180) * Math.PI / 180;
+        }
+
+        var pointax = endx + arrowPointLength * Math.cos(pointaAngle);
+        var pointay = endy + arrowPointLength * Math.sin(pointaAngle);
+
+        var pointbx = endx + arrowPointLength * Math.cos(pointbAngle);
+        var pointby = endy + arrowPointLength * Math.sin(pointbAngle);
+
+        generateLine(endx, endy, pointax, pointay, defaultDarkColor, arrowWidth);
+        generateLine(endx, endy, pointbx, pointby, defaultDarkColor, arrowWidth);
+    }
+}
+
+generateNodeCoordinates();
+
+/*
+
+Cheatsheet:
+
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
+generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
+generatePolygon(points, [ fill, stroke, strokeWidth ])
+generatePath   (startx, starty, middlex, middley, endx, endy, [ strokeWidth, stroke, fill, isRelative ])
+
+*/
+
+</script>

@@ -1,5 +1,6 @@
 <head>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
 </head>
 
 <div class="diagram image">
@@ -15,12 +16,13 @@
 
 // Dynamic styles and attributes
 
-var svgWidth = 400;
-var svgHeight = 105;
+var svgWidth = 250;
+var svgHeight = 92;
 
 var fontSize = '17px';
 var textOffset = 20;
-var mathFont = 'serif';
+var mathFont = 'Droid Serif, serif';
+var mathSize = '15px';
 
 var rectWidth = 20;
 var rectHeight = 20;
@@ -51,10 +53,10 @@ var leftMargin = 107;
 // Draw diagram here
 
 for (var i=0; i < 3; i++) {
-	generateText(integers[i], leftMargin + spacingX * (i + 1), spacingY, null, null, null, mathFont);
+	generateText(integers[i], leftMargin + spacingX * (i + 1), spacingY, null, mathSize, null, mathFont);
 }
 for (var i=3; i < 6; i++) {
-	generateText(integers[i], leftMargin + spacingX * (i - 2), spacingY * 3, null, null, null, mathFont);
+	generateText(integers[i], leftMargin + spacingX * (i - 2), spacingY * 3, null, mathSize, null, mathFont);
 }
 
 for (var i=0; i < 2; i++) {
@@ -63,7 +65,7 @@ for (var i=0; i < 2; i++) {
 	} else {
 		commaSpacing = singleDigitComma;
 	}
-	generateText(',', leftMargin + spacingX * (i + 1) + commaSpacing, spacingY, null, null, null, mathFont);
+	generateText(',', leftMargin + spacingX * (i + 1) + commaSpacing, spacingY, null, mathSize, null, mathFont);
 }
 for (var i=3; i < 5; i++) {
 	if (i === 3) {
@@ -71,14 +73,14 @@ for (var i=3; i < 5; i++) {
 	} else {
 		commaSpacing = singleDigitComma;
 	}
-	generateText(',', leftMargin + spacingX * (i - 2) + commaSpacing, spacingY * 3, null, null, null, mathFont);
+	generateText(',', leftMargin + spacingX * (i - 2) + commaSpacing, spacingY * 3, null, mathSize, null, mathFont);
 }
 
 for (var i=0; i < 2; i++) {
-	generateText('[', leftMargin + spacingX - bracketOffset + 0.5, spacingY * (i + 1) * 2 - spacingY - 0.5, null, null, null, mathFont);
+	generateText('[', leftMargin + spacingX - bracketOffset + 0.5, spacingY * (i + 1) * 2 - spacingY - 0.5, null, mathSize, null, mathFont);
 }
 for (var i=0; i < 2; i++) {
-	generateText(']', leftMargin + spacingX * 3 + bracketOffset - 1, spacingY * (i + 1) * 2 - spacingY - 0.5, null, null, null, mathFont);
+	generateText(']', leftMargin + spacingX * 3 + bracketOffset - 1, spacingY * (i + 1) * 2 - spacingY - 0.5, null, mathSize, null, mathFont);
 }
 
 

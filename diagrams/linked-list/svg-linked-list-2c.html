@@ -15,17 +15,20 @@
 
 // Dynamic styles and attributes
 
-var svgWidth  = 455;
+var blueMiddle = true;
+
+var svgWidth  = 535;
 var svgHeight = 135;
 
 var fontSize = '9.5px';
 
 var icBlue = 'rgba(91, 192, 222, 0.8)';
+var lightBlue = 'rgba(91, 192, 222, 0.6)';
 
-var leftMargin = 80;
+var leftMargin = 10;
 var topMargin = 10;
 
-var nodeXgap = 45;
+var nodeXgap = 30;
 var nodeWidth = 68;
 var nodeHeight = 95;
 var nodeColor = '#E3E3E3'
@@ -47,7 +50,7 @@ var valueTextMargin = 13;
 var nextTextMargin = 3.3;
 var valueIntMargin = 39;
 
-var values = ['5', '1', '9'];
+var values = ['L', 'M', 'N', 'O', 'P'];
 var valueSize = '23px';
 
 defaultDarkColor = '#777';
@@ -55,13 +58,19 @@ defaultDarkColor = '#777';
 // Draw diagram here
 
 // grey boxes
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap);
-	generateRect(x, topMargin, nodeWidth, nodeHeight, nodeBorderRadius + 2, nodeColor, null, nodeStrokeWidth);
+	var color;
+	if (blueMiddle && i === 2) {
+		color = lightBlue;
+	} else {
+		color = nodeColor;
+	}
+	generateRect(x, topMargin, nodeWidth, nodeHeight, nodeBorderRadius + 2, color, null, nodeStrokeWidth);
 }
 
 // values
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder;
 	var y = topMargin + nodeInternalBorder;
 	var width = nodeWidth - nodeInternalBorder * 2;
@@ -69,7 +78,7 @@ for (var i=0; i<3; i++) {
 }
 
 // pointers
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder;
 	var y = topMargin + (nodeInternalBorder * 2) + valueHeight;
 	var width = nodeWidth - nodeInternalBorder * 2;
@@ -77,7 +86,7 @@ for (var i=0; i<3; i++) {
 }
 
 // arrow triangles
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var pointX  = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth + nodeXgap - nodeInternalBorder;
 	var pointY  = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2);
 	var backX   = pointX - arrowSize;
@@ -87,7 +96,7 @@ for (var i=0; i<3; i++) {
 }
 
 // white arrow lengths
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth - nodeInternalBorder * 2 - 1;
 	var y = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) - (arrowHeight / 2);
 	var width = nodeXgap + nodeInternalBorder - 6;
@@ -95,7 +104,7 @@ for (var i=0; i<3; i++) {
 }
 
 // dark arrow lines
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var x1 = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + nodeWidth - nodeInternalBorder * 2 - 0.5;
 	var x2 = x1 + nodeXgap + nodeInternalBorder - arrowSize + 1;
 
@@ -107,18 +116,18 @@ for (var i=0; i<3; i++) {
 }
 
 // value text
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
 	var y = topMargin + nodeInternalBorder + valueTextMargin;
 	generateText('VALUE', x, y);
 }
 
 // next text
-for (var i=0; i<4; i++) {
+for (var i=0; i<6; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
 	var y = topMargin + (nodeInternalBorder * 2) + valueHeight + (pointerHeight / 2) + nextTextMargin;
 	var text = 'NEXT'
-	if (i === 3) {
+	if (i === 5) {
 		text = 'None';
 		x = x - 17;
 	}
@@ -126,7 +135,7 @@ for (var i=0; i<4; i++) {
 }
 
 // value integer
-for (var i=0; i<3; i++) {
+for (var i=0; i<5; i++) {
 	var x = leftMargin + i * (nodeWidth + nodeXgap) + nodeInternalBorder + (nodeWidth - nodeInternalBorder * 2) / 2;
 	var y = topMargin + nodeInternalBorder + valueIntMargin;
 	generateText(values[i], x, y, 'bold', valueSize, icBlue);
