@@ -148,11 +148,84 @@ function drawNodes() {
     }
 }
 
+function draw2NodeLoop() {
+
+    var circleWidth = nodeSpacing + 5;
+    var circleHeight = 7;
+
+    var simpleCoordinates = coordinates.slice(0, coordinates.length-2);
+    simpleCoordinates[simpleCoordinates.length-1][0] = simpleCoordinates[simpleCoordinates.length-2][0] + circleWidth;
+    simpleCoordinates[simpleCoordinates.length-1][1] = simpleCoordinates[simpleCoordinates.length-2][1];
+
+    for (var i=0; i<simpleCoordinates.length; i++){
+        var nodex = xof(i, simpleCoordinates);
+        var nodey = yof(i, simpleCoordinates);
+
+        generateRect(nodex, nodey, nodeWidth, nodeWidth, nodeRadius, transparent);
+
+        var fromx = nodex + nodeWidth + arrowSpacingStart;
+        var fromy = nodey + nodeWidth / 2 - arrowOffset;
+
+        if (i === simpleCoordinates.length - 1) {
+            var nextIndex = i - 1;
+        } else {
+            var nextIndex = i + 1;
+        }
+
+        var tox = xof(nextIndex, simpleCoordinates) - arrowSpacingEnd;
+        var toy = yof(nextIndex, simpleCoordinates) + nodeWidth / 2 - arrowOffset;
+
+        switch(i) {
+            case 5:
+                fromy = fromy - circleHeight + arrowOffset;
+                toy = toy - circleHeight + arrowOffset;
+                break;
+            case 6:
+                fromx = fromx - 2 * arrowSpacingStart - nodeWidth;
+                tox = tox + 2 * arrowSpacingEnd + nodeWidth;
+                fromy = fromy + circleHeight;
+                toy = toy + circleHeight;
+                break;
+        }
+
+        var deltax = tox - fromx;
+        var deltay = toy - fromy;
+
+        var angleStartToEnd = Math.atan(deltay / deltax);
+
+        if (i < 6) {
+            angleStartToEnd = angleStartToEnd - 90;
+        } else {
+            angleStartToEnd = angleStartToEnd + 90;
+        }
+
+        var curve;
+        if (i > 4) {
+            curve = arrowCurve * 1.3;
+        } else {
+            curve = arrowCurve;
+        }
+
+        var angleCurveToEnd = drawArrow(fromx, fromy, tox, toy, curve, angleStartToEnd, arrowWidth);
+
+        if (i < 6) {
+            var pointaAngle = angleCurveToEnd - arrowPointAngle * Math.PI / 180;
+            var pointbAngle = angleCurveToEnd + arrowPointAngle * Math.PI / 185;
+        } else {
+            var pointaAngle = angleCurveToEnd - (arrowPointAngle - 180) * Math.PI / 190;
+            var pointbAngle = angleCurveToEnd + (arrowPointAngle - 180) * Math.PI / 180;
+        }
+
+        drawArrowHead(tox, toy, pointaAngle, pointbAngle, arrowWidth);
+    }
+
+}
+
 function drawArrow(fromx, fromy, tox, toy, curve, angleEndToEnd, width) {
     var middlex = (fromx + tox) / 2;
     var middley = (fromy + toy) / 2;
 
-    var curvex = middlex + curve * (Math.cos(angleEndToEnd));
+    var curvex = middlex + curve * Math.round((Math.cos(angleEndToEnd)));
     var curvey = middley + curve * (Math.sin(angleEndToEnd));
 
     generateQuadraticPath(fromx, fromy, curvex, curvey, tox, toy, width);
@@ -282,8 +355,8 @@ function drawBrownStick() {
 }
 
 generateNodeCoordinates();
-drawNodes();
-
+// drawNodes();
+draw2NodeLoop();
 
 // labelLoopLength();
 
@@ -291,7 +364,6 @@ drawNodes();
 // drawPinkStick();
 // drawPurpleStick();
 // drawBrownStick();
-
 
 /*
 
