@@ -18,12 +18,13 @@
 // Dynamic styles and attributes
 
 var svgWidth  = 400;
-var svgHeight = 140;
+var svgHeight = 240;
 
 var labelFontSize = '10px';
 var arrayNumberFontSize = '15px';
 var nodeNumberFontSize = '12px';
 var positionFontSize = '10px';
+var indexFontSize = positionFontSize;
 var positionFontSizeSuper = '6px';
 
 var mathFont = 'Droid Serif';
@@ -33,13 +34,16 @@ var transparent = 'rgba(255, 255, 255, 0)';
 var topMargin = 35;
 var labelMargin = 20;
 var columnStart = labelMargin + 112;
-var columnSpacing = 42;
+var columnSpacing = 43;
 var bracketOffset = 16;
 var commaOffset = columnSpacing / 2 * 0.9;
 var positionOffset = 0;
-var rowSpacing = 31;
-var bottomRowSpacing = 43;
-var noPositionSpacing = 4;
+
+var spaceBetweenArrayAndIndex = 26;
+var spaceBetweenArrayAndPosition = 28;
+var spaceBetweenArrayAndList = 42;
+var spaceBetweenIndexAndPosition = spaceBetweenArrayAndIndex - 1;
+var spaceBetweenPositionAndList = 40;
 
 var nodeRadius = 3;
 var nodeWidth = 17;
@@ -51,7 +55,7 @@ var arrowPointAngle = 40;
 var arrowWidth = 1;
 var highlightedArrowWidth = arrowWidth + 1;
 
-var labels = ['ARRAY', 'POSITION', 'LINKED', 'LIST'];
+var labels = ['ARRAY', 'INDEX', 'POSITION', 'LINKED', 'LIST'];
 var positions = ['1', 'ST', '2', 'ND', '3', 'RD', '4', 'TH', '5', 'TH', '6', 'TH'];
 
 var positions = ['1', 'st', '2', 'nd', '3', 'rd', '4', 'th', '5', 'th', '6', 'th'];
@@ -63,24 +67,37 @@ var positionFontSizeSuper = '7px';
 function drawLabels() {
     for (var i=0; i<labels.length; i++) {
         var doubleLineOffset = 6;
-        var y = topMargin + i * rowSpacing;
-        if (i > 1) {
-            y = y - rowSpacing + bottomRowSpacing;
-            if (!includePosition) {
-                y = y + noPositionSpacing;
+
+        var labelIndex = i;
+        var y = topMargin;
+
+        if (i > 0) {
+            if (includeIndex && includePosition) {
+                y = y + spaceBetweenArrayAndIndex;
+                if (i > 2) {
+                    y = y + spaceBetweenIndexAndPosition + spaceBetweenPositionAndList + 5;
+                } else if (i > 1) {
+                    y = y + spaceBetweenIndexAndPosition;
+                }
+            } else if (includePosition) {
+                y = y + spaceBetweenArrayAndPosition;
+                labelIndex = i + 1;
+                if (i > 1) {
+                    y = y + spaceBetweenPositionAndList;
+                }
+            } else {
+                labelIndex = i + 2;
+                y = y + spaceBetweenArrayAndList;
             }
         }
-        if (i === 2){
+
+        if (labels[labelIndex] === 'LINKED'){
             y = y - doubleLineOffset;
-        } else if (i === 3){
-            y = y - rowSpacing + doubleLineOffset;
+        } else if (labels[labelIndex] === 'LIST'){
+            y = y + doubleLineOffset;
         }
-        if (!includePosition && i > 1) {
-            y = y - rowSpacing;
-        }
-        if (includePosition || (!includePosition && i !== 1)) {
-            generateText(labels[i], labelMargin, y, null, labelFontSize, null, null, 'left');
-        }
+
+        generateText(labels[labelIndex], labelMargin, y, null, labelFontSize, null, null, 'left');
     }
 }
 
@@ -88,67 +105,49 @@ function drawLabels() {
 function drawArray(array){
     for (var i=0; i<array.length; i++) {
         var x = columnStart + i * columnSpacing;
+
         generateText(array[i], x, topMargin, null, arrayNumberFontSize, null, mathFont);
-        
         if (i < array.length - 1) {
             generateText(',', x + commaOffset, topMargin, null, arrayNumberFontSize, null, mathFont);
         }
 
-        var bracket;
-        var bracketX;
+        var bracketChar;
+        var bracketx;
         if (i === 0) {
-            bracket = '[';
-            bracketX = x - bracketOffset;
+            bracketChar = '[';
+            bracketx = x - bracketOffset;
         } else if (i === array.length - 1) {
-            bracket = ']';
-            bracketX = x + bracketOffset;
+            bracketChar = ']';
+            bracketx = x + bracketOffset;
         }
-        generateText(bracket, bracketX, topMargin - 1, '300', arrayNumberFontSize);
+
+        generateText(bracketChar, bracketx, topMargin - 1, '300', arrayNumberFontSize);
     }
 }
 
 // POSITIONS
 function drawPositions(amount){
-    if (includePosition) {
-        for (var i=0; i<amount * 2; i++) {
-            var superOffset = 1;
-            var x = columnStart + i / 2 * columnSpacing - positionOffset;
-            var y = topMargin + rowSpacing;
-            var fontSize = positionFontSize;
-            if (i % 2) {
-                fontSize = positionFontSizeSuper;
-                x = x - 13;
-                y = y - 3;
-            }
-            if (i === 1) {
-                x = x - superOffset - 1;
-            } else if (i === 7) {
-                x = x - superOffset;
-            }
+    for (var i=0; i<amount * 2; i++) {
+        var superOffset = 1;
+        var x = columnStart + i / 2 * columnSpacing - positionOffset;
 
-            var color;
-            var weight;
-            if (highlightOrange2ndPosition && [2, 3].indexOf(i) >= 0) {
-                color = icBlue;
-                weight = 700;
-            } else {
-                color = defaultDarkColor;
-                weight = 1;
-            }
-            generateText(positions[i], x, y, weight, fontSize, color);
+        var y = topMargin + spaceBetweenArrayAndIndex;
+        if (includeIndex) {
+            y = y + spaceBetweenIndexAndPosition;
         }
-    }
-}
 
-// NODES
-var nodeCoordinates = [];
-function drawNodes(array){
-    for (var i=0; i<array.length; i++) {
-        var x = columnStart + i * columnSpacing;
-        var y = topMargin + rowSpacing + bottomRowSpacing;
-        if (!includePosition) {
-            y = y - rowSpacing + noPositionSpacing;
+        var fontSize = positionFontSize;
+        if (i % 2) {
+            fontSize = positionFontSizeSuper;
+            x = x - 13;
+            y = y - 3;
         }
+        if (i === 1) {
+            x = x - superOffset - 1;
+        } else if (i === 7) {
+            x = x - superOffset;
+        }
+
         var color;
         var weight;
         if (highlightOrange2ndPosition && [2, 3].indexOf(i) >= 0) {
@@ -158,10 +157,52 @@ function drawNodes(array){
             color = defaultDarkColor;
             weight = 1;
         }
+
+        generateText(positions[i], x, y, weight, fontSize, color);
+    }
+}
+
+function drawIndices(amount){
+    for (var i=0; i<amount; i++) {
+        var x = columnStart + i * columnSpacing;
+        var y = topMargin + spaceBetweenArrayAndIndex;
+
+        var fontSize = positionFontSize;
+
+        generateText(i, x, y, null, indexFontSize);
+    }
+}
+
+// NODES
+var nodeCoordinates = [];
+function drawNodes(array){
+    for (var i=0; i<array.length; i++) {
+        var x = columnStart + i * columnSpacing;
+        var y = topMargin;
+        if (includeIndex && includePosition) {
+            y = y + spaceBetweenArrayAndIndex + spaceBetweenIndexAndPosition + spaceBetweenPositionAndList;
+        } else if (includePosition) {
+            y = y + spaceBetweenArrayAndPosition + spaceBetweenPositionAndList;
+        } else {
+            y = y + spaceBetweenArrayAndList;
+        }
+
+        var color;
+        var weight;
+        if (highlightOrange2ndPosition && [2, 3].indexOf(i) >= 0) {
+            color = icBlue;
+            weight = 700;
+        } else {
+            color = defaultDarkColor;
+            weight = 1;
+        }
+
         generateText(array[i], x, y, weight, nodeNumberFontSize, color);
+
         x = x - nodeOffset / 2;
         y = y - nodeOffset / 1.3;
         nodeCoordinates.push([x, y]);
+
         generateRect(x, y, nodeWidth, nodeWidth, nodeRadius, transparent);
     } 
 }
@@ -184,7 +225,7 @@ function drawArrows(arrayColor){
         var startx = xof(i, nodeCoordinates) + nodeWidth / 2 + offsets[i][0];
         var endx = xof(numbers[i] - 1, nodeCoordinates) + nodeWidth / 2 + offsets[i][1];
         var middlex = (endx + startx) / 2 ;
-        
+
         if (ups[i]) {
             var endy = yof(numbers[i] - 1, nodeCoordinates) - arrowOffset;
             var starty = yof(i, nodeCoordinates) - arrowOffset;
@@ -304,17 +345,22 @@ var arrays = {
     },
 }
 
+var includeIndex = false;
 var includePosition = true;
+
 var highlightLoops = false;
 
-var highlightOrange2ndPosition = true;
+var highlightOrange2ndPosition = false;
 
-var arraysNames = ['red', 'orange', 'blue', 'green'];
-var arrayToDraw = arraysNames[1];
+var arrayNames = ['red', 'orange', 'blue', 'green'];
+var arrayToDraw = arrayNames[1];
 
 drawLabels();
 drawArray(arrays[arrayToDraw].numbers);
-drawPositions(arrays[arrayToDraw].numbers.length);
+
+if (includePosition) drawPositions(arrays[arrayToDraw].numbers.length);
+if (includeIndex) drawIndices(arrays[arrayToDraw].numbers.length);
+
 drawNodes(arrays[arrayToDraw].numbers);
 drawArrows(arrayToDraw);
 
