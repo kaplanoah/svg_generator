@@ -1,3 +1,15 @@
+var svg = $('svg');
+
+function setSVGDimensions(width, height) {
+	svg.attr({
+		'width' : width,
+		'height': height,
+	});
+	if ( width > 300 ) {
+		$('.diagram').addClass('diagram-large');
+	}
+}
+
 function roundDown(n) {
     return Math.round(n*10) / 10;
 }

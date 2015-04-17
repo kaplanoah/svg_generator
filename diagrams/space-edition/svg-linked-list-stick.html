@@ -1,13 +1,23 @@
 <head>
+    <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
 </head>
 
-<div class="diagram image">
-    <svg></svg>
+<div class="control-panel">
+    <p id="current-diagram"></p>
+    <button onclick="toggleBorder()">Toggle border</button>
+    <button onclick="drawNextDiagram()">Next diagram</button>
+</div>
+
+<div class="diagram-frame border">
+    <div class="diagram image">
+        <svg></svg>
+    </div>
 </div>
 
 <script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script type='text/javascript' src='../../js/index.js'></script>
 <script type='text/javascript' src='../../js/helper_functions.js'></script>
 <script type='text/javascript' src='../../js/generate_elements.js'></script>
 <script type='text/javascript' src='../../js/initialize_page.js'></script>
@@ -27,8 +37,8 @@ var mathFont = 'Droid Serif';
 var icBlue   = 'rgba(91, 192, 222, 1)';
 var transparent = 'rgba(255, 255, 255, 0)';
 
-var topMargin = 60;
-var leftMargin = 30;
+var topMargin = 35;
+var leftMargin = 7;
 
 var nodeWidth = 13;
 var nodeSpacing = 40;
@@ -53,10 +63,11 @@ var labelLineHeight = 12;
 
 // Draw diagram here
 
-var coordinates = [];
+var coordinates;
 
 function generateNodeCoordinates() {
     
+    coordinates = [];
     for (var i=0; i<9; i++) {
         x = leftMargin + i * nodeSpacing;
         y = topMargin;
@@ -354,16 +365,80 @@ function drawBrownStick() {
     generateRect(endx - stickEndWidth / 2, endy - stickEndWidth / 2 - endVerticalOffset, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
 }
 
-generateNodeCoordinates();
-// drawNodes();
-draw2NodeLoop();
+var nameSpace = 'space_edition__';
+var stickNameSpace = nameSpace + 'stick_method';
+var name;
 
-// labelLoopLength();
+var width = 305;
+var height = 83;
+var labelledHeight = 112;
 
-// drawFirstPointer();
-// drawPinkStick();
-// drawPurpleStick();
-// drawBrownStick();
+function clearSettings() {
+    // topMargin = 35;
+}
+
+var drawFunctions = [
+
+    function introExample() {
+        name = stickNameSpace + 'intro_example';
+        setSVGDimensions(width, height);
+        drawNodes();
+    },
+    function fourSteps() {
+        name = stickNameSpace + '4_example';
+        setSVGDimensions(width, labelledHeight);
+        drawNodes();
+        drawFirstPointer();
+        labelLoopLength();
+    },
+    function stickStart() {
+        name = stickNameSpace + 'stick_start';
+        setSVGDimensions(width, labelledHeight);
+        drawNodes();
+        drawPinkStick();
+        labelLoopLength();
+        topMargin = 49;
+    },
+    function stickMiddle() {
+        name = stickNameSpace + 'stick_middle';
+        setSVGDimensions(width, 97);
+        drawNodes();
+        drawPurpleStick();
+        topMargin = 44;
+    },
+    function stickEnd() {
+        name = stickNameSpace + 'stick_end';
+        setSVGDimensions(width, 100);
+        drawNodes();
+        drawBrownStick();
+        topMargin = 15;
+    },
+    function twoNodeLoop() {
+        name = nameSpace + 'last_2_nodes_loop';
+        topMargin = 
+        setSVGDimensions(274, 41);
+        draw2NodeLoop();
+        topMargin = 35;
+    }
+
+];
+
+var nextDiagramIndex = 0;
+function drawNextDiagram() {
+    replaceSVG();
+    clearSettings();
+    generateNodeCoordinates();
+    drawFunctions[nextDiagramIndex]();
+    displayName(name);
+    nextDiagramIndex += 1;
+
+    if (nextDiagramIndex === drawFunctions.length) {
+        nextDiagramIndex = 0;
+    }
+}
+
+drawNextDiagram();
+
 
 /*
 

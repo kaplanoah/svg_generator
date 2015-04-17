@@ -1,0 +1,26 @@
+body {
+	margin: 15px;
+}
+
+.control-panel {
+	margin-bottom: 15px;
+}
+
+#current-diagram {
+	font-family: serif;
+	font-size: 12px;
+}
+
+button {
+	margin-bottom: 5px;
+	display: block;
+}
+
+.diagram-frame {
+	display: inline-block;
+	border: 1px solid transparent;
+}
+
+.border {
+	border-color: lightgrey;
+}
