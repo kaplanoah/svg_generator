@@ -44,6 +44,8 @@ var leftMargin = 50;
 
 var containerWidth = 110;
 var containerHeight = 30;
+var containerColor = defaultDarkColor;
+var containerStrokeWidth = 1;
 
 var rowLabelMargin = 12;
 var rowLabelVerticalOffset = 5;
@@ -61,7 +63,21 @@ function drawRamContainers(numRows) {
     for (var i=0; i<numRows; i++) {
         var x = leftMargin;
         var y = topMargin + i * containerHeight;
-        generateRect(leftMargin, y, containerWidth, containerHeight, 0, transparent);
+
+        if (fadeBottomRows && i === numRows - fadeBottomRows) {
+            generateMask(y - 1, svgWidth, containerHeight * 2);
+        }
+
+        var mask;
+        if (i >= numRows - fadeBottomRows) {
+            mask = 'url(#bottom-transparent-fade)';
+        } else {
+            mask = null;
+        }
+
+        generateLine(leftMargin, y, leftMargin, y + containerHeight, containerColor, containerStrokeWidth, mask);
+        generateLine(leftMargin, y, leftMargin + containerWidth, y, containerColor, containerStrokeWidth, mask);
+        generateLine(leftMargin + containerWidth, y, leftMargin + containerWidth, y + containerHeight, containerColor, containerStrokeWidth, mask);
 
         x = x - rowLabelMargin;
         y = y + containerHeight / 2 + rowLabelVerticalOffset;
@@ -109,10 +125,13 @@ function drawBorder(color, start, end) {
 }
 
 
-
 var numRows;
 var isEmpty;
 var contents = {};
+
+var fadeTopRows;
+var fadeBottomRows;
+
 
 // all diagrams
 
@@ -125,16 +144,18 @@ var nameSpace = 'ram__';
 var name;
 
 function clearSettings() {
-    setSVGDimensions(svgWidth, svgHeight); 
-    numRows = 6;
+    setSVGDimensions(svgWidth, svgHeight);
+    numRows = 5;
     isEmpty = true;
+    fadeTopRows = 0;
+    fadeBottomRows = 2;
 }
 
 var drawFunctions = [
 
     function ramEmpty() {
         name = nameSpace + 'ram_empty';
-        numRows = 6;
+        numRows = 7;
     },
     function ramFull() {
         name = nameSpace + 'ram_full';
@@ -147,8 +168,7 @@ var drawFunctions = [
     }
 ];
 
-
-var nextDiagramIndex = 1;
+var nextDiagramIndex = 0;
 function drawNextDiagram() {
     replaceSVG();
     clearSettings();

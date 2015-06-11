@@ -1,12 +1,12 @@
 var svg = $('svg');
 
-function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth){
+function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth, mask){
     width = width   || rectWidth;
     height = height || rectHeight;
-    if ( borderRadius !== 0 && !borderRadius) { borderRadius = borderRadius || rectRadius };
+    if ( borderRadius !== 0 && !borderRadius) borderRadius = borderRadius || rectRadius;
     fill = fill     || defaultLightColor;
     stroke = stroke || defaultDarkColor;
-    if ( strokeWidth !== 0 && !strokeWidth ) { strokeWidth = 1 }
+    if ( strokeWidth !== 0 && !strokeWidth ) strokeWidth = 1;
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     el.setAttribute('x', roundDown(x));
     el.setAttribute('y', roundDown(y));
@@ -17,6 +17,7 @@ function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWid
     el.setAttribute('fill', fill);
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', strokeWidth);
+    if ( mask ) el.setAttribute('mask', mask);
     svg.append(el);
 
 };
@@ -47,15 +48,15 @@ function generateText(content, x, y, fontWeight, newFontSize, fill, fontFamily, 
     el.setAttribute('font-weight', fontWeight);
     el.setAttribute('font-size', newFontSize);
     el.setAttribute('fill', fill);
-    if (fontFamily) { el.setAttribute('font-family', fontFamily); }
+    if (fontFamily) el.setAttribute('font-family', fontFamily);
     el.setAttribute('text-anchor', textAnchor);
-    if (transform) { el.setAttribute('transform', transform); }
-    if (style) { el.setAttribute('style', style); }
+    if (transform) el.setAttribute('transform', transform);
+    if (style) el.setAttribute('style', style);
     el.textContent = content;
     svg.append(el);
 };
 
-function generateLine(x1, y1, x2, y2, stroke, strokeWidth){
+function generateLine(x1, y1, x2, y2, stroke, strokeWidth, mask){
     stroke = stroke || '#999';
     strokeWidth = strokeWidth || 1;
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -65,6 +66,7 @@ function generateLine(x1, y1, x2, y2, stroke, strokeWidth){
     el.setAttribute('y2', roundDown(y2));
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', strokeWidth);
+    if ( mask ) el.setAttribute('mask', mask);
     svg.append(el);
 };
 
@@ -104,3 +106,51 @@ function generateArc(startx, starty, radiix, radiiy, rotationx, largeArc, sweep,
     el.setAttribute('fill', 'rgba(255, 255, 255, 0)');
     svg.append(el);
 };
+
+function generateMask(topY, width, height, isTop) {
+
+    var maskEl = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+    maskEl.setAttribute('maskUnits', 'userSpaceOnUse');
+    maskEl.setAttribute('maskContentUnits', 'userSpaceOnUse');
+    var id = (isTop ? 'top-transparent-fade' : 'bottom-transparent-fade');
+    maskEl.setAttribute('id', id);
+
+    var lindearGradientEl = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+    lindearGradientEl.setAttribute('id', 'transparent-fade-fill');
+    lindearGradientEl.setAttribute('gradientUnits', 'objectBoundingBox');
+    lindearGradientEl.setAttribute('x1', 0);
+    lindearGradientEl.setAttribute('y1', 0);
+    lindearGradientEl.setAttribute('x2', 0);
+    lindearGradientEl.setAttribute('y2', 1);
+
+    var stopElOpaque = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stopElOpaque.setAttribute('stop-color', 'white');
+    stopElOpaque.setAttribute('offset', 0);
+
+    var stopElTransparent = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stopElTransparent.setAttribute('stop-color', 'white');
+    stopElTransparent.setAttribute('stop-opacity', 0);
+    stopElTransparent.setAttribute('offset', 1);
+
+    var rectEl = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rectEl.setAttribute('x', 0);
+    rectEl.setAttribute('y', topY);
+    rectEl.setAttribute('width', width);
+    rectEl.setAttribute('height', height);
+    rectEl.setAttribute('stroke-width', 0);
+    rectEl.setAttribute('fill', 'url(#transparent-fade-fill)');
+
+    $(lindearGradientEl).append(stopElOpaque).append(stopElTransparent);
+    $(maskEl).append(lindearGradientEl, rectEl);
+
+    svg.append(maskEl);
+
+    // <mask maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" id="bottom-transparent-fade">
+    //     <linearGradient id="transparent-fade-fill" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+    //         <stop stop-color="white" offset="0"></stop>
+    //         <stop stop-color="white" stop-opacity="0" offset="1"></stop>
+    //     </linearGradient>
+    //     <rect x="0" y="140" width="300" height="61" stroke-width="0" fill="url(#transparent-fade-fill)"></rect>
+    // </mask>
+
+}
