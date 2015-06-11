@@ -48,13 +48,14 @@ generateText('Hi', 10, 10, null, null, null, mathFont);
 
 Cheatsheet:
 
-generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth, mask ])
 generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
-generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
-generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
+generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style, mask ])
+generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth, mask ])
 generatePolygon(points, [ fill, stroke, strokeWidth ])
 generateQuadraticPath(startx, starty, middlex, middley, endx, endy, [ strokeWidth, stroke, fill, isRelative ])
 generateArc    (startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, [ closed, stroke, fill ])
+generateMask   (topY, width, height, [ isTop ])
 
 */
 
