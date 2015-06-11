@@ -21,3 +21,7 @@ function xof(i, coordinates) {
 function yof(i, coordinates) {
 	return coordinates[i][1];
 }
+
+function getMaskUrl(id) {
+    return 'url(#' + id + ')';
+}

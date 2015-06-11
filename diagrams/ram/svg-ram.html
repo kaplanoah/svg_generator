@@ -70,7 +70,7 @@ function drawRamContainers(numRows) {
                 generateMask(y - 1, svgWidth, containerHeight * 2);
             }
             if (i >= numRows - fadeBottomRows) {
-                mask = 'url(#bottom-transparent-fade)';
+                mask = 'bottom-transparent-fade';
             }
         } else {
             mask = null;
@@ -111,7 +111,7 @@ function drawContents(numRows) {
             var mask;
 
             if (row >= numRows - fadeBottomRows) {
-                mask = 'url(#bottom-transparent-fade)';
+                mask = 'bottom-transparent-fade';
             } else {
                 mask = null;
             }
@@ -155,7 +155,7 @@ var name;
 function clearSettings() {
     setSVGDimensions(svgWidth, svgHeight);
     numRows = 7;
-    isEmpty = true;
+    isEmpty = false;
     fadeTopRows = 0;
     fadeBottomRows = 2;
 }
@@ -165,14 +165,16 @@ var drawFunctions = [
     function ramEmpty() {
         name = nameSpace + 'ram_empty';
         numRows = 7;
+        isEmpty = true;
+        everyTime();
     },
     function ramFull() {
         name = nameSpace + 'ram_full';
-        isEmpty = false;
+        everyTime();
     },
     function border() {
         name = nameSpace + 'ram_border';
-        isEmpty = false;
+        everyTime();
         drawBorder('black', 2, 4);
     }
 ];
@@ -183,7 +185,6 @@ function drawNextDiagram() {
     clearSettings();
     drawFunctions[nextDiagramIndex]();
     displayName(name);
-    everyTime();
     nextDiagramIndex += 1;
 
     if (nextDiagramIndex === drawFunctions.length) {

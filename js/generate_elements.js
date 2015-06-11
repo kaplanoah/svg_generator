@@ -17,7 +17,7 @@ function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWid
     el.setAttribute('fill', fill);
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', strokeWidth);
-    if ( mask ) el.setAttribute('mask', mask);
+    if ( mask ) el.setAttribute('mask', getMaskUrl(mask));
     svg.append(el);
 
 };
@@ -52,7 +52,7 @@ function generateText(content, x, y, fontWeight, newFontSize, fill, fontFamily, 
     el.setAttribute('text-anchor', textAnchor);
     if (transform) el.setAttribute('transform', transform);
     if (style) el.setAttribute('style', style);
-    if ( mask ) el.setAttribute('mask', mask);
+    if ( mask ) el.setAttribute('mask', getMaskUrl(mask));
     el.textContent = content;
     svg.append(el);
 };
@@ -67,7 +67,7 @@ function generateLine(x1, y1, x2, y2, stroke, strokeWidth, mask){
     el.setAttribute('y2', roundDown(y2));
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', strokeWidth);
-    if ( mask ) el.setAttribute('mask', mask);
+    if ( mask ) el.setAttribute('mask', getMaskUrl(mask));
     svg.append(el);
 };
 
