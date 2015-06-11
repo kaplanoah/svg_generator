@@ -43,14 +43,14 @@ var topMargin = 20;
 var leftMargin = 50;
 
 var containerWidth = 110;
-var containerHeight = 30;
+var containerHeight = 28;
 var containerColor = defaultDarkColor;
 var containerStrokeWidth = 1;
 
 var rowLabelMargin = 12;
 var rowLabelVerticalOffset = 5;
 
-var contentVerticalOffset = 20;
+var contentVerticalOffset = 2/3 * containerHeight;
 var contentCharSpacing = 10;
 var contentColumnOffset = 0;
 
@@ -64,13 +64,14 @@ function drawRamContainers(numRows) {
         var x = leftMargin;
         var y = topMargin + i * containerHeight;
 
-        if (fadeBottomRows && i === numRows - fadeBottomRows) {
-            generateMask(y - 1, svgWidth, containerHeight * 2);
-        }
-
         var mask;
-        if (i >= numRows - fadeBottomRows) {
-            mask = 'url(#bottom-transparent-fade)';
+        if (fadeBottomRows) {
+            if (i === numRows - fadeBottomRows) {
+                generateMask(y - 1, svgWidth, containerHeight * 2);
+            }
+            if (i >= numRows - fadeBottomRows) {
+                mask = 'url(#bottom-transparent-fade)';
+            }
         } else {
             mask = null;
         }
@@ -81,7 +82,7 @@ function drawRamContainers(numRows) {
 
         x = x - rowLabelMargin;
         y = y + containerHeight / 2 + rowLabelVerticalOffset;
-        generateText(i, x, y, null, rowLableFontSize);
+        generateText(i, x, y, null, rowLableFontSize, null, null, null, null, null, mask);
     }
 
 }
@@ -107,8 +108,16 @@ function drawContents(numRows) {
             var x = columnStarts[column] + leftMargin; //  - (contentCharSpacing * 3 / 2);
             var y = topMargin + row * containerHeight + contentVerticalOffset;
 
+            var mask;
+
+            if (row >= numRows - fadeBottomRows) {
+                mask = 'url(#bottom-transparent-fade)';
+            } else {
+                mask = null;
+            }
+
             for (var i=0; i<4; i++) {
-                generateText(content[i], x, y, null, contentFontSize, null, mathFont, 'middle');
+                generateText(content[i], x, y, null, contentFontSize, null, mathFont, 'middle', null, null, mask);
                 x += contentCharSpacing;
             }
         }
@@ -145,7 +154,7 @@ var name;
 
 function clearSettings() {
     setSVGDimensions(svgWidth, svgHeight);
-    numRows = 5;
+    numRows = 7;
     isEmpty = true;
     fadeTopRows = 0;
     fadeBottomRows = 2;

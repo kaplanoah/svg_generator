@@ -37,7 +37,7 @@ function generateCircle(cx, cy, r, fill, stroke, strokeWidth){
     svg.append(el);
 };
 
-function generateText(content, x, y, fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style){
+function generateText(content, x, y, fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style, mask){
     fontWeight  = fontWeight  || 'normal'
     newFontSize = newFontSize || fontSize;
     fill = fill || defaultDarkColor;
@@ -52,6 +52,7 @@ function generateText(content, x, y, fontWeight, newFontSize, fill, fontFamily, 
     el.setAttribute('text-anchor', textAnchor);
     if (transform) el.setAttribute('transform', transform);
     if (style) el.setAttribute('style', style);
+    if ( mask ) el.setAttribute('mask', mask);
     el.textContent = content;
     svg.append(el);
 };
