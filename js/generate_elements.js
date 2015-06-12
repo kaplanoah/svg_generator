@@ -113,11 +113,12 @@ function generateMask(topY, width, height, isTop) {
     var maskEl = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
     maskEl.setAttribute('maskUnits', 'userSpaceOnUse');
     maskEl.setAttribute('maskContentUnits', 'userSpaceOnUse');
-    var id = (isTop ? 'top-transparent-fade' : 'bottom-transparent-fade');
-    maskEl.setAttribute('id', id);
+    var maskID = (isTop ? 'top-transparent-fade' : 'bottom-transparent-fade');
+    maskEl.setAttribute('id', maskID);
 
     var lindearGradientEl = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-    lindearGradientEl.setAttribute('id', 'transparent-fade-fill');
+    var linearGradientID = (isTop ? 'transparent-fade-fill-top' : 'transparent-fade-fill-bottom');
+    lindearGradientEl.setAttribute('id', linearGradientID);
     lindearGradientEl.setAttribute('gradientUnits', 'objectBoundingBox');
     lindearGradientEl.setAttribute('x1', 0);
     lindearGradientEl.setAttribute('y1', 0);
@@ -126,12 +127,14 @@ function generateMask(topY, width, height, isTop) {
 
     var stopElOpaque = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
     stopElOpaque.setAttribute('stop-color', 'white');
-    stopElOpaque.setAttribute('offset', 0);
+    var opaqueOffset = (isTop ? 1 : 0);
+    stopElOpaque.setAttribute('offset', opaqueOffset);
 
     var stopElTransparent = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
     stopElTransparent.setAttribute('stop-color', 'white');
     stopElTransparent.setAttribute('stop-opacity', 0);
-    stopElTransparent.setAttribute('offset', 1);
+    var transparentOffset = (isTop ? 0 : 1);
+    stopElTransparent.setAttribute('offset', transparentOffset);
 
     var rectEl = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     rectEl.setAttribute('x', 0);
@@ -139,19 +142,32 @@ function generateMask(topY, width, height, isTop) {
     rectEl.setAttribute('width', width);
     rectEl.setAttribute('height', height);
     rectEl.setAttribute('stroke-width', 0);
-    rectEl.setAttribute('fill', 'url(#transparent-fade-fill)');
+    rectEl.setAttribute('fill', 'url(#' + linearGradientID + ')');
 
-    $(lindearGradientEl).append(stopElOpaque).append(stopElTransparent);
+    if (isTop) {
+        $(lindearGradientEl).append(stopElTransparent).append(stopElOpaque);
+    } else {
+        $(lindearGradientEl).append(stopElOpaque).append(stopElTransparent);
+    }
+
     $(maskEl).append(lindearGradientEl, rectEl);
 
     svg.append(maskEl);
 
+    // <mask maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" id="top-transparent-fade">
+    //     <linearGradient id="transparent-fade-fill-top" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+    //         <stop stop-color="white" stop-opacity="0" offset="0"></stop>
+    //         <stop stop-color="white" offset="1"></stop>
+    //     </linearGradient>
+    //     <rect x="0" y="20" width="300" height="56" stroke-width="0" fill="url(#transparent-fade-fill-top)"></rect>
+    // </mask>
+
     // <mask maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" id="bottom-transparent-fade">
-    //     <linearGradient id="transparent-fade-fill" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+    //     <linearGradient id="transparent-fade-fill-bottom" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
     //         <stop stop-color="white" offset="0"></stop>
     //         <stop stop-color="white" stop-opacity="0" offset="1"></stop>
     //     </linearGradient>
-    //     <rect x="0" y="140" width="300" height="61" stroke-width="0" fill="url(#transparent-fade-fill)"></rect>
+    //     <rect x="0" y="215" width="300" height="56" stroke-width="0" fill="url(#transparent-fade-fill-bottom)"></rect>
     // </mask>
 
 }

@@ -33,7 +33,7 @@ setSVGDimensions(svgWidth, svgHeight);
 
 var fontSize = '10px';
 var contentFontSize = '12px';
-var rowLableFontSize = '13px';
+var rowLableFontSize = '12px';
 
 var mathFont = 'Droid Serif';
 var icBlue   = 'rgba(91, 192, 222, 1)';
@@ -47,7 +47,7 @@ var containerHeight = 28;
 var containerColor = defaultDarkColor;
 var containerStrokeWidth = 1;
 
-var rowLabelMargin = 13;
+var rowLabelMargin = 7;
 var rowLabelVerticalOffset = 5;
 
 var contentVerticalOffset = 2/3 * containerHeight;
@@ -59,35 +59,48 @@ var rowBorderThickness = 3;
 // Draw diagram here
 
 function drawRamContainers(numRows) {
+    numRows = numRows + fadeTopRows + fadeBottomRows;
 
     for (var i=0; i<numRows; i++) {
         var x = leftMargin;
         var y = topMargin + i * containerHeight;
 
         var mask;
+        if (fadeTopRows) {
+            if (i === 0) {
+                generateMask(y, svgWidth, containerHeight * fadeTopRows, true);
+            }
+            if (i < fadeTopRows) {
+                mask = 'top-transparent-fade';
+            } else {
+                mask = null;
+            }
+        }
         if (fadeBottomRows) {
             if (i === numRows - fadeBottomRows) {
-                generateMask(y - 1, svgWidth, containerHeight * 2);
+                generateMask(y - 1, svgWidth, containerHeight * fadeBottomRows);
             }
             if (i >= numRows - fadeBottomRows) {
                 mask = 'bottom-transparent-fade';
+            } else {
+                mask == null;
             }
-        } else {
-            mask = null;
         }
 
         generateLine(leftMargin, y, leftMargin, y + containerHeight, containerColor, containerStrokeWidth, mask);
         generateLine(leftMargin, y, leftMargin + containerWidth, y, containerColor, containerStrokeWidth, mask);
         generateLine(leftMargin + containerWidth, y, leftMargin + containerWidth, y + containerHeight, containerColor, containerStrokeWidth, mask);
 
+        var number = i + firstRowNumber - fadeTopRows;
         x = x - rowLabelMargin;
         y = y + containerHeight / 2 + rowLabelVerticalOffset;
-        generateText(i, x, y, null, rowLableFontSize, null, null, null, null, null, mask);
+        generateText(number, x, y, null, rowLableFontSize, null, null, 'end', null, null, mask);
     }
 
 }
 
 function drawContents(numRows) {
+    numRows = numRows + fadeTopRows + fadeBottomRows;
 
     var columnStarts = [
         (containerWidth - 2 * contentCharSpacing * 3) / 3 - contentColumnOffset,
@@ -109,11 +122,13 @@ function drawContents(numRows) {
             var y = topMargin + row * containerHeight + contentVerticalOffset;
 
             var mask;
-
-            if (row >= numRows - fadeBottomRows) {
-                mask = 'bottom-transparent-fade';
-            } else {
+            if (row > fadeTopRows - 1 && row < numRows - fadeBottomRows) {
                 mask = null;
+            }
+            else if (row >= numRows - fadeBottomRows) {
+                mask = 'bottom-transparent-fade';
+            } else if (row <= numRows - fadeTopRows) {
+                mask = 'top-transparent-fade';
             }
 
             for (var i=0; i<4; i++) {
@@ -135,6 +150,7 @@ function drawBorder(color, start, end) {
 
 
 var numRows;
+var firstRowNumber;
 var isEmpty;
 var contents = {};
 
@@ -154,9 +170,10 @@ var name;
 
 function clearSettings() {
     setSVGDimensions(svgWidth, svgHeight);
-    numRows = 7;
+    numRows = 5;
+    firstRowNumber = 2;
     isEmpty = false;
-    fadeTopRows = 0;
+    fadeTopRows = 2;
     fadeBottomRows = 2;
 }
 
@@ -164,7 +181,6 @@ var drawFunctions = [
 
     function ramEmpty() {
         name = nameSpace + 'ram_empty';
-        numRows = 7;
         isEmpty = true;
         everyTime();
     },
