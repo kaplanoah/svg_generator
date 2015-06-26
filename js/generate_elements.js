@@ -1,6 +1,6 @@
 var svg = $('svg');
 
-function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth, mask){
+function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth, transform, mask){
     width = width   || rectWidth;
     height = height || rectHeight;
     if ( borderRadius !== 0 && !borderRadius) borderRadius = borderRadius || rectRadius;
@@ -17,6 +17,7 @@ function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWid
     el.setAttribute('fill', fill);
     el.setAttribute('stroke', stroke);
     el.setAttribute('stroke-width', strokeWidth);
+    if ( transform ) el.setAttribute('transform', transform);
     if ( mask ) el.setAttribute('mask', getMaskUrl(mask));
     svg.append(el);
 

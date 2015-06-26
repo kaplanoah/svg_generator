@@ -46,6 +46,7 @@ var circleYoffset;
 var mathFont = 'Droid Serif';
 var icBlue   = 'rgba(91, 192, 222, 1)';
 var icBlueLight = 'rgba(91, 192, 222, 0.15)';
+var transparent = 'rgba(255, 255, 255, 0)';
 
 var topMargin = 10;
 var leftMargin = 10;
@@ -93,7 +94,7 @@ drawNextDiagram();
 
 Cheatsheet:
 
-generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth, mask ])
+generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth, transform, mask ])
 generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
 generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style, mask ])
 generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth, mask ])

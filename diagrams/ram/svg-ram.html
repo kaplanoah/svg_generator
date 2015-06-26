@@ -87,14 +87,14 @@ function drawRamContainers(numRows) {
             }
         }
 
-        generateLine(leftMargin, y, leftMargin, y + containerHeight, containerColor, containerStrokeWidth, mask);
-        generateLine(leftMargin, y, leftMargin + containerWidth, y, containerColor, containerStrokeWidth, mask);
-        generateLine(leftMargin + containerWidth, y, leftMargin + containerWidth, y + containerHeight, containerColor, containerStrokeWidth, mask);
+        generateLine(leftMargin, y, leftMargin, y + containerHeight, containerColor, containerStrokeWidth, null, mask);
+        generateLine(leftMargin, y, leftMargin + containerWidth, y, containerColor, containerStrokeWidth, null, mask);
+        generateLine(leftMargin + containerWidth, y, leftMargin + containerWidth, y + containerHeight, containerColor, containerStrokeWidth, null, mask);
 
         var number = i + firstRowNumber - fadeTopRows;
         x = x - rowLabelMargin;
         y = y + containerHeight / 2 + rowLabelVerticalOffset;
-        generateText(number, x, y, null, rowLableFontSize, null, null, 'end', null, null, mask);
+        generateText(number, x, y, null, rowLableFontSize, null, null, 'end', null, null, null, mask);
     }
 
 }
@@ -132,7 +132,7 @@ function drawContents(numRows) {
             }
 
             for (var i=0; i<4; i++) {
-                generateText(content[i], x, y, null, contentFontSize, null, mathFont, 'middle', null, null, mask);
+                generateText(content[i], x, y, null, contentFontSize, null, mathFont, 'middle', null, null, null, mask);
                 x += contentCharSpacing;
             }
         }

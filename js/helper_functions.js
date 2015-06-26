@@ -25,3 +25,11 @@ function yof(i, coordinates) {
 function getMaskUrl(id) {
     return 'url(#' + id + ')';
 }
+
+function randRange(lower, upper) {
+	return Math.floor(Math.random()*(upper - lower + 1) + lower);
+}
+
+function randSign() {
+	return Math.random() < 0.5 ? -1 : 1;
+}

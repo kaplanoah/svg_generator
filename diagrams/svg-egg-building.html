@@ -27,8 +27,8 @@
 
 // Dynamic styles and attributes
 
-var svgWidth  = 160;
-var svgHeight = 210;
+var svgWidth  = 300;
+var svgHeight = 100;
 
 var fontSize = '15px';
 var textOffset;
@@ -43,91 +43,19 @@ var circleRadius = 10;
 var circleXoffset;
 var circleYoffset;
 
-var mathFont = "Consolas, Monaco, 'Andale Mono', 'Droid Serif', monospace";
+var mathFont = 'Droid Serif';
 var icBlue   = 'rgba(91, 192, 222, 1)';
 var icBlueLight = 'rgba(91, 192, 222, 0.15)';
 
 var topMargin = 10;
 var leftMargin = 10;
 
-var cardHeight = 67;
-var cardWidth = 45;
-var cardRadius = 4;
-var cardFill = 'rbg(253, 253, 253)';
-
-var cardSpacingVertical = 41;
-var cardSpacingHorizontal = 48;
-
-var suitFontSize = '13px';
-var suitFontWeight = 700;
-
-var suitOffsetHorizontal = 10;
-var singleDigitOffset = 2;
-var suitOffsetTop = 14;
-var suitOffsetBottom = suitOffsetTop * 2;
-
-var labels = ['shuffled_deck', 'half1', 'half2'];
-
-var labelFontSize = '11px';
-var lableOffset = 17;
-
 // Draw diagram here
 
-function drawCards(numbers) {
 
-    // top card
-    var x = svgWidth / 2 - cardWidth / 2;
-    var y = topMargin;
-    drawCard(x, y, numbers[0], labels[0]);
-
-    // left card
-    x = svgWidth / 2 - cardSpacingHorizontal / 2 - cardWidth;
-    y = topMargin + cardHeight + cardSpacingVertical;
-    drawCard(x, y, numbers[1], labels[1]);
-
-    // right card
-    x = svgWidth / 2 + cardSpacingHorizontal / 2;
-    drawCard(x, y, numbers[2], labels[2]);
-}
-
-function drawCard(x, y, number, label) {
-
-    for (var i=0; i<2; i++) {
-        drawRandomCard(x, y);
-    }
-
-    var xOffset = suitOffsetHorizontal;
-    var numDigits = number.toString().length;
-    if (numDigits === 1) {
-        xOffset = xOffset - singleDigitOffset;
-    }
-
-    generateRect(x, y, cardWidth, cardHeight, cardRadius, cardFill);
-    generateText(label, x + cardWidth / 2, y + cardHeight + lableOffset, null, labelFontSize, null, mathFont, 'middle');
-
-    x = x + xOffset;
-    y = y + suitOffsetTop;
-    generateText(number, x, y, suitFontWeight, suitFontSize, null, null, null, null);
-    x = x - xOffset * 2 + cardWidth;
-    y = y + cardHeight - suitOffsetBottom;
-    generateText(number, x, y, suitFontWeight, suitFontSize, null, null, null, 'rotate(180 ' + x + ' ' + y + ')');
-}
-
-function drawRandomCard(x, y) {
-
-    var randomXshift = randRange(1, 3) * randSign();
-    var randomYshift = randRange(1, 3) * randSign();
-    var randomRotation = randRange(4, 8) * randSign();
-
-    var rotation = 'rotate(' + randomRotation + ' ' + (x + cardWidth / 2) + ' ' + (y + cardHeight / 2) + ')';
-    generateRect(x + randomXshift, y + randomYshift, cardWidth, cardHeight, cardRadius, cardFill, null, '0.75px', rotation);
-}
-
-
-var numbers;
 
 function everyTime() {
-    drawCards(numbers);
+    // every time
 }
 
 var nameSpace = 'playing_cards__';
@@ -135,17 +63,15 @@ var name;
 
 function clearSettings() {
     setSVGDimensions(svgWidth, svgHeight);
+    // clear settings
 }
 
 var drawFunctions = [
 
-    function canBeRiffle() {
-        name = nameSpace + 'can_be_single_riffle';
-        numbers = [10, 7, 10];
-    },
-    function cannotBeRiffle() {
-        name = nameSpace + 'cannot_be_single_riffle';
-        numbers = [32, 7, 10];
+    function firstDiagram() {
+        name = nameSpace + 'first';
+        everyTime();
+        generateText('Hello', 25, 20, null, null, null, mathFont);
     },
 ];
 
@@ -154,7 +80,6 @@ function drawNextDiagram() {
     replaceSVG();
     clearSettings();
     drawFunctions[nextDiagramIndex]();
-    everyTime();
     displayName(name);
     nextDiagramIndex += 1;
 
