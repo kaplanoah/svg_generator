@@ -28,7 +28,7 @@
 // Dynamic styles and attributes
 
 var svgWidth  = 300;
-var svgHeight = 600;
+var svgHeight = 1200;
 
 var fontSize = '15px';
 var textOffset;
@@ -52,10 +52,13 @@ var topMargin = 10;
 var leftMargin = 10;
 
 
-var buildingWidth = 200;
-var floorHeight = 15;
+var buildingWidth = 90;
+var floorHeight = 6;
+var buildingLeftMargin = 150;
 
-
+var keyTop = 20;
+var keyLeft = keyTop;
+var keyEggWidth = 10;
 
 
 // Draw diagram here
@@ -63,16 +66,25 @@ var floorHeight = 15;
 function drawBuilding() {
 
     for (var floor = 0; floor < 100; floor++) {
-        generateRect(leftMargin, topMargin + floor * floorHeight, buildingWidth, floorHeight, 0, transparent);
+        generateRect(buildingLeftMargin, topMargin + floor * floorHeight, buildingWidth, floorHeight, 0, transparent, null, '0.5px');
     }
 
 }
 
+function drawEggKey() {
+    // generateArc(startx, endx, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, closed, stroke, fill);
+    generateArc(keyLeft, keyTop, keyEggWidth, keyEggWidth, keyLeft + keyEggWidth / 2, 0, 0, keyLeft + keyEggWidth, keyTop) // , closed, stroke, fill);
+
+    // generateQuadraticPath(startx, starty, middlex, middley, endx, endy, strokeWidth, stroke, fill, isRelative)
+    // generateQuadraticPath(keyLeft, keyTop, keyLeft + keyEggWidth / 2, keyTop - 15, keyLeft + keyEggWidth, keyTop);
+    // generateQuadraticPath(keyLeft, keyTop, keyLeft + keyEggWidth / 2, keyTop + 10, keyLeft + keyEggWidth, keyTop);
+}
 
 
 
 function everyTime() {
     drawBuilding();
+    drawEggKey();
 }
 
 var nameSpace = 'egg_building__';
