@@ -20,7 +20,6 @@
 <script type='text/javascript' src='../../js/index.js'></script>
 <script type='text/javascript' src='../../js/helper_functions.js'></script>
 <script type='text/javascript' src='../../js/generate_elements.js'></script>
-<script type='text/javascript' src='../../js/initialize_page.js'></script>
 <script type='text/javascript' src='../../js/static_variables.js'></script>
 
 <script>
@@ -42,11 +41,6 @@ var rectYoffset;
 var circleRadius = 10;
 var circleXoffset;
 var circleYoffset;
-
-var mathFont = 'Droid Serif';
-var icBlue   = 'rgba(91, 192, 222, 1)';
-var icBlueLight = 'rgba(91, 192, 222, 0.15)';
-var transparent = 'rgba(255, 255, 255, 0)';
 
 var topMargin = 10;
 var leftMargin = 10;
@@ -73,6 +67,12 @@ var drawFunctions = [
         name = nameSpace + 'first';
         everyTime();
         generateText('Hello', 25, 20, null, null, null, mathFont);
+    },
+
+    function secondDiagram() {
+        name = nameSpace + 'second';
+        everyTime();
+        generateText('Hello 2', 25, 20, null, null, null, mathFont);
     },
 ];
 

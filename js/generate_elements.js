@@ -1,5 +1,3 @@
-var svg = $('svg');
-
 function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth, transform, mask){
     width = width   || rectWidth;
     height = height || rectHeight;
