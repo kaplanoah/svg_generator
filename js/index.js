@@ -21,6 +21,10 @@ function displayName(name) {
     $('#current-diagram').text(name);
 }
 
+function getMaskUrl(id) {
+    return 'url(#' + id + ')';
+}
+
 function getQueryParam(param, url) {
     if (!url) {
       url = window.location.href;

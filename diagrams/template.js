@@ -1,5 +1,5 @@
 
-// Dynamic styles and attributes
+// Dynamic values
 
 var svgWidth  = 300;
 var svgHeight = 100;
@@ -19,6 +19,7 @@ var circleYoffset;
 
 var topMargin = 10;
 var leftMargin = 10;
+
 
 // Draw diagram here
 
