@@ -7,6 +7,9 @@
 
 <body>
 
+<p class="error">
+</p>
+
 <div class="control-panel">
     <p id="current-diagram"></p>
     <button onclick="toggleBorder()">Toggle border</button>
@@ -27,9 +30,16 @@
 
 <script>
 
-console.log();
+var diagram = getQueryParam('diagram');
 
-$.getScript('diagrams/' + getQueryStringParameter('diagram') + '.js');
+if (diagram) {
+    $.getScript('diagrams/' + encodeURIComponent(diagram) + '.js')
+        .fail(function(jqxhr, settings, exception) {
+            displayError('Invalid diagram: ' + diagram);
+        });
+} else {
+    displayError('Pass a diagram to load in the query string');
+}
 
 </script>
 

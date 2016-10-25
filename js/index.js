@@ -21,18 +21,26 @@ function displayName(name) {
     $('#current-diagram').text(name);
 }
 
-function getQueryStringParameter(parameter, url) {
+function getQueryParam(param, url) {
     if (!url) {
       url = window.location.href;
     }
 
-    parameter = parameter.replace(/[\[\]]/g, "\\$&");
+    param = param.replace(/[\[\]]/g, "\\$&");
 
-    var regex = new RegExp("[?&]" + parameter + "(=([^&#]*)|&|#|$)");
+    var regex = new RegExp("[?&]" + param + "(=([^&#]*)|&|#|$)");
     var results = regex.exec(url);
 
     if (!results) return null;
     if (!results[2]) return '';
 
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function setQueryString(param, value) {
+    window.location.href = window.location.href.split(/[?#]/)[0] + '?' + param + '=' + value;
+}
+
+function displayError(errorMessage) {
+    $('.error').text(errorMessage).css('display', 'inline-block');
 }
