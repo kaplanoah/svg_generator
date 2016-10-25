@@ -6,9 +6,9 @@ A tool for making SVGs that are easy to manipulate.
 
 **svg-generator-template.html** (in diagrams > templates) contains an empty element:
 
-	<div class="diagram image">
-	    <svg></svg>
-	</div>
+    <div class="diagram image">
+        <svg></svg>
+    </div>
 
 **generate-elements.js** (in js) contains functions that:
 
@@ -21,3 +21,27 @@ Dynamic variables for styling and position (cooridnates, offsets, colors, widths
 For viewing Interview Cake on phones, SVGs with widths greater than 300 are automatically given a class 'diagram-large'.
 
 When the svg is ready, copy the div surrouding the svg from the developer console, and paste it into your file.
+
+
+### Setup
+
+```
+cp diagrams/template.js diagrams/<new-diagram>.js
+
+python -m SimpleHTTPServer
+
+open http://localhost:8000?diagram=<new-diagram>
+
+
+```
+
+### Static variables
+
+```
+defaultDarkColor
+defaultLightColor
+mathFont
+icBlue
+icBlueLight
+transparent
+```
