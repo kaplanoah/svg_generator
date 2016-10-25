@@ -1,28 +1,3 @@
-<head>
-    <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
-</head>
-
-<div class="control-panel">
-    <p id="current-diagram"></p>
-    <button onclick="toggleBorder()">Toggle border</button>
-    <button onclick="drawNextDiagram()">Next diagram</button>
-</div>
-
-<div class="diagram-frame border">
-    <div class="diagram image">
-        <svg></svg>
-    </div>
-</div>
-
-<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
-<script type='text/javascript' src='../../js/index.js'></script>
-<script type='text/javascript' src='../../js/helper_functions.js'></script>
-<script type='text/javascript' src='../../js/generate_elements.js'></script>
-<script type='text/javascript' src='../../js/static_variables.js'></script>
-
-<script>
 
 // Dynamic styles and attributes
 
@@ -104,5 +79,3 @@ generateArc    (startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx
 generateMask   (topY, width, height, [ isTop ])
 
 */
-
-</script>

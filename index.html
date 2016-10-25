@@ -1,0 +1,36 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon'>
+</head>
+
+<body>
+
+<div class="control-panel">
+    <p id="current-diagram"></p>
+    <button onclick="toggleBorder()">Toggle border</button>
+    <button onclick="drawNextDiagram()">Next diagram</button>
+</div>
+
+<div class="diagram-frame border">
+    <div class="diagram image">
+        <svg></svg>
+    </div>
+</div>
+
+<script type='text/javascript' src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+<script type='text/javascript' src='js/index.js'></script>
+<script type='text/javascript' src='js/helper_functions.js'></script>
+<script type='text/javascript' src='js/generate_elements.js'></script>
+<script type='text/javascript' src='js/static_variables.js'></script>
+
+<script>
+
+console.log();
+
+$.getScript('diagrams/' + getQueryStringParameter('diagram') + '.js');
+
+</script>
+
+</body>
