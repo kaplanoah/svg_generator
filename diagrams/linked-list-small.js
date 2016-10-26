@@ -167,7 +167,7 @@ var bottomGap = 2.4;
 var labelOffset = 9;
 var bottomOffset = labelOffset + 10;
 
-var nameSpace = 'kth_last_node__';
+var nameSpace = 'kth_last_node';
 var name;
 
 function setUp() {
@@ -187,37 +187,31 @@ var kHeight = 126;
 
 var drawFunctions = [
 
-    function() {
-        name = nameSpace + 'stick_at_start';
+    function stickAtStart() {
         drawStick(0, 2);
         labelk(false);
     },
-    function() {
-        name = nameSpace + 'stick_shifted';
+    function stickShifted() {
         drawStick(1, 3);
         labelk(false);
     },
-    function() {
-        name = nameSpace + 'stick_at_end';
+    function stickAtEnd() {
         setSVGDimensions(width, stickLastHeight);
         drawStick(4, 6);
         labelk(true);
     },
 
-    function() {
-        name = nameSpace + 'n_node_list';
+    function NNodeList() {
         setSVGDimensions(width, nHeight);
         drawLine('n', startx, endx, ny);
     },
-    function() {
-        name = nameSpace + 'k_from_end';
+    function KFromEnd() {
         setSVGDimensions(width, kHeight);
         labelk(true);
         drawLine('n', startx, endx, ny);
         drawLine('k', klastx + bottomGap, endx, ky);
     },
-    function() {
-        name = nameSpace + 'n_minus_k_from_start';
+    function NMinusKFromStart() {
         setSVGDimensions(width, kHeight);
         labelk(true);
         drawLine('n', startx, endx, ny);

@@ -26,9 +26,6 @@ var leftMargin = 10;
 
 
 
-var name;
-
-
 
 
 
@@ -37,7 +34,20 @@ var name;
 
 // generate diagrams
 
-var nameSpace = 'playing_cards__';
+var nameSpace = 'playing_cards';
+
+
+var drawFunctions = [
+
+    function first() {
+        generateText('Hello', 25, 20, null, null, null, mathFont);
+    },
+
+    function second() {
+        generateText('Hello 2', 25, 20, null, null, null, mathFont);
+    },
+];
+
 
 function setUp() {
     // runs before every draw function
@@ -47,18 +57,6 @@ function tearDown() {
     // runs after every draw function
 }
 
-var drawFunctions = [
-
-    function() {
-        name = 'first';
-        generateText('Hello', 25, 20, null, null, null, mathFont);
-    },
-
-    function() {
-        name = nameSpace + 'second';
-        generateText('Hello 2', 25, 20, null, null, null, mathFont);
-    },
-];
 
 /*
 

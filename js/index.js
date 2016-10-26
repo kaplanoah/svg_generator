@@ -18,8 +18,15 @@ function replaceSVG() {
 }
 
 function displayName(name) {
-    $('#current-diagram').text(name);
+    var currentDiagram = nameSpace.toSnakeCase() + '__' + name.toSnakeCase();
+    $('#current-diagram').text(currentDiagram);
 }
+
+String.prototype.toSnakeCase = function() {
+    return this.replace(/([A-Z])/g, function($1) {
+        return "_" + $1.toLowerCase();
+    });
+};
 
 function displaySvgContents() {
     $('#svg-contents').val(document.getElementsByTagName('svg')[0].innerHTML);
@@ -71,7 +78,7 @@ function drawNextDiagram() {
 
     drawFunctions[nextDiagramIndex]();
 
-    displayName(nameSpace + name);
+    displayName(drawFunctions[nextDiagramIndex].name);
     displaySvgContents();
 
     tearDown();
