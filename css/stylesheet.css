@@ -4,36 +4,6 @@ body {
     font-family: 'Open Sans';
 }
 
-.control-panel {
-    margin: 15px 0;
-}
-
-#current-diagram {
-    font-family: sans-serif;
-    font-size: 12px;
-}
-
-button {
-    margin-bottom: 5px;
-    display: block;
-}
-
-.diagram-frame {
-    display: inline-block;
-    border: 1px solid transparent;
-}
-
-.border {
-    border-color: lightgrey;
-}
-
-#svg-contents {
-    display: block;
-    margin: 25px 0 10px;
-    width: 300px;
-    height: 100px;
-}
-
 .error {
     display: none;
     margin: 0 0 5px;
@@ -44,4 +14,32 @@ button {
     color: #a58124;
     border: 1px solid #a58124;
     border-radius: 2px;
+}
+
+#current-diagram {
+    font-family: sans-serif;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+button {
+    margin-bottom: 5px;
+    display: block;
+}
+
+.diagram-frame {
+    display: inline-block;
+    border: 1px solid transparent;
+    margin: 20px 0 30px;
+}
+
+.border {
+    border-color: lightgrey;
+}
+
+#svg-contents {
+    display: block;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 100px;
 }

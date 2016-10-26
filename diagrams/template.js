@@ -25,47 +25,40 @@ var leftMargin = 10;
 
 
 
-function everyTime() {
-    // every time
-}
 
-var nameSpace = 'playing_cards__';
 var name;
 
-function clearSettings() {
-    setSVGDimensions(svgWidth, svgHeight);
-    // clear settings
+
+
+
+
+
+
+
+// generate diagrams
+
+var nameSpace = 'playing_cards__';
+
+function setUp() {
+    // runs before every draw function
+}
+
+function tearDown() {
+    // runs after every draw function
 }
 
 var drawFunctions = [
 
     function firstDiagram() {
-        name = nameSpace + 'first';
-        everyTime();
+        name = 'first';
         generateText('Hello', 25, 20, null, null, null, mathFont);
     },
 
     function secondDiagram() {
         name = nameSpace + 'second';
-        everyTime();
         generateText('Hello 2', 25, 20, null, null, null, mathFont);
     },
 ];
-
-var nextDiagramIndex = 0;
-function drawNextDiagram() {
-    replaceSVG();
-    clearSettings();
-    drawFunctions[nextDiagramIndex]();
-    displayName(name);
-    updateSvgContents(document.getElementsByTagName('svg')[0].innerHTML);
-    nextDiagramIndex += 1;
-
-    if (nextDiagramIndex === drawFunctions.length) {
-        nextDiagramIndex = 0;
-    }
-}
-drawNextDiagram();
 
 /*
 

@@ -170,9 +170,13 @@ var bottomOffset = labelOffset + 10;
 var nameSpace = 'kth_last_node__';
 var name;
 
-function everyTime() {
+function setUp() {
 	setSVGDimensions(width, stickHeight);
 	drawNodes();
+}
+
+function tearDown() {
+    // runs after every draw function
 }
 
 var width = 274;
@@ -222,22 +226,6 @@ var drawFunctions = [
     },
 
 ];
-
-var nextDiagramIndex = 0;
-function drawNextDiagram() {
-    replaceSVG();
-    everyTime();
-    drawFunctions[nextDiagramIndex]();
-    displayName(name);
-    nextDiagramIndex += 1;
-    if (nextDiagramIndex === drawFunctions.length) {
-        nextDiagramIndex = 0;
-    }
-}
-
-drawNextDiagram();
-
-
 
 /*
 

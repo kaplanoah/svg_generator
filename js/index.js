@@ -21,8 +21,8 @@ function displayName(name) {
     $('#current-diagram').text(name);
 }
 
-function updateSvgContents(contents) {
-    $('#svg-contents').val(contents);
+function displaySvgContents() {
+    $('#svg-contents').val(document.getElementsByTagName('svg')[0].innerHTML);
 }
 
 function getMaskUrl(id) {
@@ -60,3 +60,26 @@ function copyToClipboard(element) {
     document.execCommand('copy');
     $temp.remove();
 }
+
+var nextDiagramIndex = 0;
+
+function drawNextDiagram() {
+    replaceSVG();
+    setSVGDimensions(svgWidth, svgHeight);
+
+    setUp();
+
+    drawFunctions[nextDiagramIndex]();
+
+    displayName(nameSpace + name);
+    displaySvgContents();
+
+    tearDown();
+
+    nextDiagramIndex += 1;
+    if (nextDiagramIndex === drawFunctions.length) {
+        nextDiagramIndex = 0;
+    }
+}
+
+window.onload = drawNextDiagram;
