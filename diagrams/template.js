@@ -1,5 +1,5 @@
 
-// Dynamic values
+// dynamic values
 
 var svgWidth  = 300;
 var svgHeight = 100;
@@ -21,9 +21,7 @@ var topMargin = 10;
 var leftMargin = 10;
 
 
-// Draw diagram here
-
-
+// functions for drawing diagrams
 
 
 
@@ -34,18 +32,15 @@ var leftMargin = 10;
 
 // generate diagrams
 
-var nameSpace = 'playing_cards';
+var nameSpace = 'template';
 
 
 var drawFunctions = [
 
-    function first() {
-        generateText('Hello', 25, 20, null, null, null, mathFont);
+    function firstDiagram() {
+
     },
 
-    function second() {
-        generateText('Hello 2', 25, 20, null, null, null, mathFont);
-    },
 ];
 
 
