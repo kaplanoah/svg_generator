@@ -58,6 +58,7 @@ function drawNextDiagram() {
     clearSettings();
     drawFunctions[nextDiagramIndex]();
     displayName(name);
+    updateSvgContents(document.getElementsByTagName('svg')[0].innerHTML);
     nextDiagramIndex += 1;
 
     if (nextDiagramIndex === drawFunctions.length) {

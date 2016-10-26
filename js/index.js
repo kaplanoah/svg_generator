@@ -21,13 +21,17 @@ function displayName(name) {
     $('#current-diagram').text(name);
 }
 
+function updateSvgContents(contents) {
+    $('#svg-contents').val(contents);
+}
+
 function getMaskUrl(id) {
     return 'url(#' + id + ')';
 }
 
 function getQueryParam(param, url) {
     if (!url) {
-      url = window.location.href;
+        url = window.location.href.replace(/\/$/, '');
     }
 
     param = param.replace(/[\[\]]/g, "\\$&");
@@ -38,7 +42,7 @@ function getQueryParam(param, url) {
     if (!results) return null;
     if (!results[2]) return '';
 
-    return decodeURIComponent(results[2].replace(/\+/g, " ")).replace(/\/$/, '');
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
 function setQueryString(param, value) {
@@ -47,4 +51,12 @@ function setQueryString(param, value) {
 
 function displayError(errorMessage) {
     $('.error').text(errorMessage).css('display', 'inline-block');
+}
+
+function copyToClipboard(element) {
+    var $temp = $('<input>');
+    $('body').append($temp);
+    $temp.val($(element).val()).select();
+    document.execCommand('copy');
+    $temp.remove();
 }
