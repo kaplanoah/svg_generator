@@ -49,12 +49,12 @@ function tearDown() {
 
 var drawFunctions = [
 
-    function firstDiagram() {
+    function() {
         name = 'first';
         generateText('Hello', 25, 20, null, null, null, mathFont);
     },
 
-    function secondDiagram() {
+    function() {
         name = nameSpace + 'second';
         generateText('Hello 2', 25, 20, null, null, null, mathFont);
     },

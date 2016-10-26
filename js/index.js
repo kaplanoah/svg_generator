@@ -80,6 +80,4 @@ function drawNextDiagram() {
     if (nextDiagramIndex === drawFunctions.length) {
         nextDiagramIndex = 0;
     }
-}
-
-window.onload = drawNextDiagram;
+};

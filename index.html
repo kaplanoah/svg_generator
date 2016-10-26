@@ -38,6 +38,9 @@ var diagram = getQueryParam('diagram');
 
 if (diagram) {
     $.getScript('diagrams/' + encodeURIComponent(diagram) + '.js')
+        .done(function(script, textStatus) {
+            drawNextDiagram();
+        })
         .fail(function(jqxhr, settings, exception) {
             displayError('Invalid diagram: ' + diagram);
         });
@@ -46,7 +49,5 @@ if (diagram) {
 }
 
 </script>
-
-<script type='text/javascript' src='js/generate_diagrams.js'></script>
 
 </body>

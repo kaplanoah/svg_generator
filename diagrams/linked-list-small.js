@@ -187,36 +187,36 @@ var kHeight = 126;
 
 var drawFunctions = [
 
-    function start() {
+    function() {
         name = nameSpace + 'stick_at_start';
         drawStick(0, 2);
         labelk(false);
     },
-    function shifted() {
+    function() {
         name = nameSpace + 'stick_shifted';
         drawStick(1, 3);
         labelk(false);
     },
-    function end() {
+    function() {
         name = nameSpace + 'stick_at_end';
         setSVGDimensions(width, stickLastHeight);
         drawStick(4, 6);
         labelk(true);
     },
 
-    function n() {
+    function() {
         name = nameSpace + 'n_node_list';
         setSVGDimensions(width, nHeight);
         drawLine('n', startx, endx, ny);
     },
-    function k() {
+    function() {
         name = nameSpace + 'k_from_end';
         setSVGDimensions(width, kHeight);
         labelk(true);
         drawLine('n', startx, endx, ny);
         drawLine('k', klastx + bottomGap, endx, ky);
     },
-    function nk() {
+    function() {
         name = nameSpace + 'n_minus_k_from_start';
         setSVGDimensions(width, kHeight);
         labelk(true);
