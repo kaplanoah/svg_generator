@@ -5,52 +5,116 @@ For making SVGs programmatically that are easy to manipulate.
 
 
 
-## How it works
 
-**svg-generator-template.html** (in diagrams > templates) contains an empty element:
 
-```html
-<div class="diagram image">
-    <svg></svg>
-</div>
+### Getting started
+
+[https://help.github.com/articles/fork-a-repo/](Fork and clone this repository)
+
+Start your local server:
+
+    $ python -m SimpleHTTPServer
+
+View the template:
+
+    $ open http://localhost:8000?diagram=template
+
+
+
+### Making a new diagram
+
+Copy the template into a new script:
+
+    $ cp diagrams/template.js diagrams/<new-diagram-name>.js
+
+Open your diagram:
+
+    $ open http://localhost:8000?diagram=<new-diagram-name>
+
+
+
+
+View a sample diagram
+
+[linked-list-small.js](diagrams/linked-list-small.js)
+
+    $ open http://localhost:8000?diagram=linked-list-small
+
+
+
+
+
+### Submitting your diagram to Interview Cake
+
+Add the svg page
+
+Add the data in settings
+
+Add a description
+
+Include on the page using the tag
+
+
+
+### Generating elements
+
+See cheetsheet at the bottom of the template and [SVG MDN documentation](https://developer.mozilla.org/en-US/docs/Web/SVG).
+
+
+
+
+
+
+### Available functions
+
+```
+setSVGDimensions
+
+roundDown (x and y coordinates are rounded down for you)
+
+xof
+
+yof
+
+randRange (inclusive)
+
+randSign
 ```
 
-**generate-elements.js** (in js) contains functions that:
 
-1. take arguments for styling and position
-1. creates svg elements
-1. appends them inside the svg tag
+### Style guide
 
-Dynamic variables for styling and position (cooridnates, offsets, colors, widths) set in **svg-generator-template.html** can easily be used to allow significant changes to an svg with very little changes to the code.
+One pen
 
-For viewing Interview Cake on phones, SVGs with widths greater than 300 are automatically given a class 'diagram-large'.
+Tight margines, diagram should be nearly at the edge of the diagram
 
-When the svg is ready, copy the div surrouding the svg from the developer console, and paste it into your file.
+Think about how you'd draw it on paper
 
 
-## Setup
-
-```
-cp diagrams/template.js diagrams/<new-diagram>.js
-
-python -m SimpleHTTPServer
-
-open http://localhost:8000?diagram=<new-diagram>
-```
 
 
-## Static variables
+
+### Default values
 
 ```
-defaultDarkColor
-defaultLightColor
-mathFont
-icBlue
-icBlueLight
-transparent
+var darkColor  = '#555';
+var lightColor = 'white';
+
+var icBlue            = 'rgb(91, 192, 222)';
+var icBlueTransparent = 'rgba(91, 192, 222, 0.15)';
+var transparent       = 'rgba(255, 255, 255, 0)';
+
+var fill = lightColor;
+var stroke = darkColor;
+var strokeWidth = 1;
+var borderRadius = 0;
+
+var fontColor  = darkColor;
+var fontWeight = 'normal';
+var textAnchor = 'middle';
+
+var mathFont = 'Droid Serif';
+
 ```
 
-
-## Adding your diagrams
-
-`settings.py`
+Use our transparent, not the css value transparent (in browsers that don't support rgba, we want to default to white not black).
