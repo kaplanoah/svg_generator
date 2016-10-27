@@ -4,21 +4,8 @@
 var svgWidth  = 300;
 var svgHeight = 100;
 
-var fontSize = '15px';
-var textOffset;
 
-var rectWidth  = 20;
-var rectHeight = 20;
-var rectRadius = 3;
-var rectXoffset;
-var rectYoffset;
 
-var circleRadius = 10;
-var circleXoffset;
-var circleYoffset;
-
-var topMargin = 10;
-var leftMargin = 10;
 
 
 // functions for drawing diagrams
@@ -33,7 +20,6 @@ var leftMargin = 10;
 // generate diagrams
 
 var nameSpace = 'template';
-
 
 var drawFunctions = [
 

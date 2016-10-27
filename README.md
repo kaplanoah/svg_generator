@@ -1,6 +1,9 @@
 # Svg Generator
 
-A tool for making SVGs that are easy to manipulate.
+For making SVGs programmatically that are easy to manipulate.
+
+
+
 
 ## How it works
 

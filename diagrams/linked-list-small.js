@@ -1,16 +1,17 @@
 
-// Dynamic styles and attributes
+// dynamic styles and attributes
 
-var svgWidth  = 365;
-var svgHeight = 105;
+var svgWidth  = 274;
+var svgHeight = 80;
 
-var fontSize = '12px';
-var textOffset;
+var topMargin = 40;
+var leftMargin = 10;
+
+var mathFont = 'serif';
 
 var nodeWidth = 13;
 var nodeSpacing = 40;
 var nodeRadius = 4;
-var nodeCircleOffset = 1;
 
 var arrowCurve = 6;
 var arrowSpacingStart = 2;
@@ -22,63 +23,61 @@ var arrowPointLength = 5;
 
 var stickEndWidth = 8;
 var stickOffset = 17;
-var stickEndRadius = 1;
-
-var circleRadius = 10;
-var circleXoffset;
-var circleYoffset;
-
-var mathFont = 'serif';
-var icBlue   = 'rgba(91, 192, 222, 1)';
-var icBlueLight = 'rgba(91, 192, 222, 0.15)';
-var transparent = 'rgba(255, 255, 255, 0)';
-
-var topMargin = 40;
-var leftMargin = 10;
-
-var arrowPadding = 6.5;
-var arrowHeadSize = 3.7;
-var arrowWidth = 1;
-var arrowDetail = 0.3;
-
-var stickOffset = 17;
 var stickEndRadius = 1.5;
-var stickColor = darkColor;
 var stickLabelOffset = 6;
+var stickLastHeight = 93;
+
 var lineLabelSize = '10px';
 var stickLabelSize = '11px';
 var mathLabelSize = '14px';
 
+var listStartX = leftMargin;
+var lineEndX = leftMargin + nodeWidth + 6 * nodeSpacing;
+
 var kLabelOffset = stickOffset + 0;
+var kx = leftMargin + 2 * nodeSpacing + nodeWidth / 2;
+var klastx = leftMargin + 6 * nodeSpacing + nodeWidth / 2 - 2 * nodeSpacing;
+var ky = topMargin + nodeWidth + 47;
+var kHeight = 126;
 
-// Draw diagram here
+var ny = topMargin - 15;
+var nHeight = 62;
 
-// nodes
+var bottomGap = 2.4;
+var labelOffset = 9;
+var bottomOffset = labelOffset + 10;
+
+
+
+// functions for drawing diagrams
+
 function drawNodes() {
-	for (var i=0; i < 7; i++) {
-		var nodex = leftMargin + i * nodeSpacing;
-		var nodey = topMargin;
 
-		generateRect(nodex, nodey, nodeWidth, nodeWidth, nodeRadius, transparent, null, 1);
+    for (var i=0; i < 7; i++) {
+        var nodex = leftMargin + i * nodeSpacing;
+        var nodey = topMargin;
 
-		if (i < 6) {
-	        var fromx = nodex + nodeWidth + arrowSpacingStart;
-	        var fromy = nodey + nodeWidth / 2 - arrowOffset;
+        generateRect(nodex, nodey, nodeWidth, nodeWidth, nodeRadius, transparent, null, 1);
 
-	        var tox = leftMargin + (i + 1) * nodeSpacing - arrowSpacingEnd;
-	        var toy = fromy;
+        if (i < 6) {
+            var fromx = nodex + nodeWidth + arrowSpacingStart;
+            var fromy = nodey + nodeWidth / 2 - arrowOffset;
 
-			var angleCurveToEnd = drawArrow(fromx, fromy, tox, toy, arrowCurve);
+            var tox = leftMargin + (i + 1) * nodeSpacing - arrowSpacingEnd;
+            var toy = fromy;
 
-			var pointaAngle = angleCurveToEnd - arrowPointAngle * Math.PI / 180;
-	        var pointbAngle = angleCurveToEnd + arrowPointAngle * Math.PI / 185;
+            var angleCurveToEnd = drawArrow(fromx, fromy, tox, toy, arrowCurve);
 
-        	drawArrowHead(tox, toy, pointaAngle, pointbAngle, arrowWidth);
+            var pointaAngle = angleCurveToEnd - arrowPointAngle * Math.PI / 180;
+            var pointbAngle = angleCurveToEnd + arrowPointAngle * Math.PI / 185;
+
+            drawArrowHead(tox, toy, pointaAngle, pointbAngle, arrowWidth);
         }
-	}
+    }
 }
 
 function drawArrow(fromx, fromy, tox, toy, curve) {
+
     var middlex = (fromx + tox) / 2;
     var middley = (fromy + toy) / 2;
 
@@ -91,10 +90,12 @@ function drawArrow(fromx, fromy, tox, toy, curve) {
     var deltay = toy - curvey;
 
     var angleCurveToEnd = Math.atan(deltay / deltax);
+
     return angleCurveToEnd;
 }
 
 function drawArrowHead(headx, heady, pointaAngle, pointbAngle, width) {
+
     var pointax = headx + arrowPointLength * Math.cos(pointaAngle);
     var pointay = heady + arrowPointLength * Math.sin(pointaAngle);
 
@@ -105,85 +106,63 @@ function drawArrowHead(headx, heady, pointaAngle, pointbAngle, width) {
     generateLine(headx, heady, pointbx, pointby, darkColor, width);
 }
 
-// stick
 function drawStick(startNode, endNode) {
-	var stickStart = leftMargin + startNode * nodeSpacing + nodeWidth / 2;
+
+    var stickStart = leftMargin + startNode * nodeSpacing + nodeWidth / 2;
     var stickEnd   = leftMargin + endNode   * nodeSpacing + nodeWidth / 2;
-	var y = topMargin - stickOffset;
-	generateText('STICK', (stickStart + stickEnd) / 2, topMargin - stickOffset - stickLabelOffset, lineLabelSize);
-	// generateLine(stickStart, y, stickEnd, y, darkColor, 1);
-	// generateCircle(stickStart, y, stickEndRadius, defaultLightColor, stickColor, 0);
-	// generateCircle(stickEnd, y, stickEndRadius, defaultLightColor, stickColor, 0);
+    var y = topMargin - stickOffset;
 
-	var ends = [stickStart, stickEnd];
-	for (var i=0; i < 2; i++) {
-		generateRect(ends[i] - stickEndWidth / 2, y - stickEndWidth / 2, stickEndWidth, stickEndWidth, stickEndRadius, darkColor);
-	}
+    generateText('STICK', (stickStart + stickEnd) / 2, topMargin - stickOffset - stickLabelOffset, lineLabelSize);
 
-	generateLine(stickStart, y, stickEnd, y, darkColor);
+    var ends = [stickStart, stickEnd];
 
+    for (var i=0; i < 2; i++) {
+        generateRect(ends[i] - stickEndWidth / 2, y - stickEndWidth / 2, stickEndWidth, stickEndWidth, stickEndRadius, darkColor);
+    }
+
+    generateLine(stickStart, y, stickEnd, y, darkColor);
 }
 
-// k
 function labelk(last) {
-	if (last) {
-		generateText('k', klastx - 5.7, topMargin + nodeWidth + kLabelOffset, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
-		generateText('th', klastx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, stickLabelSize);
-		generateText('to last', klastx, topMargin + nodeWidth + kLabelOffset - 0.1 + 14, stickLabelSize);
-	} else {
-		generateText('k', kx - 5.7, topMargin + nodeWidth + kLabelOffset, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
-		generateText('th', kx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, stickLabelSize);
-	}
+
+    if (last) {
+        generateText('k', klastx - 5.7, topMargin + nodeWidth + kLabelOffset, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
+        generateText('th', klastx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, stickLabelSize);
+        generateText('to last', klastx, topMargin + nodeWidth + kLabelOffset - 0.1 + 14, stickLabelSize);
+    } else {
+        generateText('k', kx - 5.7, topMargin + nodeWidth + kLabelOffset, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
+        generateText('th', kx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, stickLabelSize);
+    }
 }
 
-// lines
 function drawLine(label, start, end, y) {
-	generateLine(start, y, end, y, darkColor);
 
-	var endHeight = 4.8;
-	generateLine(start, y - endHeight, start, y + endHeight, darkColor);
-	generateLine(end, y - endHeight, end, y + endHeight, darkColor);
+    generateLine(start, y, end, y, darkColor);
 
-	labelLine(label, (start + end) / 2, y);
+    var endHeight = 4.8;
+
+    generateLine(start, y - endHeight, start, y + endHeight, darkColor);
+    generateLine(end, y - endHeight, end, y + endHeight, darkColor);
+
+    labelLine(label, (start + end) / 2, y);
 }
 
 function labelLine(label, x, y) {
-	if (y < topMargin) {
-		y = y - labelOffset;
-	} else {
-		y = y + bottomOffset;
-	}
-	generateText(label, x, y, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
+
+    if (y < topMargin) {
+        y = y - labelOffset;
+    } else {
+        y = y + bottomOffset;
+    }
+
+    generateText(label, x, y, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
 }
 
-var startx = leftMargin;
-var endx = leftMargin + nodeWidth + 6 * nodeSpacing;
-var kx = leftMargin + 2 * nodeSpacing + nodeWidth / 2;
-var klastx = leftMargin + 6 * nodeSpacing + nodeWidth / 2 - 2 * nodeSpacing;
 
-var ny = topMargin - 15;
-var ky = topMargin + nodeWidth + 47;
-var bottomGap = 2.4;
-var labelOffset = 9;
-var bottomOffset = labelOffset + 10;
+
+// generate diagrams
 
 var nameSpace = 'kth_last_node';
-var name;
-
-function setUp() {
-	setSVGDimensions(width, stickHeight);
-	drawNodes();
-}
-
-function tearDown() {
-    // runs after every draw function
-}
-
-var width = 274;
-var stickHeight = 80;
-var stickLastHeight = 93;
-var nHeight = 62;
-var kHeight = 126;
 
 var drawFunctions = [
 
@@ -196,40 +175,51 @@ var drawFunctions = [
         labelk(false);
     },
     function stickAtEnd() {
-        setSVGDimensions(width, stickLastHeight);
+        setSVGDimensions(svgWidth, stickLastHeight);
         drawStick(4, 6);
         labelk(true);
     },
-
     function NNodeList() {
-        setSVGDimensions(width, nHeight);
-        drawLine('n', startx, endx, ny);
+        setSVGDimensions(svgWidth, nHeight);
+        drawLine('n', listStartX, lineEndX, ny);
     },
     function KFromEnd() {
-        setSVGDimensions(width, kHeight);
+        setSVGDimensions(svgWidth, kHeight);
         labelk(true);
-        drawLine('n', startx, endx, ny);
-        drawLine('k', klastx + bottomGap, endx, ky);
+        drawLine('n', listStartX, lineEndX, ny);
+        drawLine('k', klastx + bottomGap, lineEndX, ky);
     },
     function NMinusKFromStart() {
-        setSVGDimensions(width, kHeight);
+        setSVGDimensions(svgWidth, kHeight);
         labelk(true);
-        drawLine('n', startx, endx, ny);
-        drawLine('k', klastx + bottomGap, endx, ky);
-        drawLine('n - k', startx, klastx - bottomGap, ky);
+        drawLine('n', listStartX, lineEndX, ny);
+        drawLine('k', klastx + bottomGap, lineEndX, ky);
+        drawLine('n - k', listStartX, klastx - bottomGap, ky);
     },
 
 ];
+
+
+function setUp() {
+    drawNodes();
+}
+
+function tearDown() {
+    // runs after every draw function
+}
+
 
 /*
 
 Cheatsheet:
 
-generateRect   ( x, y, [ width, height, borderRadius, fill, stroke, strokeWidth ])
-generateCircle ( cx, cy, [ r, fill, stroke, strokeWidth ])
-generateText   ( content, x, y, [ fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style ])
-generateLine   (x1, y1, x2, y2, [ stroke, strokeWidth ])
-generatePolygon(points, [ fill, stroke, strokeWidth ])
+generateRect    ( x, y, width, height, [ borderRadius, fill, stroke, strokeWidth, transform, mask ])
+generateCircle  ( cx, cy, r, [ fill, stroke, strokeWidth ])
+generateText    ( content, x, y, fontSize, [ fontWeight, fill, fontFamily, textAnchor, transform, style, mask ])
+generateLine    (x1, y1, x2, y2, [ stroke, strokeWidth, mask ])
+generatePolygon (points, [ fill, stroke, strokeWidth ])
+generateQuadraticPath(startx, starty, middlex, middley, endx, endy, [ stroke, strokeWidth, fill, isRelative ])
+generateArc     (startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, [ isClosed, stroke, strokeWidth, fill ])
+generateMask    (topY, width, height, [ isTop ])
 
 */
-
