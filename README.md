@@ -34,7 +34,7 @@ Open your diagram:
 
 [linked-list-small.js](diagrams/linked-list-small.js)
 
-$ open http://localhost:8000?diagram=linked-list-small
+    $ open http://localhost:8000?diagram=linked-list-small
 
 
 
@@ -82,12 +82,11 @@ var fontWeight = 'normal';
 var textAnchor = 'middle';
 
 var mathFont = 'Droid Serif';
-
 ```
 
-Use our transparent, not the css value transparent (in browsers that don't support rgba, we want to default to white not black).
+Use our transparent value, not the css value `transparent` (in browsers that don't support rgba, we want to default to white not black).
 
-Override a default value and you don't have to pass it as an argument.
+You can override a default value and it will apply to all elements.
 
 
 
