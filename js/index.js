@@ -17,6 +17,14 @@ function replaceSVG() {
     svg = $('svg');
 }
 
+function isArgument(argument) {
+    return argument !== undefined && argument !== null;
+}
+
+function paramOrDefault(parameter, defaultVariable) {
+    return isArgument(parameter) ? parameter : defaultVariable;
+}
+
 function displayName(name) {
     var currentDiagram = nameSpace.toSnakeCase() + '__' + name.toSnakeCase();
     $('#current-diagram').text(currentDiagram);
@@ -32,7 +40,7 @@ function displaySvgContents() {
     $('#svg-contents').val(document.getElementsByTagName('svg')[0].innerHTML);
 }
 
-function getMaskUrl(id) {
+function getUrl(id) {
     return 'url(#' + id + ')';
 }
 

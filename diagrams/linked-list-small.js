@@ -43,7 +43,7 @@ var arrowDetail = 0.3;
 
 var stickOffset = 17;
 var stickEndRadius = 1.5;
-var stickColor = defaultDarkColor;
+var stickColor = darkColor;
 var stickLabelOffset = 6;
 var lineLabelSize = '10px';
 var stickLabelSize = '11px';
@@ -85,7 +85,7 @@ function drawArrow(fromx, fromy, tox, toy, curve) {
     var curvex = middlex;
     var curvey = middley - curve;
 
-    generateQuadraticPath(fromx, fromy, curvex, curvey, tox, toy, arrowWidth);
+    generateQuadraticPath(fromx, fromy, curvex, curvey, tox, toy, null, arrowWidth);
 
     var deltax = tox - curvex;
     var deltay = toy - curvey;
@@ -101,8 +101,8 @@ function drawArrowHead(headx, heady, pointaAngle, pointbAngle, width) {
     var pointbx = headx + arrowPointLength * Math.cos(pointbAngle);
     var pointby = heady + arrowPointLength * Math.sin(pointbAngle);
 
-    generateLine(headx, heady, pointax, pointay, defaultDarkColor, width);
-    generateLine(headx, heady, pointbx, pointby, defaultDarkColor, width);
+    generateLine(headx, heady, pointax, pointay, darkColor, width);
+    generateLine(headx, heady, pointbx, pointby, darkColor, width);
 }
 
 // stick
@@ -110,39 +110,39 @@ function drawStick(startNode, endNode) {
 	var stickStart = leftMargin + startNode * nodeSpacing + nodeWidth / 2;
     var stickEnd   = leftMargin + endNode   * nodeSpacing + nodeWidth / 2;
 	var y = topMargin - stickOffset;
-	generateText('STICK', (stickStart + stickEnd) / 2, topMargin - stickOffset - stickLabelOffset, null, lineLabelSize);
-	// generateLine(stickStart, y, stickEnd, y, defaultDarkColor, 1);
+	generateText('STICK', (stickStart + stickEnd) / 2, topMargin - stickOffset - stickLabelOffset, lineLabelSize);
+	// generateLine(stickStart, y, stickEnd, y, darkColor, 1);
 	// generateCircle(stickStart, y, stickEndRadius, defaultLightColor, stickColor, 0);
 	// generateCircle(stickEnd, y, stickEndRadius, defaultLightColor, stickColor, 0);
 
 	var ends = [stickStart, stickEnd];
 	for (var i=0; i < 2; i++) {
-		generateRect(ends[i] - stickEndWidth / 2, y - stickEndWidth / 2, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
+		generateRect(ends[i] - stickEndWidth / 2, y - stickEndWidth / 2, stickEndWidth, stickEndWidth, stickEndRadius, darkColor);
 	}
 
-	generateLine(stickStart, y, stickEnd, y, defaultDarkColor);
+	generateLine(stickStart, y, stickEnd, y, darkColor);
 
 }
 
 // k
 function labelk(last) {
 	if (last) {
-		generateText('k', klastx - 5.7, topMargin + nodeWidth + kLabelOffset, null, mathLabelSize, null, mathFont, null, null, 'font-style:italic');
-		generateText('th', klastx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, null, stickLabelSize);
-		generateText('to last', klastx, topMargin + nodeWidth + kLabelOffset - 0.1 + 14, null, stickLabelSize);
+		generateText('k', klastx - 5.7, topMargin + nodeWidth + kLabelOffset, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
+		generateText('th', klastx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, stickLabelSize);
+		generateText('to last', klastx, topMargin + nodeWidth + kLabelOffset - 0.1 + 14, stickLabelSize);
 	} else {
-		generateText('k', kx - 5.7, topMargin + nodeWidth + kLabelOffset, null, mathLabelSize, null, mathFont, null, null, 'font-style:italic');
-		generateText('th', kx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, null, stickLabelSize);
+		generateText('k', kx - 5.7, topMargin + nodeWidth + kLabelOffset, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
+		generateText('th', kx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, stickLabelSize);
 	}
 }
 
 // lines
 function drawLine(label, start, end, y) {
-	generateLine(start, y, end, y, defaultDarkColor);
+	generateLine(start, y, end, y, darkColor);
 
 	var endHeight = 4.8;
-	generateLine(start, y - endHeight, start, y + endHeight, defaultDarkColor);
-	generateLine(end, y - endHeight, end, y + endHeight, defaultDarkColor);
+	generateLine(start, y - endHeight, start, y + endHeight, darkColor);
+	generateLine(end, y - endHeight, end, y + endHeight, darkColor);
 
 	labelLine(label, (start + end) / 2, y);
 }
@@ -153,7 +153,7 @@ function labelLine(label, x, y) {
 	} else {
 		y = y + bottomOffset;
 	}
-	generateText(label, x, y,  null, mathLabelSize, null, mathFont, null, null, 'font-style:italic');
+	generateText(label, x, y, mathLabelSize, null, null, mathFont, null, null, 'font-style:italic');
 }
 
 var startx = leftMargin;

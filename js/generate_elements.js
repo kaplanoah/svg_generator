@@ -1,123 +1,144 @@
-function generateRect(x, y, width, height, borderRadius, fill, stroke, strokeWidth, transform, mask){
-    width = width   || rectWidth;
-    height = height || rectHeight;
-    if ( borderRadius !== 0 && !borderRadius) borderRadius = borderRadius || rectRadius;
-    fill = fill     || defaultLightColor;
-    stroke = stroke || defaultDarkColor;
-    if ( strokeWidth !== 0 && !strokeWidth ) strokeWidth = 1;
+function generateRect(x, y, width, height, borderRadiusParam, fillParam, strokeParam, strokeWidthParam, transform, mask) {
+
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+
     el.setAttribute('x', roundDown(x));
     el.setAttribute('y', roundDown(y));
     el.setAttribute('width', width);
     el.setAttribute('height', height);
-    el.setAttribute('rx', borderRadius);
-    el.setAttribute('ry', borderRadius);
-    el.setAttribute('fill', fill);
-    el.setAttribute('stroke', stroke);
-    el.setAttribute('stroke-width', strokeWidth);
-    if ( transform ) el.setAttribute('transform', transform);
-    if ( mask ) el.setAttribute('mask', getMaskUrl(mask));
-    svg.append(el);
+    el.setAttribute('rx', paramOrDefault(borderRadiusParam, borderRadius));
+    el.setAttribute('ry', paramOrDefault(borderRadiusParam, borderRadius));
+    el.setAttribute('fill', paramOrDefault(fillParam, fill));
+    el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
+    el.setAttribute('stroke-width', paramOrDefault(strokeWidthParam, strokeWidth));
 
+    if (isArgument(transform)) el.setAttribute('transform', transform);
+    if (isArgument(mask))      el.setAttribute('mask', getUrl(mask));
+
+    svg.append(el);
 };
 
-function generateCircle(cx, cy, r, fill, stroke, strokeWidth){
-    r = r           || circleRadius;
-    fill = fill     || defaultLightColor;
-    stroke = stroke || defaultDarkColor;
-    strokeWidth = strokeWidth || 1;
+function generateCircle(cx, cy, r, fillParam, strokeParam, strokeWidthParam){
+
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+
     el.setAttribute('cx', roundDown(cx));
     el.setAttribute('cy', roundDown(cy));
     el.setAttribute('r', r);
-    el.setAttribute('fill', fill);
-    el.setAttribute('stroke', stroke);
-    el.setAttribute('stroke-width', strokeWidth);
+    el.setAttribute('fill', paramOrDefault(fillParam, fill));
+    el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
+    el.setAttribute('stroke-width', paramOrDefault(strokeWidthParam, strokeWidth));
+
     svg.append(el);
 };
 
-function generateText(content, x, y, fontWeight, newFontSize, fill, fontFamily, textAnchor, transform, style, mask){
-    fontWeight  = fontWeight  || 'normal'
-    newFontSize = newFontSize || fontSize;
-    fill = fill || defaultDarkColor;
-    textAnchor = textAnchor || 'middle';
+function generateText(content, x, y, fontSize, fontWeightParam, fillParam, fontFamily, textAnchorParam, transform, style, mask) {
+
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+    el.textContent = content;
+
     el.setAttribute('x', roundDown(x));
     el.setAttribute('y', roundDown(y));
-    el.setAttribute('font-weight', fontWeight);
-    el.setAttribute('font-size', newFontSize);
-    el.setAttribute('fill', fill);
-    if (fontFamily) el.setAttribute('font-family', fontFamily);
-    el.setAttribute('text-anchor', textAnchor);
-    if (transform) el.setAttribute('transform', transform);
-    if (style) el.setAttribute('style', style);
-    if ( mask ) el.setAttribute('mask', getMaskUrl(mask));
-    el.textContent = content;
+    el.setAttribute('font-size', fontSize);
+    el.setAttribute('font-weight', paramOrDefault(fontWeightParam, fontWeight));
+    el.setAttribute('fill', paramOrDefault(fillParam, fontColor));
+    el.setAttribute('text-anchor', paramOrDefault(textAnchorParam , textAnchor));
+
+    if (isArgument(fontFamily)) el.setAttribute('font-family', fontFamily);
+    if (isArgument(transform))  el.setAttribute('transform', transform);
+    if (isArgument(style))      el.setAttribute('style', style);
+    if (isArgument(mask))       el.setAttribute('mask', getUrl(mask));
+
     svg.append(el);
 };
 
-function generateLine(x1, y1, x2, y2, stroke, strokeWidth, mask){
-    stroke = stroke || '#999';
-    strokeWidth = strokeWidth || 1;
+function generateLine(x1, y1, x2, y2, strokeParam, strokeWidthParam, mask) {
+
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+
     el.setAttribute('x1', roundDown(x1));
     el.setAttribute('y1', roundDown(y1));
     el.setAttribute('x2', roundDown(x2));
     el.setAttribute('y2', roundDown(y2));
-    el.setAttribute('stroke', stroke);
-    el.setAttribute('stroke-width', strokeWidth);
-    if ( mask ) el.setAttribute('mask', getMaskUrl(mask));
+    el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
+    el.setAttribute('stroke-width', paramOrDefault(strokeWidthParam, strokeWidth));
+
+    if (isArgument(mask)) el.setAttribute('mask', getUrl(mask));
+
     svg.append(el);
 };
 
-function generatePolygon(points, fill, stroke, strokeWidth){
-    fill   = fill   || defaultLightColor;
-    stroke = stroke || defaultDarkColor;
-    strokeWidth = strokeWidth || 1;
+function generatePolygon(points, fillParam, strokeParam, strokeWidthParam) {
+
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+
     el.setAttribute('points', points);
-    el.setAttribute('fill', fill);
-    el.setAttribute('stroke', stroke);
-    el.setAttribute('stroke-width', strokeWidth);
+    el.setAttribute('fill', paramOrDefault(fillParam, fill));
+    el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
+    el.setAttribute('stroke-width', paramOrDefault(strokeWidthParam, strokeWidth));
+
     svg.append(el);
 };
 
-function generateQuadraticPath(startx, starty, middlex, middley, endx, endy, strokeWidth, stroke, fill, isRelative){
-    stroke = stroke || defaultDarkColor;
-    strokeWidth = strokeWidth || 1;
-    fill   = fill || 'rgba(255, 255, 255, 0)';
-    var relative;
-    isRelative ? relative = 'q' : relative = 'Q';
-    var d = 'M' + roundDown(startx) + ',' + roundDown(starty) + ' ' + relative + roundDown(middlex) + ',' + roundDown(middley) + ' ' + roundDown(endx) + ',' + roundDown(endy);
+function generateQuadraticPath(startx, starty, middlex, middley, endx, endy, strokeParam, strokeWidthParam, fillParam, isRelative) {
+
+    var d = 'M' +
+            roundDown(startx) + ',' +
+            roundDown(starty) + ' ' +
+            (isRelative ? 'q' : 'Q') +
+            roundDown(middlex) + ',' +
+            roundDown(middley) + ' ' +
+            roundDown(endx) + ',' +
+            roundDown(endy);
+
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
     el.setAttribute('d', d);
-    el.setAttribute('stroke', stroke);
-    el.setAttribute('stroke-width', strokeWidth);
-    el.setAttribute('fill', fill);
+    el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
+    el.setAttribute('stroke-width', paramOrDefault(strokeWidthParam, strokeWidth));
+    el.setAttribute('fill', paramOrDefault(fillParam, transparent));
+
     svg.append(el);
 };
 
-function generateArc(startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, closed, stroke, fill){
-    var d = 'M' + roundDown(startx) + ',' + roundDown(starty) + ' A' + roundDown(radiix) + ',' + roundDown(radiiy) + ' ' + roundDown(rotationx) + ' ' + largeArc + ',' + sweep + ' ' + roundDown(endx) + ',' + roundDown(endy);
-    if (closed) d = d + ' z';
+function generateArc(startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, isClosed, strokeParam, strokeWidthParam, fillParam) {
+
+    var d = 'M' +
+            roundDown(startx) + ',' +
+            roundDown(starty) +
+            ' A' +
+            roundDown(radiix) + ',' +
+            roundDown(radiiy) + ' ' +
+            roundDown(rotationx) + ' ' +
+            largeArc + ',' +
+            sweep + ' ' +
+            roundDown(endx) + ',' +
+            roundDown(endy);
+
+    if (isClosed) d = d + ' z';
+
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
     el.setAttribute('d', d);
-    el.setAttribute('stroke', defaultDarkColor);
-    el.setAttribute('fill', 'rgba(255, 255, 255, 0)');
+    el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
+    el.setAttribute('stroke-width', paramOrDefault(strokeWidthParam, strokeWidth));
+    el.setAttribute('fill', paramOrDefault(fillParam, transparent));
+
     svg.append(el);
 };
 
 function generateMask(topY, width, height, isTop) {
 
     var maskEl = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+
     maskEl.setAttribute('maskUnits', 'userSpaceOnUse');
     maskEl.setAttribute('maskContentUnits', 'userSpaceOnUse');
-    var maskID = (isTop ? 'top-transparent-fade' : 'bottom-transparent-fade');
-    maskEl.setAttribute('id', maskID);
+    maskEl.setAttribute('id', isTop ? 'top-transparent-fade' : 'bottom-transparent-fade');
 
     var lindearGradientEl = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-    var linearGradientID = (isTop ? 'transparent-fade-fill-top' : 'transparent-fade-fill-bottom');
-    lindearGradientEl.setAttribute('id', linearGradientID);
+
+    lindearGradientEl.setAttribute('id', isTop ? 'transparent-fade-fill-top' : 'transparent-fade-fill-bottom');
     lindearGradientEl.setAttribute('gradientUnits', 'objectBoundingBox');
     lindearGradientEl.setAttribute('x1', 0);
     lindearGradientEl.setAttribute('y1', 0);
@@ -125,23 +146,24 @@ function generateMask(topY, width, height, isTop) {
     lindearGradientEl.setAttribute('y2', 1);
 
     var stopElOpaque = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+
     stopElOpaque.setAttribute('stop-color', 'white');
-    var opaqueOffset = (isTop ? 1 : 0);
-    stopElOpaque.setAttribute('offset', opaqueOffset);
+    stopElOpaque.setAttribute('offset', isTop ? 1 : 0);
 
     var stopElTransparent = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+
     stopElTransparent.setAttribute('stop-color', 'white');
     stopElTransparent.setAttribute('stop-opacity', 0);
-    var transparentOffset = (isTop ? 0 : 1);
-    stopElTransparent.setAttribute('offset', transparentOffset);
+    stopElTransparent.setAttribute('offset', isTop ? 0 : 1);
 
     var rectEl = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+
     rectEl.setAttribute('x', 0);
     rectEl.setAttribute('y', topY);
     rectEl.setAttribute('width', width);
     rectEl.setAttribute('height', height);
     rectEl.setAttribute('stroke-width', 0);
-    rectEl.setAttribute('fill', 'url(#' + linearGradientID + ')');
+    rectEl.setAttribute('fill', getUrl(linearGradientID));
 
     if (isTop) {
         $(lindearGradientEl).append(stopElTransparent).append(stopElOpaque);
