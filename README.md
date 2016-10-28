@@ -32,17 +32,13 @@ Open your diagram:
 
     $ open http://localhost:8000?diagram=<new-diagram-name>
 
-There are 3 sections in your new diagram file:
+Set a namespace for your diagrams, and a width and height (you diagrams will automatically be set to `svgWidth` and `svgHeight`, and you can [manually set the dimensions of individual diagrams](#helper-functions).
 
-#### 1. `// dynamic values`
-For variables like `nodeHeight` or `labelFontSize`.
+The **dynamic values** section is for variables to hold things like the size of nodes, the distance between nodes, and the font size of labels.
 
-#### 2. `// functions for drawing diagrams`
-For functions like `drawBinaryTree(depth)` or `drawArrow(startX, startY, endX, endY)`.
+The **functions for drawing diagrams** section should hold functions for things like drawing binary trees or drawing arrows.
 
-#### 3. `// generate diagrams`
-Give your diagram a namespace and add a function for each diagram (if you only need one diagram, just leave one function).
-
+If you need multiple similar diagrams, add a function for each diagram in `diagramFunctions`.
 
 
 
@@ -62,13 +58,13 @@ See cheetsheet at the bottom of the template and [SVG MDN documentation](https:/
 
 ## Helper functions
 
-##### `setSVGDimensions(width, height)`
+**`setSVGDimensions(width, height)`**:
 If you need to change your diagram dimensions for an individual diagram.
 
-##### `roundDown(number)`
+**`roundDown(number)`**:
 Final numerical values in your diagram should be integers. All `x` and `y` arguments are automatically rounded down for you.
 
-##### `xof(coordinates)` and`yof(coordinates)`
+**`xof(coordinates)` and`yof(coordinates)`**:
 If you're storing a set of coordinates:
 
 ```javascript
@@ -83,39 +79,25 @@ var coordinates = [
 
 you can use `xof(2)` to get the `x` coordinate at index 2.
 
-##### `randRange(lower, upper)`
-Fet a random integer in the range `lower..upper` inclusive.
+**`randRange(lower, upper)`**:
+Get a random integer in the range `lower..upper` inclusive.
 
-##### `randSign()`
+**`randSign()`**:
 Randomly get 1 or -1.
 
 
 
 ## Default values
 
-| variable            | value                        |
-| ------------------- | ---------------------------- |
-| `darkColor`         | `'#555'`                     |
-| `lightColor`        | `'white'`                    |
-| `icBlue`            | `'rgb(91, 192, 222)'`        |
-| `icBlueTransparent` | `'rgba(91, 192, 222, 0.15)'` |
-| `transparent`       | `'rgba(255, 255, 255, 0)'`   |
-| `fill`              | `lightColor`                 |
-| `stroke`            | `darkColor`                  |
-| `strokeWidth`       | `1`                          |
-| `borderRadius`      | `0`                          |
-| `fontColor`         | `darkColor`                  |
-| `fontWeight`        | `'normal'`                   |
-| `textAnchor`        | `'middle'`                   |
-| `mathFont`          | `'Droid Serif'`              |
+[Default values](js/default_values.js)
 
-These values will apply to optional arguments in the `generateElement` functions, and they're available to use in your diagram file.
+These values apply to optional arguments in the `generateElement` functions, and they're available to use in your diagram file.
 
 You can also override a default value in your diagram file and it will apply to all elements.
 
-Use our transparent value, not the css value `transparent` (in browsers that don't support rgba, we want to default to white not black).
-
 For text, we use our `stroke` value as a default for the text `fill` property.
+
+There are also values for the official Interview Cake blue. Use our transparent color value, not the css value `transparent` (in browsers that don't support rgba, we want to default to white not black).
 
 
 

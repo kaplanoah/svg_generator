@@ -1,8 +1,12 @@
-
-// dynamic values
+var nameSpace = 'template';
 
 var svgWidth  = 300;
 var svgHeight = 100;
+
+
+// dynamic values
+
+
 
 
 
@@ -16,10 +20,7 @@ var svgHeight = 100;
 
 
 
-
 // generate diagrams
-
-var nameSpace = 'template';
 
 var diagramFunctions = [
 
@@ -31,11 +32,11 @@ var diagramFunctions = [
 
 
 function setUp() {
-    // runs before every draw function
+    // runs before every diagram function
 }
 
 function tearDown() {
-    // runs after every draw function
+    // runs after every diagram function
 }
 
 

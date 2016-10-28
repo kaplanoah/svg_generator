@@ -80,7 +80,10 @@ var nextDiagramIndex = 0;
 
 function drawNextDiagram() {
     replaceSVG();
-    setSVGDimensions(svgWidth, svgHeight);
+
+    if (window.svgWidth && window.svgHeight) {
+        setSVGDimensions(svgWidth, svgHeight);
+    }
 
     setUp();
 
