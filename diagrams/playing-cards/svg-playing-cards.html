@@ -137,7 +137,7 @@ function clearSettings() {
     setSVGDimensions(svgWidth, svgHeight);
 }
 
-var drawFunctions = [
+var diagramFunctions = [
 
     function canBeRiffle() {
         name = nameSpace + 'can_be_single_riffle';
@@ -153,12 +153,12 @@ var nextDiagramIndex = 0;
 function drawNextDiagram() {
     replaceSVG();
     clearSettings();
-    drawFunctions[nextDiagramIndex]();
+    diagramFunctions[nextDiagramIndex]();
     everyTime();
     displayName(name);
     nextDiagramIndex += 1;
 
-    if (nextDiagramIndex === drawFunctions.length) {
+    if (nextDiagramIndex === diagramFunctions.length) {
         nextDiagramIndex = 0;
     }
 }

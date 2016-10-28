@@ -6,27 +6,43 @@ For making SVGs programmatically that are easy to manipulate.
 
 ## Getting started
 
-[Fork and clone this repository](https://help.github.com/articles/fork-a-repo/)
+[Fork and clone the repository.](https://help.github.com/articles/fork-a-repo/)
 
 Start your local server:
 
     $ python -m SimpleHTTPServer
 
-View the template:
+Open a diagram:
 
-    $ open http://localhost:8000?diagram=template
+    $ open http://localhost:8000?diagram=<diagram file name>
+
+Diagram files are in [diagrams/](diagrams/), so for example:
+
+    $ open http://localhost:8000?diagram=linked-list-small
 
 
 
 ## Making a new diagram
 
-Copy the template into a new script:
+Copy the template into a new diagram file:
 
     $ cp diagrams/template.js diagrams/<new-diagram-name>.js
 
 Open your diagram:
 
     $ open http://localhost:8000?diagram=<new-diagram-name>
+
+There are 3 sections in your new diagram file:
+
+**1. dynamic values**
+For variables like `nodeHeight` or `labelFontSize`.
+
+**2. functions for drawing diagrams**
+For functions like `drawBinaryTree(depth)` or `drawArrow(startX, startY, endX, endY)`.
+
+**3. generate diagrams**
+
+
 
 
 

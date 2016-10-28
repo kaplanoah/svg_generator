@@ -66,7 +66,7 @@ var labelLineHeight = 12;
 var coordinates;
 
 function generateNodeCoordinates() {
-    
+
     coordinates = [];
     for (var i=0; i<9; i++) {
         x = leftMargin + i * nodeSpacing;
@@ -365,7 +365,7 @@ function clearSettings() {
     // topMargin = 35;
 }
 
-var drawFunctions = [
+var diagramFunctions = [
 
     function introExample() {
         name = stickNameSpace + 'intro_example';
@@ -403,7 +403,7 @@ var drawFunctions = [
     },
     function twoNodeLoop() {
         name = nameSpace + 'last_2_nodes_loop';
-        topMargin = 
+        topMargin =
         setSVGDimensions(287, 41);
         draw2NodeLoop();
         topMargin = 35;
@@ -416,11 +416,11 @@ function drawNextDiagram() {
     replaceSVG();
     clearSettings();
     generateNodeCoordinates();
-    drawFunctions[nextDiagramIndex]();
+    diagramFunctions[nextDiagramIndex]();
     displayName(name);
     nextDiagramIndex += 1;
 
-    if (nextDiagramIndex === drawFunctions.length) {
+    if (nextDiagramIndex === diagramFunctions.length) {
         nextDiagramIndex = 0;
     }
 }

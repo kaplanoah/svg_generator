@@ -177,7 +177,7 @@ function clearSettings() {
     fadeBottomRows = 2;
 }
 
-var drawFunctions = [
+var diagramFunctions = [
 
     function ramEmpty() {
         name = nameSpace + 'ram_empty';
@@ -199,11 +199,11 @@ var nextDiagramIndex = 0;
 function drawNextDiagram() {
     replaceSVG();
     clearSettings();
-    drawFunctions[nextDiagramIndex]();
+    diagramFunctions[nextDiagramIndex]();
     displayName(name);
     nextDiagramIndex += 1;
 
-    if (nextDiagramIndex === drawFunctions.length) {
+    if (nextDiagramIndex === diagramFunctions.length) {
         nextDiagramIndex = 0;
     }
 }

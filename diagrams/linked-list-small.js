@@ -164,7 +164,7 @@ function labelLine(label, x, y) {
 
 var nameSpace = 'kth_last_node';
 
-var drawFunctions = [
+var diagramFunctions = [
 
     function stickAtStart() {
         drawStick(0, 2);

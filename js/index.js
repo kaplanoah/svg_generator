@@ -84,15 +84,15 @@ function drawNextDiagram() {
 
     setUp();
 
-    drawFunctions[nextDiagramIndex]();
+    diagramFunctions[nextDiagramIndex]();
 
-    displayName(drawFunctions[nextDiagramIndex].name);
+    displayName(diagramFunctions[nextDiagramIndex].name);
     displaySvgContents();
 
     tearDown();
 
     nextDiagramIndex += 1;
-    if (nextDiagramIndex === drawFunctions.length) {
+    if (nextDiagramIndex === diagramFunctions.length) {
         nextDiagramIndex = 0;
     }
 };

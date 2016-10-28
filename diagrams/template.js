@@ -21,7 +21,7 @@ var svgHeight = 100;
 
 var nameSpace = 'template';
 
-var drawFunctions = [
+var diagramFunctions = [
 
     function firstDiagram() {
         generateRect(10, 10, 20, 20);

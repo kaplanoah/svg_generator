@@ -95,7 +95,7 @@ function clearSettings() {
     // clear settings
 }
 
-var drawFunctions = [
+var diagramFunctions = [
 
     function firstDiagram() {
         name = nameSpace + 'worst_case_thirteen';
@@ -107,11 +107,11 @@ var nextDiagramIndex = 0;
 function drawNextDiagram() {
     replaceSVG();
     clearSettings();
-    drawFunctions[nextDiagramIndex]();
+    diagramFunctions[nextDiagramIndex]();
     displayName(name);
     nextDiagramIndex += 1;
 
-    if (nextDiagramIndex === drawFunctions.length) {
+    if (nextDiagramIndex === diagramFunctions.length) {
         nextDiagramIndex = 0;
     }
 }

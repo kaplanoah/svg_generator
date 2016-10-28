@@ -143,7 +143,7 @@ function drawStick(startNode, endNode) {
 
 	var ends = [stickStart, stickEnd];
 	for (var i=0; i < 2; i++) {
-		generateRect(ends[i] - stickEndWidth / 2, y - stickEndWidth / 2, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);	
+		generateRect(ends[i] - stickEndWidth / 2, y - stickEndWidth / 2, stickEndWidth, stickEndWidth, stickEndRadius, defaultDarkColor);
 	}
 
 	generateLine(stickStart, y, stickEnd, y, defaultDarkColor);
@@ -159,7 +159,7 @@ function labelk(last) {
 	} else {
 		generateText('k', kx - 5.7, topMargin + nodeWidth + kLabelOffset, null, mathLabelSize, null, mathFont, null, null, 'font-style:italic');
 		generateText('th', kx + 4.4, topMargin + nodeWidth + kLabelOffset - 0.1, null, stickLabelSize);
-	}	
+	}
 }
 
 // lines
@@ -207,7 +207,7 @@ var stickLastHeight = 93;
 var nHeight = 62;
 var kHeight = 126;
 
-var drawFunctions = [
+var diagramFunctions = [
 
     function start() {
         name = nameSpace + 'stick_at_start';
@@ -253,10 +253,10 @@ var nextDiagramIndex = 0;
 function drawNextDiagram() {
     replaceSVG();
     everyTime();
-    drawFunctions[nextDiagramIndex]();
+    diagramFunctions[nextDiagramIndex]();
     displayName(name);
     nextDiagramIndex += 1;
-    if (nextDiagramIndex === drawFunctions.length) {
+    if (nextDiagramIndex === diagramFunctions.length) {
         nextDiagramIndex = 0;
     }
 }
