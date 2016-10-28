@@ -34,13 +34,13 @@ Open your diagram:
 
 There are 3 sections in your new diagram file:
 
-#### 1. dynamic values
+#### 1. `// dynamic values`
 For variables like `nodeHeight` or `labelFontSize`.
 
-#### 2. functions for drawing diagrams
+#### 2. `// functions for drawing diagrams`
 For functions like `drawBinaryTree(depth)` or `drawArrow(startX, startY, endX, endY)`.
 
-#### 3. generate diagrams
+#### 3. `// generate diagrams`
 Give your diagram a namespace and add a function for each diagram (if you only need one diagram, just leave one function).
 
 
@@ -62,13 +62,13 @@ See cheetsheet at the bottom of the template and [SVG MDN documentation](https:/
 
 ## Helper functions
 
-#### `setSVGDimensions(width, height)`
+##### `setSVGDimensions(width, height)`
 If you need to change your diagram dimensions for an individual diagram.
 
-#### `roundDown(number)`
+##### `roundDown(number)`
 Final numerical values in your diagram should be integers. All `x` and `y` arguments are automatically rounded down for you.
 
-#### `xof(coordinates)` and`yof(coordinates)`**
+##### `xof(coordinates)` and`yof(coordinates)`
 If you're storing a set of coordinates:
 
 ```javascript
@@ -83,10 +83,10 @@ var coordinates = [
 
 you can use `xof(2)` to get the `x` coordinate at index 2.
 
-#### `randRange(lower, upper)`
-Fet a random number in the range `lower..upper` inclusive.
+##### `randRange(lower, upper)`
+Fet a random integer in the range `lower..upper` inclusive.
 
-#### `randSign()`
+##### `randSign()`
 Randomly get 1 or -1.
 
 
@@ -109,7 +109,9 @@ Randomly get 1 or -1.
 | `textAnchor`        | `'middle'`                   |
 | `mathFont`          | `'Droid Serif'`              |
 
-You can override a default value in your diagram file and it will apply to all elements.
+These values will apply to optional arguments in the `generateElement` functions, and they're available to use in your diagram file.
+
+You can also override a default value in your diagram file and it will apply to all elements.
 
 Use our transparent value, not the css value `transparent` (in browsers that don't support rgba, we want to default to white not black).
 
@@ -131,11 +133,11 @@ Include on the page using the tag
 
 ## Style guide
 
-One pen
+Make your diagram close to how you'd draw it on a piece of paper.
 
-Tight margines, diagram should be nearly at the edge of the diagram
+Your diagram should fit seamlessly on the page on Interview Cake, as if you used one pen to write the content and draw the diagram.
 
-Think about how you'd draw it on paper
+The elements in your diagram should be nearly at the edge of the SVG.
 
 
 
