@@ -16,7 +16,7 @@ Open a diagram:
 
     $ open http://localhost:8000?diagram=<diagram file name>
 
-Diagram files are in [diagrams/](diagrams/), so for example:
+Diagram files are in [diagrams/](diagrams/) so for example:
 
     $ open http://localhost:8000?diagram=linked-list-small
 
@@ -60,21 +60,28 @@ See cheetsheet at the bottom of the template and [SVG MDN documentation](https:/
 
 
 
-## Available functions
+## Helper functions
 
-```
-setSVGDimensions
+**`setSVGDimensions(width, height)`**: if you need to change your diagram dimensions for an individual diagram.
 
-roundDown (x and y coordinates are rounded down for you)
+**`roundDown(number)`**: final numerical values in your diagram should be integers. All `x` and `y` arguments are automatically rounded down for you.
 
-xof
+**`xof(coordinates)` and **`yof(coordinates)`**: if you're storing a set of coordinates:
 
-yof
+```javascript
+var coordinates = [
+    // [x, y]
+    [0, 1],
+    [0, 4],
+    [3, 1],
+    [3, 4],
+]
 
-randRange (inclusive)
+you can use `xof(2)` to get the `x` coordinate at index 2.
 
-randSign
-```
+**`randRange(lower, upper)`**: get a random number in the range `lower..upper` inclusive.
+
+**`randSign()`**: randomly get 1 or -1.
 
 
 
