@@ -1,4 +1,4 @@
-# Svg Generator
+# SVG Generator
 
 For making SVGs programmatically that are easy to manipulate.
 
@@ -32,7 +32,7 @@ Open your diagram:
 
     $ open http://localhost:8000?diagram=<new-diagram-name>
 
-Set a namespace for your diagrams, and a width and height (you diagrams will automatically be set to `svgWidth` and `svgHeight`, and you can [manually set the dimensions of individual diagrams](#helper-functions).
+Set a namespace for your diagrams, and a width and height. Your diagrams will automatically be set to `svgWidth` and `svgHeight`, and you can [manually set the dimensions of individual diagrams](#helper-functions).
 
 The **dynamic values** section is for variables to hold things like the size of nodes, the distance between nodes, and the font size of labels.
 
@@ -42,7 +42,7 @@ If you need multiple similar diagrams, add a function for each diagram in `diagr
 
 
 
-## Sample diagram:
+## Sample diagram
 
 [linked-list-small.js](diagrams/linked-list-small.js)
 
@@ -89,11 +89,9 @@ Randomly get 1 or -1.
 
 ## Default values
 
-[Default values](js/default_values.js)
+[Default values](js/default_values.js) apply to optional arguments in the `generateElement` functions, and they're available to use in your diagram file.
 
-These values apply to optional arguments in the `generateElement` functions, and they're available to use in your diagram file.
-
-You can also override a default value in your diagram file and it will apply to all elements.
+You can override a default value in your diagram file and it will apply to all elements.
 
 For text, we use our `stroke` value as a default for the text `fill` property.
 
