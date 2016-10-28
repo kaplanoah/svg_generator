@@ -2,8 +2,8 @@ function generateRect(x, y, width, height, borderRadiusParam, fillParam, strokeP
 
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-    el.setAttribute('x', roundDown(x));
-    el.setAttribute('y', roundDown(y));
+    el.setAttribute('x', round(x));
+    el.setAttribute('y', round(y));
     el.setAttribute('width', width);
     el.setAttribute('height', height);
     el.setAttribute('rx', paramOrDefault(borderRadiusParam, borderRadius));
@@ -22,8 +22,8 @@ function generateCircle(cx, cy, r, fillParam, strokeParam, strokeWidthParam){
 
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 
-    el.setAttribute('cx', roundDown(cx));
-    el.setAttribute('cy', roundDown(cy));
+    el.setAttribute('cx', round(cx));
+    el.setAttribute('cy', round(cy));
     el.setAttribute('r', r);
     el.setAttribute('fill', paramOrDefault(fillParam, fill));
     el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
@@ -38,8 +38,8 @@ function generateText(content, x, y, fontSize, fontWeightParam, fillParam, fontF
 
     el.textContent = content;
 
-    el.setAttribute('x', roundDown(x));
-    el.setAttribute('y', roundDown(y));
+    el.setAttribute('x', round(x));
+    el.setAttribute('y', round(y));
     el.setAttribute('font-size', fontSize);
     el.setAttribute('font-weight', paramOrDefault(fontWeightParam, fontWeight));
     el.setAttribute('fill', paramOrDefault(fillParam, fontColor));
@@ -57,10 +57,10 @@ function generateLine(x1, y1, x2, y2, strokeParam, strokeWidthParam, mask) {
 
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 
-    el.setAttribute('x1', roundDown(x1));
-    el.setAttribute('y1', roundDown(y1));
-    el.setAttribute('x2', roundDown(x2));
-    el.setAttribute('y2', roundDown(y2));
+    el.setAttribute('x1', round(x1));
+    el.setAttribute('y1', round(y1));
+    el.setAttribute('x2', round(x2));
+    el.setAttribute('y2', round(y2));
     el.setAttribute('stroke', paramOrDefault(strokeParam, stroke));
     el.setAttribute('stroke-width', paramOrDefault(strokeWidthParam, strokeWidth));
 
@@ -84,13 +84,13 @@ function generatePolygon(points, fillParam, strokeParam, strokeWidthParam) {
 function generateQuadraticPath(startx, starty, middlex, middley, endx, endy, strokeParam, strokeWidthParam, fillParam, isRelative) {
 
     var d = 'M' +
-            roundDown(startx) + ',' +
-            roundDown(starty) + ' ' +
+            round(startx) + ',' +
+            round(starty) + ' ' +
             (isRelative ? 'q' : 'Q') +
-            roundDown(middlex) + ',' +
-            roundDown(middley) + ' ' +
-            roundDown(endx) + ',' +
-            roundDown(endy);
+            round(middlex) + ',' +
+            round(middley) + ' ' +
+            round(endx) + ',' +
+            round(endy);
 
     var el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
@@ -105,16 +105,16 @@ function generateQuadraticPath(startx, starty, middlex, middley, endx, endy, str
 function generateArc(startx, starty, radiix, radiiy, rotationx, largeArc, sweep, endx, endy, isClosed, strokeParam, strokeWidthParam, fillParam) {
 
     var d = 'M' +
-            roundDown(startx) + ',' +
-            roundDown(starty) +
+            round(startx) + ',' +
+            round(starty) +
             ' A' +
-            roundDown(radiix) + ',' +
-            roundDown(radiiy) + ' ' +
-            roundDown(rotationx) + ' ' +
+            round(radiix) + ',' +
+            round(radiiy) + ' ' +
+            round(rotationx) + ' ' +
             largeArc + ',' +
             sweep + ' ' +
-            roundDown(endx) + ',' +
-            roundDown(endy);
+            round(endx) + ',' +
+            round(endy);
 
     if (isClosed) d = d + ' z';
 

@@ -1,5 +1,6 @@
-function roundDown(n) {
-    return Math.round(n*10) / 10;
+function round(value) {
+    // http://www.jacklmoore.com/notes/rounding-in-javascript/
+    return Number(Math.round(value + 'e1') + 'e-1');
 }
 
 function xof(i, coordinates) {

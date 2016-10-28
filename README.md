@@ -59,13 +59,13 @@ See cheetsheet at the bottom of the template and [SVG MDN documentation](https:/
 ## Helper functions
 
 **`setSVGDimensions(width, height)`**:
-If you need to change your diagram dimensions for an individual diagram.
+Changes an individual SVG's width and height.
 
-**`roundDown(number)`**:
-Final numerical values in your diagram should be integers. All `x` and `y` arguments are automatically rounded down for you.
+**`round(number)`**:
+Rounds to 1 decimal place. All `x` and `y` arguments are automatically rounded.
 
-**`xof(coordinates)` and`yof(coordinates)`**:
-If you're storing a set of coordinates:
+**`xof(i, coordinates)` and`yof(i, coordinates)`**:
+Get's the coordinate at index `i` if you store coordinates like this:
 
 ```javascript
 var coordinates = [
@@ -76,8 +76,6 @@ var coordinates = [
     [3, 4],
 ]
 ```
-
-you can use `xof(2)` to get the `x` coordinate at index 2.
 
 **`randRange(lower, upper)`**:
 Get a random integer in the range `lower..upper` inclusive.
