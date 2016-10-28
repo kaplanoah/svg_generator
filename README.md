@@ -34,14 +34,14 @@ Open your diagram:
 
 There are 3 sections in your new diagram file:
 
-**1. dynamic values**
+#### 1. dynamic values
 For variables like `nodeHeight` or `labelFontSize`.
 
-**2. functions for drawing diagrams**
+#### 2. functions for drawing diagrams
 For functions like `drawBinaryTree(depth)` or `drawArrow(startX, startY, endX, endY)`.
 
-**3. generate diagrams**
-
+#### 3. generate diagrams
+Give your diagram a namespace and add a function for each diagram (if you only need one diagram, just leave one function).
 
 
 
@@ -62,11 +62,14 @@ See cheetsheet at the bottom of the template and [SVG MDN documentation](https:/
 
 ## Helper functions
 
-**`setSVGDimensions(width, height)`**: if you need to change your diagram dimensions for an individual diagram.
+#### `setSVGDimensions(width, height)`
+If you need to change your diagram dimensions for an individual diagram.
 
-**`roundDown(number)`**: final numerical values in your diagram should be integers. All `x` and `y` arguments are automatically rounded down for you.
+#### `roundDown(number)`
+Final numerical values in your diagram should be integers. All `x` and `y` arguments are automatically rounded down for you.
 
-**`xof(coordinates)` and **`yof(coordinates)`**: if you're storing a set of coordinates:
+#### `xof(coordinates)` and`yof(coordinates)`**
+If you're storing a set of coordinates:
 
 ```javascript
 var coordinates = [
@@ -76,40 +79,41 @@ var coordinates = [
     [3, 1],
     [3, 4],
 ]
+```
 
 you can use `xof(2)` to get the `x` coordinate at index 2.
 
-**`randRange(lower, upper)`**: get a random number in the range `lower..upper` inclusive.
+#### `randRange(lower, upper)`
+Fet a random number in the range `lower..upper` inclusive.
 
-**`randSign()`**: randomly get 1 or -1.
+#### `randSign()`
+Randomly get 1 or -1.
 
 
 
 ## Default values
 
-```
-var darkColor  = '#555';
-var lightColor = 'white';
+| variable            | value                        |
+| ------------------- | ---------------------------- |
+| `darkColor`         | `'#555'`                     |
+| `lightColor`        | `'white'`                    |
+| `icBlue`            | `'rgb(91, 192, 222)'`        |
+| `icBlueTransparent` | `'rgba(91, 192, 222, 0.15)'` |
+| `transparent`       | `'rgba(255, 255, 255, 0)'`   |
+| `fill`              | `lightColor`                 |
+| `stroke`            | `darkColor`                  |
+| `strokeWidth`       | `1`                          |
+| `borderRadius`      | `0`                          |
+| `fontColor`         | `darkColor`                  |
+| `fontWeight`        | `'normal'`                   |
+| `textAnchor`        | `'middle'`                   |
+| `mathFont`          | `'Droid Serif'`              |
 
-var icBlue            = 'rgb(91, 192, 222)';
-var icBlueTransparent = 'rgba(91, 192, 222, 0.15)';
-var transparent       = 'rgba(255, 255, 255, 0)';
-
-var fill = lightColor;
-var stroke = darkColor;
-var strokeWidth = 1;
-var borderRadius = 0;
-
-var fontColor  = darkColor;
-var fontWeight = 'normal';
-var textAnchor = 'middle';
-
-var mathFont = 'Droid Serif';
-```
+You can override a default value in your diagram file and it will apply to all elements.
 
 Use our transparent value, not the css value `transparent` (in browsers that don't support rgba, we want to default to white not black).
 
-You can override a default value and it will apply to all elements.
+For text, we use our `stroke` value as a default for the text `fill` property.
 
 
 
