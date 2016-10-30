@@ -107,6 +107,8 @@ Add a description
 
 Include on the page using the tag
 
+Increment cache bust if it's a change, not a new svg
+
 
 
 ## Style guide
