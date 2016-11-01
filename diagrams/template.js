@@ -12,7 +12,7 @@ var svgHeight = 100;
 
 
 
-// functions for drawing diagrams
+// drawing functions
 
 
 

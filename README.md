@@ -36,7 +36,7 @@ Set a namespace for your diagrams, and a width and height. Your diagrams will au
 
 The **dynamic values** section is for variables to hold things like the size of nodes, the distance between nodes, and the font size of labels.
 
-The **functions for drawing diagrams** section should hold functions for things like drawing binary trees or drawing arrows.
+The **drawing functions** section should hold functions for things like drawing binary trees or drawing arrows.
 
 If you need multiple similar diagrams, add a function for each diagram in `diagramFunctions`.
 
