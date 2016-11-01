@@ -60,10 +60,6 @@ function getQueryParam(param, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function setQueryString(param, value) {
-    window.location.href = window.location.href.split(/[?#]/)[0] + '?' + param + '=' + value;
-}
-
 function displayError(errorMessage) {
     $('.error').text(errorMessage).css('display', 'inline-block');
 }

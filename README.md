@@ -58,13 +58,13 @@ See cheetsheet at the bottom of the template and [SVG MDN documentation](https:/
 
 ## Helper functions
 
-**`setSVGDimensions(width, height)`**:
+`setSVGDimensions(width, height)` <br/>
 Changes an individual SVG's width and height.
 
-**`round(number)`**:
+`round(number)` <br/>
 Rounds to 1 decimal place. All `x` and `y` arguments are automatically rounded.
 
-**`xof(i, coordinates)` and`yof(i, coordinates)`**:
+`xof(i, coordinates)` and`yof(i, coordinates)` <br/>
 Get's the coordinate at index `i` if you store coordinates like this:
 
 ```javascript
@@ -77,10 +77,10 @@ var coordinates = [
 ]
 ```
 
-**`randRange(lower, upper)`**:
+`randRange(lower, upper)` <br/>
 Get a random integer in the range `lower..upper` inclusive.
 
-**`randSign()`**:
+`randSign()` <br/>
 Randomly get 1 or -1.
 
 
