@@ -25,19 +25,24 @@ function paramOrDefault(parameter, defaultVariable) {
     return isArgument(parameter) ? parameter : defaultVariable;
 }
 
-function displayName(name) {
-    var currentDiagram = nameSpace.toSnakeCase() + '__' + name.toSnakeCase();
-    $('#current-diagram').text(currentDiagram);
-}
-
 String.prototype.toSnakeCase = function() {
     return this.replace(/([A-Z])/g, function($1) {
         return "_" + $1.toLowerCase();
     });
 };
 
-function displaySvgContents() {
-    $('#svg-contents').val(document.getElementsByTagName('svg')[0].innerHTML);
+function displayContentsAndData(name) {
+    var namespacedName = nameSpace.toSnakeCase() + '__' + name.toSnakeCase();
+    var svgContents = document.getElementsByTagName('svg')[0].innerHTML;
+    var svgData = "'" + namespacedName + "': {\n" +
+                  "    'width': " + svg.width() + ",\n" +
+                  "    'height': " + svg.height() + ",\n" +
+                  "    'desc': '',\n" +
+                  "},";
+
+    $('#current-diagram').text(namespacedName);
+    $('#svg-contents').val(svgContents);
+    $('#svg-data').val(svgData);
 }
 
 function getUrl(id) {
@@ -85,8 +90,7 @@ function drawNextDiagram() {
 
     diagramFunctions[nextDiagramIndex]();
 
-    displayName(diagramFunctions[nextDiagramIndex].name);
-    displaySvgContents();
+    displayContentsAndData(diagramFunctions[nextDiagramIndex].name);
 
     tearDown();
 

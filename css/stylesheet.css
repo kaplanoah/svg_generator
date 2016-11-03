@@ -23,23 +23,31 @@ body {
 }
 
 button {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     display: block;
 }
 
 .diagram-frame {
     display: inline-block;
     border: 1px solid transparent;
-    margin: 20px 0 30px;
+    margin: 15px 0 30px;
 }
 
 .border {
     border-color: lightgrey;
 }
 
-#svg-contents {
+.copy-contents {
     display: block;
-    margin-bottom: 10px;
-    width: 300px;
+}
+
+.copy-contents div {
+    display: inline-block;
+}
+
+.copy-contents textarea {
+    display: block;
+    margin: 0 10px 7px 0;
+    width: 250px;
     height: 100px;
 }

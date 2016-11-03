@@ -21,10 +21,20 @@
     </div>
 </div>
 
-<textarea type="text" id="svg-contents">
-</textarea>
+<div class="copy-contents">
+    <div>
+        <textarea type="text" id="svg-contents">
+        </textarea>
 
-<button onclick="copyToClipboard('#svg-contents')">Copy to clipboard</button>
+        <button onclick="copyToClipboard('#svg-contents')">Copy to clipboard</button>
+    </div>
+    <div>
+        <textarea type="text" id="svg-data">
+        </textarea>
+
+        <button onclick="copyToClipboard('#svg-data')">Copy to clipboard</button>
+    </div>
+</div>
 
 <script type='text/javascript' src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
 <script type='text/javascript' src='js/index.js'></script>

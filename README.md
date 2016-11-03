@@ -64,7 +64,8 @@ Changes an individual SVG's width and height.
 `round(number)` <br/>
 Rounds to 1 decimal place. All `x` and `y` arguments are automatically rounded.
 
-`xof(i, coordinates)` and`yof(i, coordinates)` <br/>
+`xof(i, coordinates)` <br/>
+`yof(i, coordinates)` <br/>
 Get's the coordinate at index `i` if you store coordinates like this:
 
 ```javascript
@@ -124,6 +125,5 @@ The elements in your diagram should be nearly at the edge of the SVG.
 ## Planned features
 
 - load a specific diagram function by passing an index or function name in the query string
-- generate and display the dictionary of data for settings to copy
 - make old diagrams compatible with new version
 - testing and error messages
