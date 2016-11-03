@@ -125,5 +125,7 @@ The elements in your diagram should be nearly at the edge of the SVG.
 ## Planned features
 
 - load a specific diagram function by passing an index or function name in the query string
+- toggle between current display and displaying diagram as if it's on a page
+- generate touch and echo commands with custom path to file to make and fill .svg file
 - make old diagrams compatible with new version
 - testing and error messages
