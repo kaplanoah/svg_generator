@@ -100,6 +100,8 @@ There are also values for the official Interview Cake blue. Use our transparent 
 
 ## Submitting your diagram to Interview Cake
 
+Test your SVG in Chrome, Safari, and Firefox
+
 Add the svg page
 
 Add the data in settings
