@@ -54,6 +54,36 @@ If you need multiple similar diagrams, add a function for each diagram in `diagr
 
 See cheetsheet at the bottom of the template and [SVG MDN documentation](https://developer.mozilla.org/en-US/docs/Web/SVG).
 
+#### Required and optional arguments
+
+Arguments in brackets are optional. For example, when you make a line:
+
+```
+generateLine( x1, y1, x2, y2, [ stroke, strokeWidth, mask ])
+```
+
+the x and y coordinates are required, and the rest of the arguments are optional.
+
+#### Masks
+
+There are 2 types of masks:
+
+1. `'bottom-transparent-fade'`: masked contents are transparent at the bottom and opaque at the top
+1. `'top-transparent-fade'`: masked contents are transparent at the top and opaque at the bottom
+
+
+The `topY` argument is the y coordinate of the top of the mask.
+
+Masks default to `'bottom-transparent-fade'` if you don't pass `true` as an argument for `isTop`.
+
+To apply a mask to elements, generate a mask and then pass `'bottom-transparent-fade'` or `'top-transparent-fade'` as an argument for `mask` to all the elements you want masked.
+
+Example:
+
+[ram-start.js](diagrams/ram-start.js)
+
+    $ open http://localhost:8000?diagram=ram-start
+
 
 
 ## Helper functions
