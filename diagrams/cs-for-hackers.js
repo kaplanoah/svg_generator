@@ -1,10 +1,11 @@
-var nameSpace = 'ram';
+var nameSpace = 'cs_for_hackers';
 
 var svgWidth  = 250;
 var svgHeight = 250;
 
 var xOffset = 40;
 
+// dynamic values
 
 //table appearance
 var rowHeight = 30;
@@ -84,7 +85,6 @@ var diagramFunctions = [
     },
 
     function arrayBlank() {
-      
     }
 
 ];
