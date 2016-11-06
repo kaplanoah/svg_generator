@@ -1,4 +1,4 @@
-var nameSpace = 'template';
+var nameSpace = 'ram';
 
 var svgWidth  = 250;
 var svgHeight = 250;
@@ -6,16 +6,10 @@ var svgHeight = 250;
 var xOffset = 40;
 
 
-// dynamic values
-
-var textColor = '#555555';
-
 //table appearance
 var rowHeight = 30;
 var rowWidth = 110;
 var numRows = 6;
-// var rowColor = '#eff9fc';
-var strokeColor = '#555555';
 
 var tableContent = [];
 var lightOutlineRows = []; // range of rows to outline lightly
@@ -28,16 +22,16 @@ function drawTable(tableNumber, lightOutlineRows = [], darkOutlineRows = []) {
 
   for (i = 1; i < numRows+1; i++) { 
       // draw row numbers
-      generateText(i - 1, 20, i*rowHeight + 19, 13, null, textColor);
+      generateText(i - 1, 20, i*rowHeight + 19, 13);
       // draw rows
       if (lightOutlineRows.length == 1 && lightOutlineRows[0] == i) {
-        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, strokeColor, 2);
+        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 2);
       } else if (darkOutlineRows.length == 1 && darkOutlineRows[0] == i) {
-        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, strokeColor, 3);
+        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 3);
       } else {
-        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, strokeColor, 1);
+        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 1);
       }
-      generateText(tableContent[i], rowWidth - 15, i*rowHeight + 19, 13, null, textColor);
+      generateText(tableContent[i], rowWidth - 15, i*rowHeight + 19, 13);
       // if (i == numRows) {
         // generateMask(100, 500, rowHeight, true);
       // }
@@ -75,18 +69,22 @@ function fillTable(tableNumber) {
 
 var diagramFunctions = [
 
-    function drawTable1() {
+    function ramEmpty() {
       drawTable(1);
     },
 
-    function drawTable2() {
+    function ramBits() {
       drawTable(2);
     },
 
-    function drawTable3() {
+    function ramSingleInt() {
       var lightOutlineRows = [3];
       var darkOutlineRows = [4];
       drawTable(3, lightOutlineRows, darkOutlineRows);
+    },
+
+    function arrayBlank() {
+      
     }
 
 ];
