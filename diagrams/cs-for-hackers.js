@@ -1,8 +1,9 @@
 var nameSpace = 'cs_for_hackers';
 
 var svgWidth  = 250;
-var svgHeight = 250;
+var svgHeight = 320;
 
+var topMargin = 30
 var xOffset = 40;
 
 // dynamic values
@@ -10,7 +11,7 @@ var xOffset = 40;
 //table appearance
 var rowHeight = 30;
 var rowWidth = 110;
-var numRows = 6;
+var fadeBottomRows = 2;
 
 var tableContent = [];
 var lightOutlineRows = []; // range of rows to outline lightly
@@ -18,28 +19,49 @@ var darkOutlineRows = []; // range of rows to outline darkly
 
 // functions for drawing diagrams
 
-function drawTable(tableNumber, lightOutlineRows = [], darkOutlineRows = []) {
-  fillTable(tableNumber);
+function drawTable(tableNumber, numRows, lightOutlineRows = [], darkOutlineRows = []) {
+  fillTable(tableNumber, numRows);
 
   for (i = 1; i < numRows+1; i++) { 
-      // draw row numbers
-      generateText(i - 1, 20, i*rowHeight + 19, 13);
-      // draw rows
-      if (lightOutlineRows.length == 1 && lightOutlineRows[0] == i) {
-        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 2);
-      } else if (darkOutlineRows.length == 1 && darkOutlineRows[0] == i) {
-        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 3);
-      } else {
-        generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 1);
+    var y = i * rowHeight;
+
+    
+    // fadeout bottom
+    var mask;
+    if (fadeBottomRows) {
+      if (i === numRows - fadeBottomRows) {
+        // console.log(i);
+        console.log('genmask');
+        generateMask(y, svgWidth, rowHeight * fadeBottomRows);
       }
-      generateText(tableContent[i], rowWidth - 15, i*rowHeight + 19, 13);
-      // if (i == numRows) {
-        // generateMask(100, 500, rowHeight, true);
-      // }
+      if (i >= numRows - fadeBottomRows) {
+        console.log('set mask');
+        mask = 'bottom-transparent-fade';
+      } else {
+        mask = null;
+      }
+    }
+
+    // draw row numbers
+    generateText(i - 1, 20, i*rowHeight+19, 13, null, null, null, null, null, null, mask);
+
+    // draw rows
+    if (lightOutlineRows.length == 1 && lightOutlineRows[0] == i) {
+      generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 2, null, mask);
+    } else if (darkOutlineRows.length == 1 && darkOutlineRows[0] == i) {
+      generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 3, null, mask);
+    } else {
+      generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 1, null, mask);
+      console.log(i);
+      console.log(mask);
+    }
+
+    // draw the table content
+    generateText(tableContent[i], rowWidth - 15, i*rowHeight + 19, 13, null, null, null, null, null, null, mask);
   }
 }
 
-function fillTable(tableNumber) {
+function fillTable(tableNumber, numRows) {
   switch(tableNumber) {
     case 1:
       for (i = 1; i < numRows+1; i++) { 
@@ -71,20 +93,25 @@ function fillTable(tableNumber) {
 var diagramFunctions = [
 
     function ramEmpty() {
-      drawTable(1);
+      var numRows = 7;
+      drawTable(1, numRows);
     },
 
     function ramBits() {
-      drawTable(2);
+      var numRows = 7;
+      drawTable(2, numRows);
     },
 
     function ramSingleInt() {
+      var numRows = 7;
       var lightOutlineRows = [3];
       var darkOutlineRows = [4];
-      drawTable(3, lightOutlineRows, darkOutlineRows);
+      drawTable(3, numRows, lightOutlineRows, darkOutlineRows);
     },
 
     function arrayBlank() {
+      var numRows = 9;
+      drawTable(1, numRows)
     }
 
 ];
