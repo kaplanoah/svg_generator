@@ -4,7 +4,7 @@ var svgWidth  = 250;
 var svgHeight = 320;
 
 var topMargin = 30
-var xOffset = 40;
+var xOffset = 90;
 
 // dynamic values
 
@@ -40,7 +40,7 @@ function drawTable(tableNumber, numRows, lightOutlineRows = [], darkOutlineRows 
     }
 
     // draw row numbers
-    generateText(i - 1, 20, i*rowHeight+19, 13, null, null, null, null, null, null, mask);
+    generateText(i - 1, xOffset-10, i*rowHeight+19, 13, null, null, null, null, null, null, mask);
 
     // draw rows
     if (lightOutlineRows.length == 1 && lightOutlineRows[0] == i) {
@@ -52,7 +52,7 @@ function drawTable(tableNumber, numRows, lightOutlineRows = [], darkOutlineRows 
     }
 
     // draw the table content
-    generateText(tableContent[i], rowWidth - 15, i*rowHeight + 19, 13, null, null, null, null, null, null, mask);
+    generateText(tableContent[i], xOffset+(rowWidth/2), i*rowHeight + 19, 13, null, null, null, null, null, null, mask);
   }
 }
 
