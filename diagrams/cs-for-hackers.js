@@ -30,12 +30,9 @@ function drawTable(tableNumber, numRows, lightOutlineRows = [], darkOutlineRows 
     var mask;
     if (fadeBottomRows) {
       if (i === numRows - fadeBottomRows) {
-        // console.log(i);
-        console.log('genmask');
         generateMask(y, svgWidth, rowHeight * fadeBottomRows);
       }
       if (i >= numRows - fadeBottomRows) {
-        console.log('set mask');
         mask = 'bottom-transparent-fade';
       } else {
         mask = null;
@@ -52,8 +49,6 @@ function drawTable(tableNumber, numRows, lightOutlineRows = [], darkOutlineRows 
       generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 3, null, mask);
     } else {
       generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 1, null, mask);
-      console.log(i);
-      console.log(mask);
     }
 
     // draw the table content
