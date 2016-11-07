@@ -112,6 +112,16 @@ var diagramFunctions = [
     function arrayBlank() {
       var numRows = 9;
       drawTable(1, numRows)
+    },
+
+    function array5Occupied() {
+      var numRows = 9;
+      drawTable(1, numRows)
+    },
+
+    function array5() {
+      var numRows = 9;
+      drawTable(1, numRows)
     }
 
 ];
