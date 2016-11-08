@@ -4,7 +4,7 @@ var svgWidth  = 250;
 var svgHeight = 320;
 
 var topMargin = 30
-var xOffset = 90;
+var leftMargin = 90;
 
 // dynamic values
 
@@ -14,54 +14,47 @@ var rowWidth = 110;
 var fadeBottomRows = 2;
 
 var tableContent = [];
-var lightOutlineRows = []; // range of rows to outline lightly
-var darkOutlineRows = []; // range of rows to outline darkly
 
 // functions for drawing diagrams
 
-function drawTable(tableNumber, numRows, lightOutlineRows = [], darkOutlineRows = []) {
+function drawTable(tableNumber, numRows) {
   fillTable(tableNumber, numRows);
 
   for (i = 1; i < numRows+1; i++) { 
     var y = i * rowHeight;
-
     
-    // fadeout bottom
+    // generate mask
     var mask;
-    if (fadeBottomRows) {
-      if (i === numRows - fadeBottomRows) {
-        generateMask(y, svgWidth, rowHeight * fadeBottomRows);
-      }
-      if (i >= numRows - fadeBottomRows) {
-        mask = 'bottom-transparent-fade';
-      } else {
-        mask = null;
+    if (tableNumber != 6) {
+      if (fadeBottomRows) {
+        if (i === numRows - fadeBottomRows) {
+          generateMask(y, svgWidth, rowHeight * fadeBottomRows);
+        }
+        if (i >= numRows - fadeBottomRows) {
+          mask = 'bottom-transparent-fade';
+        } else {
+          mask = null;
+        }
       }
     }
 
     // draw row numbers
-    generateText(i - 1, xOffset-10, i*rowHeight+19, 13, null, null, null, null, null, null, mask);
+    generateText(i - 1, leftMargin-15, i*rowHeight+19, 13, null, null, null, null, null, null, mask);
 
     // draw rows
-    if (lightOutlineRows.length == 1 && lightOutlineRows[0] == i) {
-      generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 2, null, mask);
-    } else if (darkOutlineRows.length == 1 && darkOutlineRows[0] == i) {
-      generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 3, null, mask);
-    } else {
-      generateRect(xOffset, i*rowHeight, rowWidth, rowHeight, 0, null, null, 1, null, mask);
-    }
+    generateRect(leftMargin, i*rowHeight, rowWidth, rowHeight, 0, null, null, 1, null, mask);
 
-    // draw the table content
-    generateText(tableContent[i], xOffset+(rowWidth/2), i*rowHeight + 19, 13, null, null, null, null, null, null, mask);
+    // draw table content
+    generateText(tableContent[i], leftMargin+(rowWidth/2), i*rowHeight + 19, 13, null, null, null, null, null, null, mask);
   }
 }
 
 function fillTable(tableNumber, numRows) {
   switch(tableNumber) {
     case 1:
-      for (i = 1; i < numRows+1; i++) { 
-        tableContent[i] = '0 0 0 0 0 0 0 0';
-      }
+      // for (i = 1; i < numRows+1; i++) { 
+      //   tableContent[i] = '0 0 0 0 0 0 0 0';
+      // }
       break;
 
     case 2:
@@ -79,9 +72,45 @@ function fillTable(tableNumber, numRows) {
       tableContent[4] = '0 0 0 0 0 0 0 0';
       tableContent[5] = '0 0 0 0 0 0 0 0';
       break;
+
+    case 4:
+      for (i = 1; i < numRows+1; i++) { 
+        tableContent[i] = '0 0 0 0 0 0 0 0';
+      }
+      break;
   }
 }
 
+function drawBorder(color, start, end, size = 2) {
+  end = end || start;
+
+  var y = topMargin + start * rowHeight;
+  var height = (end - start + 1) * rowHeight;
+
+  generateRect(leftMargin, y, rowWidth, height, 0, transparent, color, size)
+}
+
+function drawBracket(start, end) {
+  end = end || start;
+  numRows = end - start + 1;
+
+  var x = leftMargin - 40;
+  var x2 = x + 8;
+  var y1 = topMargin + start * rowHeight;
+  var y2 = y1 + ((end - start + 1) * rowHeight);
+
+  // draw bracket
+  generateLine(x, y1, x, y2);
+  generateLine(x, y1, x2, y1);
+  generateLine(x, y2, x2, y2);
+
+  // draw row numbers
+  y = y1;
+  for (i = 1; i <= numRows; i++) {
+    generateText(i - 1, x-15, y+(rowHeight-11), 13);
+    y = y+rowHeight;
+  }
+}
 
 // generate diagrams
 
@@ -99,24 +128,27 @@ var diagramFunctions = [
 
     function ramSingleInt() {
       var numRows = 7;
-      var lightOutlineRows = [3];
-      var darkOutlineRows = [4];
-      drawTable(3, numRows, lightOutlineRows, darkOutlineRows);
+      drawTable(3, numRows);
+      drawBorder('black', 3);
     },
 
     function arrayBlank() {
       var numRows = 9;
-      drawTable(1, numRows)
+      drawTable(4, numRows);
     },
 
     function array5Occupied() {
       var numRows = 9;
-      drawTable(1, numRows)
+      drawTable(4, numRows);
+      drawBorder('black', 3);
     },
 
     function array5() {
       var numRows = 9;
-      drawTable(1, numRows)
+      drawTable(6, numRows);
+      drawBorder('black', 3, null, 3);
+      drawBorder('black', 3, 8, 2);
+      drawBracket(3, 7);
     }
 
 ];
