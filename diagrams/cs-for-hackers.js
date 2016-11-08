@@ -78,6 +78,28 @@ function fillTable(tableNumber, numRows) {
         tableContent[i] = '0 0 0 0 0 0 0 0';
       }
       break;
+
+    case 5:
+      tableContent[1] = '0 0 0 0 0 0 0 0';
+      tableContent[2] = '0 0 0 0 0 0 0 0';
+      tableContent[3] = '0 1 1 0 1 0 0 1';
+      tableContent[4] = '0 0 0 0 0 0 0 0';
+      tableContent[5] = '0 0 0 0 0 0 0 0';
+      tableContent[6] = '0 0 0 0 0 0 0 0';
+      tableContent[7] = '0 0 0 0 0 0 0 0';
+      tableContent[8] = '0 0 0 0 0 0 0 0';
+      break;
+
+    case 6:
+      tableContent[1] = '0 0 0 0 0 0 0 0';
+      tableContent[2] = '0 0 0 0 0 0 0 0';
+      tableContent[3] = '0 1 1 0 1 0 0 1';
+      tableContent[4] = '0 0 0 0 0 0 0 0';
+      tableContent[5] = '0 0 0 0 0 0 0 0';
+      tableContent[6] = '0 0 0 0 0 0 0 0';
+      tableContent[7] = '0 0 0 0 0 0 0 0';
+      tableContent[8] = '0 0 0 0 0 0 0 0';
+      break;
   }
 }
 
@@ -92,7 +114,7 @@ function drawBorder(color, start, end, size = 2) {
 
 function drawBracket(start, end) {
   end = end || start;
-  numRows = end - start + 1;
+  var numRows = end - start + 1;
 
   var x = leftMargin - 40;
   var x2 = x + 8;
@@ -146,7 +168,7 @@ var diagramFunctions = [
     function array5() {
       var numRows = 9;
       drawTable(6, numRows);
-      drawBorder('black', 3, null, 3);
+      drawBorder('black', 2, null, 3);
       drawBorder('black', 3, 8, 2);
       drawBracket(3, 7);
     }
