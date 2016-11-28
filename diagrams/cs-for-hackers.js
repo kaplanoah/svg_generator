@@ -3,7 +3,7 @@ var nameSpace = 'cs_for_hackers';
 var svgWidth  = 250;
 var svgHeight = 320;
 
-var topMargin = 30
+var topMargin = 30;
 var leftMargin = 90;
 
 // dynamic values
@@ -46,6 +46,7 @@ function drawTable(tableNumber, numRows) {
 
     // draw table content
     generateText(tableContent[i], leftMargin+(rowWidth/2), i*rowHeight + 19, 13, null, null, null, null, null, null, mask);
+
   }
 }
 
@@ -151,7 +152,7 @@ var diagramFunctions = [
     function ramSingleInt() {
       var numRows = 7;
       drawTable(3, numRows);
-      drawBorder('black', 3);
+      drawBorder('black', 2);
     },
 
     function arrayBlank() {
@@ -162,7 +163,7 @@ var diagramFunctions = [
     function array5Occupied() {
       var numRows = 9;
       drawTable(4, numRows);
-      drawBorder('black', 3);
+      drawBorder('black', 2);
     },
 
     function array5() {
@@ -177,7 +178,7 @@ var diagramFunctions = [
 
 
 function setUp() {
-    drawTable();
+
 }
 
 function tearDown() {
